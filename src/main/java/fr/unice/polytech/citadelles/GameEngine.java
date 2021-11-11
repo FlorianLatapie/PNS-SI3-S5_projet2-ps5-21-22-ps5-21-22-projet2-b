@@ -25,14 +25,18 @@ public class GameEngine {
 
     private void initPlayers() {
         for (int i = 0; i < nbPlayers; i++) {
-            DistrictCard card = new DistrictCard(new Random().nextInt(1, 6));
-            listOfPlayers.add(new Player(card));
+            List<DistrictCard> districtCards = new ArrayList<>();
+            for (int j = 0; j < 4; j++) {
+                districtCards.add(new DistrictCard(new Random().nextInt(1, 6)));
+            }
+            listOfPlayers.add(new Player(districtCards));
         }
     }
 
     public void launchGame() {
         for (Player player : listOfPlayers) {
             io.printDistrictCardsInHandOf(player);
+            io.printCoinsOf(player);
         }
     }
 }

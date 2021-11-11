@@ -5,8 +5,14 @@ import java.util.List;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
+    private int coins;
 
-    public Player(DistrictCard... districtCards) {
+    public Player(List<DistrictCard> districtCards) {
+        this(districtCards, 2);
+    }
+
+    public Player(List<DistrictCard> districtCards, int coins) {
+        this.coins = coins;
         this.districtCardsInHand = new ArrayList<>();
         for (DistrictCard card : districtCards) {
             districtCardsInHand.add(card);
@@ -15,6 +21,10 @@ public class Player {
 
     public List<DistrictCard> getDistrictCardsInHand() {
         return districtCardsInHand;
+    }
+
+    public int getCoins() {
+        return coins;
     }
 
     @Override

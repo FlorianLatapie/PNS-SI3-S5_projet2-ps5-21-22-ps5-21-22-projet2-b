@@ -7,15 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
-    /*String varToBeInitInSetup;
-
-    @BeforeEach
-    void setUp() {
-        varToBeInitInSetup = "Hello World!";
-    }
-
     @Test
     void helloTest() {
-        assertEquals(varToBeInitInSetup, Main.hello());
-    }*/
+        Main.main(null);
+        assertTrue(true);
+    }
 }

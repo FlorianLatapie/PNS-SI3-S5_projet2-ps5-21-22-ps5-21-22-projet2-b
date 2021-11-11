@@ -8,22 +8,25 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameEngineTest {
     GameEngine ge;
 
-    static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;
 
     @BeforeAll
-    static void baSetUp(){
+    static void baSetUp() {
+        outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
     @BeforeEach
     void setUp() {
         ge = new GameEngine();
+        outContent.reset();
     }
 
     @Test

@@ -7,28 +7,49 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IOTest {
     IO io;
-    static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    List<DistrictCard> districtCards;
+    static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;
 
     @BeforeAll
-    static void baSetUp(){
+    static void baSetUp() {
+        outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
+
     @BeforeEach
     void setUp() {
-
         io = new IO();
+        districtCards = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            districtCards.add(new DistrictCard(i));
+        }
+        outContent.reset();
     }
 
     @Test
-    public void out() {
-        io.printDistrictCardsInHandOf(new Player(new DistrictCard(1)));
-        assertEquals("The player has the following district cards in hand : [DistrictCard{priceToBuild=1}]\r\n", outContent.toString());
+    public void printDistrictCardsInHandOfTest() {
+        io.printDistrictCardsInHandOf(new Player(districtCards));
+        assertEquals("The player has the following district cards in hand : [DistrictCard{priceToBuild=0}, DistrictCard{priceToBuild=1}, DistrictCard{priceToBuild=2}, DistrictCard{priceToBuild=3}]\r\n", outContent.toString());
+    }
+
+    @Test
+    public void printCoinsOfTest() {
+        io.printCoinsOf(new Player(districtCards));
+        assertEquals("The player has 2 coins\r\n", outContent.toString());
+    }
+
+    @Test
+    public void printCoinsOfTest2() {
+        io.printCoinsOf(new Player(districtCards, 1));
+        assertEquals("The player has 1 coin\r\n", outContent.toString());
     }
 
     @AfterAll
