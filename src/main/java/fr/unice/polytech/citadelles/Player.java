@@ -8,7 +8,7 @@ public class Player {
     private int coins;
 
     public Player(List<DistrictCard> districtCards) {
-        this(districtCards, 2);
+        this(districtCards, Integer.MAX_VALUE);
     }
 
     public Player(List<DistrictCard> districtCards, int coins) {
