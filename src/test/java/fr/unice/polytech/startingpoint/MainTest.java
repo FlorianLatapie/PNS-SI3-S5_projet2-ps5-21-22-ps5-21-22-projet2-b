@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
-    String varToBeInitInSetup;
+    /*String varToBeInitInSetup;
 
     @BeforeEach
     void setUp() {
@@ -17,5 +17,5 @@ class MainTest {
     @Test
     void helloTest() {
         assertEquals(varToBeInitInSetup, Main.hello());
-    }
+    }*/
 }
