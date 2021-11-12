@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
-    private List<DistrictCard> districtCardsBuild = new ArrayList<>();
+    private List<DistrictCard> districtCardsBuild;
     private int coins;
+    private String name;
 
-    public Player(List<DistrictCard> districtCards) {
-        this(districtCards, Integer.MAX_VALUE);
+    public Player(String name, List<DistrictCard> districtCards) {
+        this(name, districtCards, Integer.MAX_VALUE);
     }
 
-    public Player(List<DistrictCard> districtCards, int coins) {
+    public Player(String name, List<DistrictCard> districtCards, int coins) {
+        this.name = name;
         this.coins = coins;
-        this.districtCardsInHand = new ArrayList<>();
-        for (DistrictCard card : districtCards) {
-            districtCardsInHand.add(card);
-        }
+        districtCardsInHand = new ArrayList<>(districtCards);
+        districtCardsBuild = new ArrayList<>();
     }
 
     public List<DistrictCard> getDistrictCardsInHand() {
@@ -36,6 +36,10 @@ public class Player {
 
     public int getCoins() {
         return coins;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -5,19 +5,25 @@ package fr.unice.polytech.citadelles;
  */
 public class IO {
     public void printDistrictCardsInHandOf(Player player) {
-        System.out.println("The player has the following district cards in hand : " + player.getDistrictCardsInHand());
+        System.out.println(player.getName() + " has the following district cards in hand      : " + player.getDistrictCardsInHand());
     }
 
-    public void printDistrictCardsBuildOf(Player player) {
-        System.out.println("The player has the following district cards build : " + player.getDistrictCardsBuild());
+    public void printDistrictCardsBuiltBy(Player player) {
+        System.out.println(player.getName() + " has the following district cards on the table : " + player.getDistrictCardsBuild());
     }
 
     public void printCoinsOf(Player player) {
         int coins = player.getCoins();
         if (coins > 1) {
-            System.out.println("The player has " + coins + " coins");
+            System.out.println(player.getName() + " has " + coins + " coins");
         } else {
-            System.out.println("The player has " + coins + " coin");
+            System.out.println(player.getName() + " has " + coins + " coin");
         }
+    }
+
+    public void printSeparator(String text) {
+        String separator = "-----------------------------------------------------------------------------";
+        if (!text.isEmpty()) text = " " + text + " ";
+        System.out.println(separator + text + separator + "\n");
     }
 }

@@ -29,16 +29,19 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(new DistrictCard(new Random().nextInt(1, 6)));
             }
-            listOfPlayers.add(new Player(districtCards));
+            listOfPlayers.add(new Player("Player_"+(i+1), districtCards));
         }
     }
 
     public void launchGame() {
+        io.printSeparator("The game starts !");
+
         for (Player player : listOfPlayers) {
             player.buildDistrictCardsInHand(player.getDistrictCardsInHand().get(0)); //because IA isn't implemented yet, and neither are rounds, only the first card is build
-            io.printDistrictCardsBuildOf(player);
+            io.printDistrictCardsBuiltBy(player);
             io.printDistrictCardsInHandOf(player);
             io.printCoinsOf(player);
+            io.printSeparator("End of turn for player : " + player.getName());
         }
     }
 }
