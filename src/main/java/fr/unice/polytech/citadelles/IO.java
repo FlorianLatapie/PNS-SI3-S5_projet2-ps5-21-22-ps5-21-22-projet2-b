@@ -8,6 +8,10 @@ public class IO {
         System.out.println("The player has the following district cards in hand : " + player.getDistrictCardsInHand());
     }
 
+    public void printDistrictCardsBuildOf(Player player) {
+        System.out.println("The player has the following district cards build : " + player.getDistrictCardsBuild());
+    }
+
     public void printCoinsOf(Player player) {
         int coins = player.getCoins();
         if (coins > 1) {

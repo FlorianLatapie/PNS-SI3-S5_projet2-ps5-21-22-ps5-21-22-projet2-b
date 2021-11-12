@@ -13,6 +13,7 @@ class PlayerTest {
     Player p;
     List<DistrictCard> districtCards;
 
+
     @BeforeEach
     void setUp() {
         districtCards = new ArrayList<>();
@@ -28,5 +29,13 @@ class PlayerTest {
         assertEquals(p, new Player(districtCards));
         assertNotEquals(p, " ");
         assertEquals(p.getDistrictCardsInHand(), new Player(districtCards).getDistrictCardsInHand());
+    }
+
+    @Test
+    void buildDistrictCardTest() {
+        Player pCopy = new Player(p.getDistrictCardsInHand());
+        pCopy.buildDistrictCardsInHand(p.getDistrictCardsInHand().get(0));
+        assertNotEquals(p.getDistrictCardsInHand(),pCopy.getDistrictCardsInHand()); //check if card has been removed
+        assertEquals(p.getDistrictCardsInHand().get(0), pCopy.getDistrictCardsBuild().get(0)); //check if card has been build
     }
 }

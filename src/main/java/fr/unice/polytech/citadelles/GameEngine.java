@@ -35,6 +35,8 @@ public class GameEngine {
 
     public void launchGame() {
         for (Player player : listOfPlayers) {
+            player.buildDistrictCardsInHand(player.getDistrictCardsInHand().get(0)); //because IA isn't implemented yet, and neither are rounds, only the first card is build
+            io.printDistrictCardsBuildOf(player);
             io.printDistrictCardsInHandOf(player);
             io.printCoinsOf(player);
         }

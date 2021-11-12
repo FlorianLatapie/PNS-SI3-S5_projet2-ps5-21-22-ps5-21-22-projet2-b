@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
+    private List<DistrictCard> districtCardsBuild = new ArrayList<>();
     private int coins;
 
     public Player(List<DistrictCard> districtCards) {
@@ -21,6 +22,16 @@ public class Player {
 
     public List<DistrictCard> getDistrictCardsInHand() {
         return districtCardsInHand;
+    }
+
+    void buildDistrictCardsInHand(DistrictCard cardToBuild){
+        this.coins -= cardToBuild.getPriceToBuild();
+        districtCardsInHand.remove(cardToBuild);
+        districtCardsBuild.add(cardToBuild);
+    }
+
+    public List<DistrictCard> getDistrictCardsBuild() {
+        return districtCardsBuild;
     }
 
     public int getCoins() {
