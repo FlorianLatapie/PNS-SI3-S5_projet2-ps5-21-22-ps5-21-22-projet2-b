@@ -2,10 +2,11 @@ package fr.unice.polytech.citadelles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
-    private List<DistrictCard> districtCardsBuild;
+    private List<DistrictCard> districtCardsBuilt;
     private int coins;
     private String name;
 
@@ -17,7 +18,7 @@ public class Player {
         this.name = name;
         this.coins = coins;
         districtCardsInHand = new ArrayList<>(districtCards);
-        districtCardsBuild = new ArrayList<>();
+        districtCardsBuilt = new ArrayList<>();
     }
 
     public List<DistrictCard> getDistrictCardsInHand() {
@@ -27,11 +28,15 @@ public class Player {
     void buildDistrictCardsInHand(DistrictCard cardToBuild){
         this.coins -= cardToBuild.getPriceToBuild();
         districtCardsInHand.remove(cardToBuild);
-        districtCardsBuild.add(cardToBuild);
+        districtCardsBuilt.add(cardToBuild);
     }
 
-    public List<DistrictCard> getDistrictCardsBuild() {
-        return districtCardsBuild;
+    public List<DistrictCard> getDistrictCardsBuilt() {
+        return districtCardsBuilt;
+    }
+
+    public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
+        this.districtCardsBuilt = districtCardsBuilt;
     }
 
     public int getCoins() {
@@ -40,6 +45,15 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public boolean chooseToBuildDistrict(){
+        boolean choice = new Random().nextBoolean();
+        DistrictCard card = districtCardsInHand.get(new Random().nextInt(0, districtCardsInHand.size()));
+        if(choice){
+            buildDistrictCardsInHand(card);
+        }
+        return choice;
     }
 
     @Override

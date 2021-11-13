@@ -1,5 +1,6 @@
 package fr.unice.polytech.citadelles;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,9 +38,11 @@ public class GameEngine {
         io.printSeparator("The game starts !");
 
         for (Player player : listOfPlayers) {
-            player.buildDistrictCardsInHand(player.getDistrictCardsInHand().get(0)); //because IA isn't implemented yet, and neither are rounds, only the first card is build
-            io.printDistrictCardsBuiltBy(player);
             io.printDistrictCardsInHandOf(player);
+            if(player.chooseToBuildDistrict()){
+                io.println(player.getName() + " has chose to build a district");
+            }
+            io.printDistrictCardsBuiltBy(player);
             io.printCoinsOf(player);
             io.printSeparator("End of turn for player : " + player.getName());
         }

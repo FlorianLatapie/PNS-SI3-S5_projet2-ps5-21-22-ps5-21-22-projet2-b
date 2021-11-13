@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameEngineTest {
-    GameEngine ge;
+    //Needs to be commented otherwise the unit tests will always be at 100% coverage
+    /*GameEngine ge;
 
     static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;
@@ -43,5 +44,5 @@ class GameEngineTest {
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);
-    }
+    }*/
 }

@@ -9,7 +9,7 @@ public class IO {
     }
 
     public void printDistrictCardsBuiltBy(Player player) {
-        System.out.println(player.getName() + " has the following district cards on the table : " + player.getDistrictCardsBuild());
+        System.out.println(player.getName() + " has the following district cards on the table : " + player.getDistrictCardsBuilt());
     }
 
     public void printCoinsOf(Player player) {
@@ -26,4 +26,9 @@ public class IO {
         if (!text.isEmpty()) text = " " + text + " ";
         System.out.println(separator + text + separator + "\n");
     }
+
+    public void println(Object o){
+        System.out.println(o);
+    }
+
 }

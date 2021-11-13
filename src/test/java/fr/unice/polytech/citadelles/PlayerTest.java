@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     Player p;
@@ -17,7 +16,6 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        districtCards = new ArrayList<>();
         districtCards = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             districtCards.add(new DistrictCard(i));
@@ -37,6 +35,11 @@ class PlayerTest {
         Player pCopy = new Player(player1, p.getDistrictCardsInHand());
         pCopy.buildDistrictCardsInHand(p.getDistrictCardsInHand().get(0));
         assertNotEquals(p.getDistrictCardsInHand(),pCopy.getDistrictCardsInHand()); //check if card has been removed
-        assertEquals(p.getDistrictCardsInHand().get(0), pCopy.getDistrictCardsBuild().get(0)); //check if card has been build
+        assertEquals(p.getDistrictCardsInHand().get(0), pCopy.getDistrictCardsBuilt().get(0)); //check if card has been build
+    }
+
+    @Test
+    void chooseToBuildDistrictTest(){
+        assertTrue((Boolean)p.chooseToBuildDistrict() instanceof Boolean);
     }
 }
