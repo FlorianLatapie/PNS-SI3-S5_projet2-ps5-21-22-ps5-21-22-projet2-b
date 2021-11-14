@@ -1,5 +1,9 @@
 package fr.unice.polytech.citadelles;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * IO means Input/Output
  */
@@ -31,4 +35,8 @@ public class IO {
         System.out.println(o);
     }
 
+
+    public void printWinner(Player p, Integer points) {
+        System.out.println("Bravo au joueur " + p.getName() + " qui gagne la partie avec " + points + " points");
+    }
 }
