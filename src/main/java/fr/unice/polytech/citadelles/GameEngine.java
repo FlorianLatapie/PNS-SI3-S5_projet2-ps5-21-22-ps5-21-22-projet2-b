@@ -10,6 +10,7 @@ public class GameEngine {
     private List<Player> listOfPlayers;
     private IO io;
     private List<Player> winner;
+    private DeckOfCards deckOfCards;
     private int round;
 
     public GameEngine() {
@@ -22,6 +23,7 @@ public class GameEngine {
         io = new IO();
         winner = new ArrayList<>();
         round = 1;
+        deckOfCards = new DeckOfCards();
         initPlayers();
     }
 
@@ -29,7 +31,7 @@ public class GameEngine {
         for (int i = 0; i < nbPlayers; i++) {
             List<DistrictCard> districtCards = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
-                districtCards.add(new DistrictCard(new Random().nextInt(1, 6)));
+                districtCards.add(deckOfCards.getRandomDistrictCard());
             }
             listOfPlayers.add(new Player("Player_"+(i+1), districtCards));
         }
