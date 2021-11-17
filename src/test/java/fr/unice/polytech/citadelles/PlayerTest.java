@@ -42,4 +42,18 @@ class PlayerTest {
     void chooseToBuildDistrictTest(){
         assertTrue((Boolean)p.chooseToBuildDistrict() instanceof Boolean);
     }
+
+    @Test
+    void getSumOfCardsBuiltTest(){
+        assertEquals(0, p.getSumOfCardsBuilt());
+        p.buildDistrictCardsInHand(districtCards.get(3));
+        assertEquals(3, p.getSumOfCardsBuilt());
+    }
+
+    @Test
+    void getNbOfPointsTest(){
+        assertEquals(0, p.getNbOfPoints());
+        p.buildDistrictCardsInHand(districtCards.get(3));
+        assertEquals(3, p.getNbOfPoints());
+    }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Player {
+public class Player{
     private List<DistrictCard> districtCardsInHand;
     private List<DistrictCard> districtCardsBuilt;
     private int coins;
@@ -64,4 +64,14 @@ public class Player {
         }
         return false;
     }
+
+    public int getSumOfCardsBuilt() {
+        return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
+    }
+
+    public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
+        return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
+    }
+
+
 }

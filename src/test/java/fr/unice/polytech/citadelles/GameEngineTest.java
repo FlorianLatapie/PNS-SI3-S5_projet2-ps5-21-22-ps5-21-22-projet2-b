@@ -41,6 +41,10 @@ class GameEngineTest {
         assertFalse(outContent.toString().isBlank());
     }
 
+    @Test
+    void getWinnerTest(){
+
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);

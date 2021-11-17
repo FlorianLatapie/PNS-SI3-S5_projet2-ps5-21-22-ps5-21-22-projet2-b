@@ -56,10 +56,8 @@ public class GameEngine {
     }
 
     private void getWinner() {
-        HashMap<Integer, Player> player = new HashMap<>();
-        listOfPlayers.forEach(elem ->
-                player.put(elem.getDistrictCardsBuilt().stream().map(card -> card.getPriceToBuild()).reduce(0,Integer::sum),elem)
-        );
-        io.printWinner(player.get(Collections.max(player.keySet())),Collections.max(player.keySet()));
+        Collections.sort(this.listOfPlayers,
+                (o1, o2) -> o2.getNbOfPoints().compareTo(o1.getNbOfPoints()));
+        io.printWinner(this.listOfPlayers);
     }
 }

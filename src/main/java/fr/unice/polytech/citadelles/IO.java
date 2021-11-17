@@ -28,7 +28,7 @@ public class IO {
     public void printSeparator(String text) {
         String separator = "-----------------------------------------------------------------------------";
         if (!text.isEmpty()) text = " " + text + " ";
-        System.out.println(separator + text + separator + "\n");
+        System.out.println(separator + text + separator + System.lineSeparator());
     }
 
     public void println(Object o){
@@ -36,7 +36,10 @@ public class IO {
     }
 
 
-    public void printWinner(Player p, Integer points) {
-        System.out.println("Bravo au joueur " + p.getName() + " qui gagne la partie avec " + points + " points");
+    public void printWinner(List<Player> winners) {
+        this.println("The winners podium !");
+        winners.forEach(winner ->
+                System.out.println(winner.getName() + " with " + winner.getSumOfCardsBuilt() +" pts")
+        );
     }
 }
