@@ -38,7 +38,7 @@ class IOTest {
     @Test
     public void printDistrictCardsInHandOfTest() {
         io.printDistrictCardsInHandOf(new Player(player1, districtCards));
-        assertEquals("Player_1 has the following district cards in hand      : [DistrictCard{priceToBuild=1}, DistrictCard{priceToBuild=2}, DistrictCard{priceToBuild=3}, DistrictCard{priceToBuild=4}]" + System.lineSeparator(), outContent.toString());
+        assertEquals("Player_1 has the following district cards in hand      : [DistrictCard{priceToBuild=1, color=GREY}, DistrictCard{priceToBuild=2, color=GREY}, DistrictCard{priceToBuild=3, color=GREY}, DistrictCard{priceToBuild=4, color=GREY}]" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
@@ -51,7 +51,7 @@ class IOTest {
         player2.setDistrictCardsBuilt(districtCardsBuilt);
 
         io.printDistrictCardsBuiltBy(player2);
-        assertEquals("player_2 has the following district cards on the table : [DistrictCard{priceToBuild=1}, DistrictCard{priceToBuild=2}, DistrictCard{priceToBuild=3}, DistrictCard{priceToBuild=4}]" + System.lineSeparator(), outContent.toString());
+        assertEquals("player_2 has the following district cards on the table : [DistrictCard{priceToBuild=1, color=GREY}, DistrictCard{priceToBuild=2, color=GREY}, DistrictCard{priceToBuild=3, color=GREY}, DistrictCard{priceToBuild=4, color=GREY}]" + System.lineSeparator(), outContent.toString());
     }
 
     @Test

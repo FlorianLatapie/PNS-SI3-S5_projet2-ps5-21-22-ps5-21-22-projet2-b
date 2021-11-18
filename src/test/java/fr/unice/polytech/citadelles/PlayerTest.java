@@ -17,7 +17,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         districtCards = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             districtCards.add(new DistrictCard(i));
         }
         p = new Player(player1, districtCards);
@@ -47,13 +47,13 @@ class PlayerTest {
     void getSumOfCardsBuiltTest(){
         assertEquals(0, p.getSumOfCardsBuilt());
         p.buildDistrictCardsInHand(districtCards.get(3));
-        assertEquals(3, p.getSumOfCardsBuilt());
+        assertEquals(4, p.getSumOfCardsBuilt());
     }
 
     @Test
     void getNbOfPointsTest(){
         assertEquals(0, p.getNbOfPoints());
         p.buildDistrictCardsInHand(districtCards.get(3));
-        assertEquals(3, p.getNbOfPoints());
+        assertEquals(4, p.getNbOfPoints());
     }
 }
