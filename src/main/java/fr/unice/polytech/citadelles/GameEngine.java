@@ -43,14 +43,16 @@ public class GameEngine {
         while (winner.isEmpty() && round <= 4) {
             io.printSeparator("Start of the round " + round);
             for (Player player : listOfPlayers) {
+                giveCoins(player);
                 io.printDistrictCardsInHandOf(player);
+
                 if (player.chooseToBuildDistrict()) {
                     io.println(player.getName() + " has chose to build a district");
-                    io.printDistrictCardsInHandOf(player);
                 }
+
                 io.printDistrictCardsBuiltBy(player);
                 io.printCoinsOf(player);
-                io.printSeparator("End of turn " + round + " for player : " + player.getName());
+                io.printSeparator("End of turn " + round + " for " + player.getName());
             }
             round++;
         }
@@ -62,5 +64,13 @@ public class GameEngine {
         Collections.sort(this.listOfPlayers,
                 (o1, o2) -> o2.getNbOfPoints().compareTo(o1.getNbOfPoints()));
         io.printWinner(this.listOfPlayers);
+    }
+
+    public void giveCoins(Player player){
+        if(round != 1) {
+            System.out.println(player.getName() + " receives 2 coins.");
+            player.receiveCoins(2);
+            io.printCoinsOf(player);
+        }
     }
 }

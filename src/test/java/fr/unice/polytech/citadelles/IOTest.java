@@ -65,8 +65,9 @@ class IOTest {
 
     @Test
     void printCoinsOfTest() {
-        io.printCoinsOf(new Player(player1, districtCards));
-        assertEquals("Player_1 has 2147483647 coins" + System.lineSeparator(), outContent.toString());
+        Player playerTest = new Player(player1, districtCards);
+        io.printCoinsOf(playerTest);
+        assertEquals("Player_1 has " + playerTest.getCoins() + " coins" + System.lineSeparator(), outContent.toString());
     }
 
     @Test

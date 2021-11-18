@@ -12,7 +12,7 @@ public class Player {
     private Random random;
 
     public Player(String name, List<DistrictCard> districtCards) {
-        this(name, districtCards, Integer.MAX_VALUE);
+        this(name, districtCards, 2);
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins) {
@@ -28,7 +28,7 @@ public class Player {
     }
 
     void buildDistrictCardsInHand(DistrictCard cardToBuild) {
-        this.coins -= cardToBuild.getPriceToBuild();
+        removeCoins(cardToBuild.getPriceToBuild());
         districtCardsInHand.remove(cardToBuild);
         districtCardsBuilt.add(cardToBuild);
     }
@@ -45,15 +45,33 @@ public class Player {
         return coins;
     }
 
+    public void receiveCoins(int nbCoins){
+        this.coins += nbCoins;
+    }
+
+    public void removeCoins(int nbCoins){
+        this.coins -= nbCoins;
+    }
+
     public String getName() {
         return name;
     }
 
+    public boolean canBuildDistrict(DistrictCard district){
+        return coins >= district.getPriceToBuild();
+    }
+
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
-        DistrictCard card = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
-        if (choice) {
-            buildDistrictCardsInHand(card);
+        DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
+
+        if(!canBuildDistrict(district)){
+            choice = false;
+            return choice;
+        } else {
+            if (choice) {
+                buildDistrictCardsInHand(district);
+            }
         }
         return choice;
     }
@@ -74,6 +92,5 @@ public class Player {
     public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
     }
-
 
 }

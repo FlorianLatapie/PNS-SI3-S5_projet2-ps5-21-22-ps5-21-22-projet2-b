@@ -39,6 +39,26 @@ class PlayerTest {
     }
 
     @Test
+    void receiveCoinsTest(){
+        Player playerWith4Coins = new Player(player1, districtCards);
+        playerWith4Coins.receiveCoins(2);
+        assertEquals(4, playerWith4Coins.getCoins());
+    }
+
+    @Test
+    public void removeCoinsTest(){
+        Player playerWithNoCoins = new Player(player1, districtCards);
+        playerWithNoCoins.removeCoins(2);
+        assertEquals(0, playerWithNoCoins.getCoins());
+    }
+
+    @Test
+    public void canBuildDistrictTest(){
+        Player playerWith2Coins = new Player(player1, districtCards);
+        assertEquals(true, playerWith2Coins.canBuildDistrict(new DistrictCard(2)));
+    }
+
+    @Test
     void chooseToBuildDistrictTest() {
         assertTrue((Boolean) p.chooseToBuildDistrict() instanceof Boolean);
     }
