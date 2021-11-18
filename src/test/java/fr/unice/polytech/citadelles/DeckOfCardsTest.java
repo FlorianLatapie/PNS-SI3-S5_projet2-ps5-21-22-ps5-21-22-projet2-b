@@ -10,11 +10,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DeckOfCardsTest {
+class DeckOfCardsTest {
     private DeckOfCards doc;
 
     @Test
-    void getRandomDistrictCardTest(){
+    void getRandomDistrictCardTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt())).thenReturn(3);
         doc = new DeckOfCards(mockRandom);
@@ -23,7 +23,7 @@ public class DeckOfCardsTest {
     }
 
     @Test
-    void getDistrictCardsTest(){
+    void getDistrictCardsTest() {
         doc = new DeckOfCards();
         assertEquals(54, doc.getDistrictCards().size());
     }

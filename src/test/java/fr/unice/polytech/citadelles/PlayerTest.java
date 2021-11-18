@@ -26,7 +26,7 @@ class PlayerTest {
     @Test
     void districtCardTest() {
         assertEquals(p, new Player(player1, districtCards));
-        assertNotEquals(p, " ");
+        assertNotEquals(p, 1); // wrong order of arguments to test the .equals method of p and not the other object
         assertEquals(p.getDistrictCardsInHand(), new Player(player1, districtCards).getDistrictCardsInHand());
     }
 
@@ -34,24 +34,24 @@ class PlayerTest {
     void buildDistrictCardTest() {
         Player pCopy = new Player(player1, p.getDistrictCardsInHand());
         pCopy.buildDistrictCardsInHand(p.getDistrictCardsInHand().get(0));
-        assertNotEquals(p.getDistrictCardsInHand(),pCopy.getDistrictCardsInHand()); //check if card has been removed
+        assertNotEquals(p.getDistrictCardsInHand(), pCopy.getDistrictCardsInHand()); //check if card has been removed
         assertEquals(p.getDistrictCardsInHand().get(0), pCopy.getDistrictCardsBuilt().get(0)); //check if card has been build
     }
 
     @Test
-    void chooseToBuildDistrictTest(){
-        assertTrue((Boolean)p.chooseToBuildDistrict() instanceof Boolean);
+    void chooseToBuildDistrictTest() {
+        assertTrue((Boolean) p.chooseToBuildDistrict() instanceof Boolean);
     }
 
     @Test
-    void getSumOfCardsBuiltTest(){
+    void getSumOfCardsBuiltTest() {
         assertEquals(0, p.getSumOfCardsBuilt());
         p.buildDistrictCardsInHand(districtCards.get(3));
         assertEquals(4, p.getSumOfCardsBuilt());
     }
 
     @Test
-    void getNbOfPointsTest(){
+    void getNbOfPointsTest() {
         assertEquals(0, p.getNbOfPoints());
         p.buildDistrictCardsInHand(districtCards.get(3));
         assertEquals(4, p.getNbOfPoints());

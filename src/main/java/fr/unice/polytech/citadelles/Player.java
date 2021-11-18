@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Player{
+public class Player {
     private List<DistrictCard> districtCardsInHand;
     private List<DistrictCard> districtCardsBuilt;
     private int coins;
     private String name;
+    private Random random;
 
     public Player(String name, List<DistrictCard> districtCards) {
         this(name, districtCards, Integer.MAX_VALUE);
@@ -17,6 +18,7 @@ public class Player{
     public Player(String name, List<DistrictCard> districtCards, int coins) {
         this.name = name;
         this.coins = coins;
+        this.random = new Random();
         districtCardsInHand = new ArrayList<>(districtCards);
         districtCardsBuilt = new ArrayList<>();
     }
@@ -25,7 +27,7 @@ public class Player{
         return districtCardsInHand;
     }
 
-    void buildDistrictCardsInHand(DistrictCard cardToBuild){
+    void buildDistrictCardsInHand(DistrictCard cardToBuild) {
         this.coins -= cardToBuild.getPriceToBuild();
         districtCardsInHand.remove(cardToBuild);
         districtCardsBuilt.add(cardToBuild);
@@ -47,10 +49,10 @@ public class Player{
         return name;
     }
 
-    public boolean chooseToBuildDistrict(){
-        boolean choice = new Random().nextBoolean();
-        DistrictCard card = districtCardsInHand.get(new Random().nextInt(0, districtCardsInHand.size()));
-        if(choice){
+    public boolean chooseToBuildDistrict() {
+        boolean choice = random.nextBoolean();
+        DistrictCard card = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
+        if (choice) {
             buildDistrictCardsInHand(card);
         }
         return choice;

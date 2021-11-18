@@ -36,13 +36,13 @@ class IOTest {
     }
 
     @Test
-    public void printDistrictCardsInHandOfTest() {
+    void printDistrictCardsInHandOfTest() {
         io.printDistrictCardsInHandOf(new Player(player1, districtCards));
         assertEquals("Player_1 has the following district cards in hand      : [DistrictCard{priceToBuild=1, color=GREY}, DistrictCard{priceToBuild=2, color=GREY}, DistrictCard{priceToBuild=3, color=GREY}, DistrictCard{priceToBuild=4, color=GREY}]" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void printDistrictCardsBuiltByTest() {
+    void printDistrictCardsBuiltByTest() {
         Player player2 = new Player("player_2", districtCards);
         List<DistrictCard> districtCardsBuilt = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
@@ -55,7 +55,7 @@ class IOTest {
     }
 
     @Test
-    public void printDistrictCardsBuiltByTest2() {
+    void printDistrictCardsBuiltByTest2() {
         Player player2 = new Player("player_2", districtCards);
         List<DistrictCard> districtCardsBuilt = new ArrayList<>();
         player2.setDistrictCardsBuilt(districtCardsBuilt);
@@ -64,31 +64,31 @@ class IOTest {
     }
 
     @Test
-    public void printCoinsOfTest() {
+    void printCoinsOfTest() {
         io.printCoinsOf(new Player(player1, districtCards));
         assertEquals("Player_1 has 2147483647 coins" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void printCoinsOfTest2() {
+    void printCoinsOfTest2() {
         io.printCoinsOf(new Player(player1, districtCards, 1));
         assertEquals("Player_1 has 1 coin" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void printSeparatorTest() {
+    void printSeparatorTest() {
         io.printSeparator("test");
         assertEquals("----------------------------------------------------------------------------- test -----------------------------------------------------------------------------" + System.lineSeparator() + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void printlnTest() {
+    void printlnTest() {
         io.println("test");
         assertEquals("test" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
-    public void printWinnerTest() {
+    void printWinnerTest() {
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             players.add(new Player("Player_" + i, districtCards));

@@ -1,7 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,7 +29,7 @@ public class IO {
         System.out.println(separator + text + separator + System.lineSeparator());
     }
 
-    public void println(Object o){
+    public void println(Object o) {
         System.out.println(o);
     }
 
@@ -39,7 +37,7 @@ public class IO {
     public void printWinner(List<Player> winners) {
         this.println("The winners podium !");
         winners.forEach(winner ->
-                System.out.println(winner.getName() + " with " + winner.getSumOfCardsBuilt() +" pts")
+                System.out.println(winner.getName() + " with " + winner.getSumOfCardsBuilt() + " pts")
         );
     }
 }

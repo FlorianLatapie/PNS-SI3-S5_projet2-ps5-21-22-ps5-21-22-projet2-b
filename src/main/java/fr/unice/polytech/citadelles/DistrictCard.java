@@ -5,8 +5,8 @@ public class DistrictCard extends Card {
     private Color color;
 
     /**
-     * @deprecated because you should not use this constructor anymore
      * @param priceToBuild price to build this district card
+     * @deprecated because you should not use this constructor anymore
      */
     @Deprecated
     public DistrictCard(int priceToBuild) { // the default constructor creates a grey card
@@ -44,7 +44,7 @@ public class DistrictCard extends Card {
         if (obj instanceof DistrictCard) {
             DistrictCard cardToCompare = (DistrictCard) obj;
             return this.getPriceToBuild() == cardToCompare.getPriceToBuild()
-                     && this.getColor().equals(cardToCompare.getColor());
+                    && this.getColor().equals(cardToCompare.getColor());
         }
         return false;
     }

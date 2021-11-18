@@ -33,19 +33,20 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            listOfPlayers.add(new Player("Player_"+(i+1), districtCards));
+            listOfPlayers.add(new Player("Player_" + (i + 1), districtCards));
         }
     }
 
     public void launchGame() {
         io.printSeparator("The game starts !");
 
-        while(winner.size()==0 && round<=4) {
+        while (winner.isEmpty() && round <= 4) {
             io.printSeparator("Start of the round " + round);
             for (Player player : listOfPlayers) {
                 io.printDistrictCardsInHandOf(player);
                 if (player.chooseToBuildDistrict()) {
                     io.println(player.getName() + " has chose to build a district");
+                    io.printDistrictCardsInHandOf(player);
                 }
                 io.printDistrictCardsBuiltBy(player);
                 io.printCoinsOf(player);
