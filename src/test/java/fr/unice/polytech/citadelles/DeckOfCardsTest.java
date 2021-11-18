@@ -19,7 +19,7 @@ class DeckOfCardsTest {
         when(mockRandom.nextInt(anyInt())).thenReturn(3);
         doc = new DeckOfCards(mockRandom);
 
-        assertEquals(new DistrictCard(Color.BLUE, 2), doc.getRandomDistrictCard());
+        assertEquals(new DistrictCard(Color.BLUE, DistrictName.Church, 2), doc.getRandomDistrictCard());
     }
 
     @Test
