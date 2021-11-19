@@ -1,6 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -19,7 +18,7 @@ class DeckOfCardsTest {
         when(mockRandom.nextInt(anyInt())).thenReturn(3);
         doc = new DeckOfCards(mockRandom);
 
-        assertEquals(new DistrictCard(Color.BLUE, DistrictName.Church, 2), doc.getRandomDistrictCard());
+        assertEquals(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2), doc.getRandomDistrictCard());
     }
 
     @Test

@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PlayerTest {
     Player p;
@@ -18,9 +22,9 @@ class PlayerTest {
     void setUp() {
         districtCards = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            districtCards.add(new DistrictCard(i));
+            districtCards.add(new DistrictCard(Color.GREY, DistrictName.NONE, i));
         }
-        p = new Player(player1, districtCards);
+        p = new Player(player1, districtCards, Integer.MAX_VALUE);
     }
 
     @Test
@@ -39,28 +43,61 @@ class PlayerTest {
     }
 
     @Test
-    void receiveCoinsTest(){
+    void receiveCoinsTest() {
         Player playerWith4Coins = new Player(player1, districtCards);
         playerWith4Coins.receiveCoins(2);
         assertEquals(4, playerWith4Coins.getCoins());
     }
 
     @Test
-    public void removeCoinsTest(){
+    void removeCoinsTest() {
         Player playerWithNoCoins = new Player(player1, districtCards);
         playerWithNoCoins.removeCoins(2);
         assertEquals(0, playerWithNoCoins.getCoins());
+
+        Player hasToThrowError = new Player(player1, districtCards);
+        assertThrows(RuntimeException.class, () -> hasToThrowError.removeCoins(Integer.MAX_VALUE + 1));
     }
 
     @Test
-    public void canBuildDistrictTest(){
+    void canBuildDistrictTest() {
         Player playerWith2Coins = new Player(player1, districtCards);
-        assertEquals(true, playerWith2Coins.canBuildDistrict(new DistrictCard(2)));
+        assertEquals(true, playerWith2Coins.canBuildDistrict(new DistrictCard(Color.GREY, DistrictName.NONE, 2)));
     }
 
     @Test
     void chooseToBuildDistrictTest() {
-        assertTrue((Boolean) p.chooseToBuildDistrict() instanceof Boolean);
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextBoolean()).thenReturn(true);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+
+        List<DistrictCard> districtCards = new ArrayList<>();
+        districtCards.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        List<DistrictCard> expectedBuilt = new ArrayList<>();
+        expectedBuilt.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player playerWithCoins = new Player("1", districtCards, 100, mockRandom);
+
+        assertTrue(playerWithCoins.chooseToBuildDistrict());
+        assertEquals(expectedBuilt, playerWithCoins.getDistrictCardsBuilt());
+        assertTrue(playerWithCoins.getDistrictCardsInHand().isEmpty());
+    }
+
+    @Test
+    void chooseToBuildDistrictTest2() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextBoolean()).thenReturn(true);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+
+        List<DistrictCard> districtCards = new ArrayList<>();
+        districtCards.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player playerWithNoCoins = new Player("1", districtCards, 0, mockRandom);
+
+        assertFalse(playerWithNoCoins.chooseToBuildDistrict());
+        assertTrue(playerWithNoCoins.getDistrictCardsBuilt().isEmpty());
+        assertFalse(playerWithNoCoins.getDistrictCardsInHand().isEmpty());
     }
 
     @Test

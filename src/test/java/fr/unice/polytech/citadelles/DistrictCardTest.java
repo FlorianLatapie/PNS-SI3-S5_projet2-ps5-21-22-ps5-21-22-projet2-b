@@ -10,26 +10,24 @@ class DistrictCardTest {
 
     @BeforeEach
     void setUp() {
-        dc = new DistrictCard(1);
-        dcRed = new DistrictCard(Color.RED,DistrictName.Barracks, 4);
-        dcGreen = new DistrictCard(Color.GREEN,DistrictName.Tavern, 4);
-        dcBlue = new DistrictCard(Color.BLUE,DistrictName.Temple, 4);
-        dcYellow = new DistrictCard(Color.YELLOW,DistrictName.Palace, 4);
-        dcGrey = new DistrictCard(Color.GREY,DistrictName.GreyHouse, 4);
+        dcRed = new DistrictCard(Color.RED, DistrictName.BARRACKS, 4);
+        dcGreen = new DistrictCard(Color.GREEN, DistrictName.TAVERN, 4);
+        dcBlue = new DistrictCard(Color.BLUE, DistrictName.TEMPLE, 4);
+        dcYellow = new DistrictCard(Color.YELLOW, DistrictName.PALACE, 4);
+        dcGrey = new DistrictCard(Color.GREY, DistrictName.NONE, 4);
     }
 
     @Test
     void districtCardTest() {
-        assertEquals(dc, new DistrictCard(1));
-        assertNotEquals(dc, 1); // wrong order of arguments to test the .equals method of dc and not the other object
-        assertEquals(1, new DistrictCard(1).getPriceToBuild());
-        assertEquals(dcGrey, new DistrictCard(4)); // the default constructor needs to create a grey card
+        assertEquals(dcGrey, new DistrictCard(Color.GREY, DistrictName.NONE, 4));
+        assertNotEquals(dcGrey, 1); // wrong order of arguments to test the .equals method of dc and not the other object
+        assertEquals(4, dcGrey.getPriceToBuild());
 
-        assertEquals(dcRed, new DistrictCard(Color.RED,DistrictName.Barracks, 4));
-        assertEquals(dcGreen, new DistrictCard(Color.GREEN,DistrictName.Tavern, 4));
-        assertEquals(dcBlue, new DistrictCard(Color.BLUE,DistrictName.Temple, 4));
-        assertEquals(dcYellow, new DistrictCard(Color.YELLOW,DistrictName.Palace, 4));
+        assertEquals(dcRed, new DistrictCard(Color.RED, DistrictName.BARRACKS, 4));
+        assertEquals(dcGreen, new DistrictCard(Color.GREEN, DistrictName.TAVERN, 4));
+        assertEquals(dcBlue, new DistrictCard(Color.BLUE, DistrictName.TEMPLE, 4));
+        assertEquals(dcYellow, new DistrictCard(Color.YELLOW, DistrictName.PALACE, 4));
 
-        assertThrows(RuntimeException.class, () -> new DistrictCard(-1));
+        assertThrows(RuntimeException.class, () -> new DistrictCard(Color.GREY, DistrictName.NONE, -1));
     }
 }

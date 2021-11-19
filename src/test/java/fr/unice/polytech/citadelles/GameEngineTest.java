@@ -1,16 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 class GameEngineTest {
     //Needs to be commented otherwise the unit tests will always be at 100% coverage
     /*GameEngine ge;

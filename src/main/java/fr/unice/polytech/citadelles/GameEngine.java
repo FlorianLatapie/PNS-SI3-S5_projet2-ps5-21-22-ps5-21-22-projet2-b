@@ -1,6 +1,8 @@
 package fr.unice.polytech.citadelles;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
@@ -45,29 +47,32 @@ public class GameEngine {
             for (Player player : listOfPlayers) {
                 giveCoins(player);
                 io.printDistrictCardsInHandOf(player);
-
-                if (player.chooseToBuildDistrict()) {
-                    io.println(player.getName() + " has chose to build a district");
-                }
-
+                askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
                 io.printCoinsOf(player);
                 io.printSeparator("End of turn " + round + " for " + player.getName());
             }
             round++;
         }
-
+        io.printSeparator("The game is over !");
         getWinner();
+    }
+
+    private void askToBuildDistrict(Player player) {
+        if (player.chooseToBuildDistrict()) {
+            io.println(player.getName() + " has chose to build a district");
+            io.printDistrictCardsInHandOf(player);
+        }
     }
 
     private void getWinner() {
         Collections.sort(this.listOfPlayers,
-                (o1, o2) -> o2.getNbOfPoints().compareTo(o1.getNbOfPoints()));
+                (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
         io.printWinner(this.listOfPlayers);
     }
 
-    public void giveCoins(Player player){
-        if(round != 1) {
+    public void giveCoins(Player player) {
+        if (round != 1) {
             System.out.println(player.getName() + " receives 2 coins.");
             player.receiveCoins(2);
             io.printCoinsOf(player);

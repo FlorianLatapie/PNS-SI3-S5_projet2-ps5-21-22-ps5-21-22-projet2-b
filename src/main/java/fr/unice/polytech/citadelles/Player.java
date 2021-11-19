@@ -12,13 +12,17 @@ public class Player {
     private Random random;
 
     public Player(String name, List<DistrictCard> districtCards) {
-        this(name, districtCards, 2);
+        this(name, districtCards, 2, new Random());
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins) {
+        this(name, districtCards, coins, new Random());
+    }
+
+    public Player(String name, List<DistrictCard> districtCards, int coins, Random random) {
         this.name = name;
         this.coins = coins;
-        this.random = new Random();
+        this.random = random;
         districtCardsInHand = new ArrayList<>(districtCards);
         districtCardsBuilt = new ArrayList<>();
     }
@@ -45,19 +49,25 @@ public class Player {
         return coins;
     }
 
-    public void receiveCoins(int nbCoins){
+    public void receiveCoins(int nbCoins) {
         this.coins += nbCoins;
     }
 
-    public void removeCoins(int nbCoins){
-        this.coins -= nbCoins;
+    public boolean removeCoins(int nbCoins) {
+        if (this.coins - nbCoins >= 0) {
+            this.coins -= nbCoins;
+            return true;
+        } else {
+            throw new RuntimeException("It is impossible to remove coins because the player " + this.name + " does not have enough coins : "
+                    + this.coins + "-" + nbCoins + " = " + (this.coins - nbCoins) + " is less than 0");
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean canBuildDistrict(DistrictCard district){
+    public boolean canBuildDistrict(DistrictCard district) {
         return coins >= district.getPriceToBuild();
     }
 
@@ -65,7 +75,7 @@ public class Player {
         boolean choice = random.nextBoolean();
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
 
-        if(!canBuildDistrict(district)){
+        if (!canBuildDistrict(district)) {
             choice = false;
             return choice;
         } else {
