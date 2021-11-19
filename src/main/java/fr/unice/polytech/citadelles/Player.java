@@ -71,6 +71,10 @@ public class Player {
         return coins >= district.getPriceToBuild();
     }
 
+    public String chooseCharacter(DeckOfCards deck){
+        return deck.getRandomCharacterCard().toString();
+    }
+
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
@@ -86,14 +90,6 @@ public class Player {
         return choice;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Player) {
-            Player playerToCompare = (Player) obj;
-            return this.getDistrictCardsInHand().equals(playerToCompare.getDistrictCardsInHand());
-        }
-        return false;
-    }
 
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
@@ -103,4 +99,12 @@ public class Player {
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Player) {
+            Player playerToCompare = (Player) obj;
+            return this.getDistrictCardsInHand().equals(playerToCompare.getDistrictCardsInHand());
+        }
+        return false;
+    }
 }

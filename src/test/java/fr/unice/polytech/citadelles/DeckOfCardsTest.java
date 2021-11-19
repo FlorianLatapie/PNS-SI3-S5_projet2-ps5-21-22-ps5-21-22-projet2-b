@@ -2,6 +2,8 @@ package fr.unice.polytech.citadelles;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +27,16 @@ class DeckOfCardsTest {
     void getDistrictCardsTest() {
         doc = new DeckOfCards();
         assertEquals(54, doc.getDistrictCards().size());
+    }
+
+    @Test
+    void getRandomCharacterCardTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt())).thenReturn(3);
+        doc = new DeckOfCards(mockRandom);
+        doc.createCharacterCards();
+
+        assertEquals(new Character(CharacterNames.KING).toString(), doc.getRandomCharacterCard().toString());
     }
 
 }

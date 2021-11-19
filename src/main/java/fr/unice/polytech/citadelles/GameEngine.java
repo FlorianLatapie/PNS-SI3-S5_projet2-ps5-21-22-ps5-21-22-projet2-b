@@ -44,7 +44,9 @@ public class GameEngine {
 
         while (winner.isEmpty() && round <= 4) {
             io.printSeparator("Start of the round " + round);
+            deckOfCards.createCharacterCards();
             for (Player player : listOfPlayers) {
+                offerPlayer(player);
                 giveCoins(player);
                 io.printDistrictCardsInHandOf(player);
                 askToBuildDistrict(player);
@@ -77,5 +79,9 @@ public class GameEngine {
             player.receiveCoins(2);
             io.printCoinsOf(player);
         }
+    }
+
+    public void offerPlayer(Player player){
+        System.out.println(player.getName() + " has chose " + player.chooseCharacter(deckOfCards));
     }
 }

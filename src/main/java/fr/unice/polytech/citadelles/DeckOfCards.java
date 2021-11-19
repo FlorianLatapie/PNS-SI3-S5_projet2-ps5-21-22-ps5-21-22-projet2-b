@@ -2,11 +2,13 @@ package fr.unice.polytech.citadelles;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 public class DeckOfCards {
     private List<DistrictCard> districtCards;
+    private List<Character> characters;
     private Random random;
 
     public DeckOfCards() {
@@ -15,6 +17,7 @@ public class DeckOfCards {
 
     public DeckOfCards(Random random) {
         districtCards = new ArrayList<>();
+        characters = new ArrayList<>();
         this.random = random;
         createDistrictCards();
     }
@@ -74,11 +77,30 @@ public class DeckOfCards {
         return districtCards;
     }
 
+    public void createCharacterCards(){
+        characters.removeAll(characters);
+        characters.add(new Character(CharacterNames.ASSASSIN));
+        characters.add(new Character(CharacterNames.THIEF));
+        characters.add(new Character(CharacterNames.MAGICIAN));
+        characters.add(new Character(CharacterNames.KING));
+        characters.add(new Character(CharacterNames.BISHOP));
+        characters.add(new Character(CharacterNames.MERCHANT));
+        characters.add(new Character(CharacterNames.ARCHITECT));
+        characters.add(new Character(CharacterNames.WARLORD));
+    }
+
     public DistrictCard getRandomDistrictCard() {
         DistrictCard card = districtCards.get(random.nextInt(districtCards.size()));
         districtCards.remove(card);
         return card;
     }
+
+    public Character getRandomCharacterCard(){
+        Character card = characters.get(random.nextInt(characters.size()));
+        characters.remove(card);
+        return card;
+    }
+
 
     public List<DistrictCard> getDistrictCards() {
         return districtCards;
