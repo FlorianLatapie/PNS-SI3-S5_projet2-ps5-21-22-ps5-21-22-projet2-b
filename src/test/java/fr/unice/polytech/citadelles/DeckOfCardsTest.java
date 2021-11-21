@@ -28,15 +28,15 @@ class DeckOfCardsTest {
         doc = new DeckOfCards();
         assertEquals(54, doc.getDistrictCards().size());
     }
-
     @Test
-    void getRandomCharacterCardTest() {
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextInt(anyInt())).thenReturn(3);
-        doc = new DeckOfCards(mockRandom);
-        doc.createCharacterCards();
+    void getCharacterCardsTest() {
+        doc = new DeckOfCards();
+        assertEquals(8, doc.getNewCharacterCards().size());
+        List<CharacterCard> cards = doc.getNewCharacterCards();
+        cards.remove(0);
+        assertEquals(7, cards.size());
+        assertEquals(8, doc.getNewCharacterCards().size());
 
-        assertEquals(new Character(CharacterNames.KING).toString(), doc.getRandomCharacterCard().toString());
     }
 
 }

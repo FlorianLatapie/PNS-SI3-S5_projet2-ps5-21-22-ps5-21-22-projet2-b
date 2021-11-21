@@ -3,29 +3,35 @@ package fr.unice.polytech.citadelles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
  */
 public class GameEngine {
+    private IO io;
+
     private int nbPlayers;
     private List<Player> listOfPlayers;
-    private IO io;
-    private List<Player> winner;
+    private List<Player> playersWhoPlacedThe8Cards;
+
     private DeckOfCards deckOfCards;
-    private int round;
+
+    private Random random;
 
     public GameEngine() {
-        this(4);
+        this(4, new Random());
     }
 
-    public GameEngine(int nbPlayers) {
+    public GameEngine(int nbPlayers, Random random) {
+        this.random = random;
         this.nbPlayers = nbPlayers;
         listOfPlayers = new ArrayList<>();
         io = new IO();
-        winner = new ArrayList<>();
-        round = 1;
-        deckOfCards = new DeckOfCards();
+        playersWhoPlacedThe8Cards = new ArrayList<>();
+
+        deckOfCards = new DeckOfCards(random);
+
         initPlayers();
     }
 
@@ -35,23 +41,31 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            listOfPlayers.add(new Player("Player_" + (i + 1), districtCards));
+            listOfPlayers.add(new Player("Player_" + (i + 1), districtCards, 0 , random));
         }
     }
 
     public void launchGame() {
+        int round = 1;
+        List<CharacterCard> characterCardDeckOfTheRound;
+
         io.printSeparator("The game starts !");
 
-        while (winner.isEmpty() && round <= 4) {
+        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 4) {
             io.printSeparator("Start of the round " + round);
-            deckOfCards.createCharacterCards();
+            characterCardDeckOfTheRound = deckOfCards.getNewCharacterCards(); // is a new copy of the 8 characters each new round
+
             for (Player player : listOfPlayers) {
-                offerPlayer(player);
+                askToChooseCharacter(player, characterCardDeckOfTheRound);
+
                 giveCoins(player);
+
                 io.printDistrictCardsInHandOf(player);
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
+
                 io.printCoinsOf(player);
+
                 io.printSeparator("End of turn " + round + " for " + player.getName());
             }
             round++;
@@ -67,21 +81,23 @@ public class GameEngine {
         }
     }
 
-    private void getWinner() {
+    private void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
         Collections.sort(this.listOfPlayers,
                 (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
         io.printWinner(this.listOfPlayers);
     }
 
     public void giveCoins(Player player) {
-        if (round != 1) {
-            System.out.println(player.getName() + " receives 2 coins.");
-            player.receiveCoins(2);
-            io.printCoinsOf(player);
-        }
+        int nbCoinsToAdd = 2;
+        io.println(player.getName() + " receives "+nbCoinsToAdd+" coins.");
+        player.receiveCoins(nbCoinsToAdd);
+        io.printCoinsOf(player);
+
     }
 
-    public void offerPlayer(Player player){
-        System.out.println(player.getName() + " has chose " + player.chooseCharacter(deckOfCards));
+    public void askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound){
+        CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
+        characterCardDeckOfTheRound.remove(choice);
+        io.println(player.getName() + " chose " + player.getCharacterCard());
     }
 }

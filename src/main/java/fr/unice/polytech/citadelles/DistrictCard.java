@@ -2,26 +2,19 @@ package fr.unice.polytech.citadelles;
 
 public class DistrictCard extends Card {
     private int priceToBuild;
-    private Color color;
     private DistrictName districtName;
 
-
     public DistrictCard(Color color, DistrictName districtName, int priceToBuild) {
-        super();                 // title and description will be in the super class
+        super.setColor(color);
         if (priceToBuild <= 0) { // cannot instantiate card if it is not greater than 0
             throw new RuntimeException("The price of the card is not greater than 0 :" + priceToBuild);
         }
         this.priceToBuild = priceToBuild;
-        this.color = color;
         this.districtName = districtName;
     }
 
     public int getPriceToBuild() {
         return priceToBuild;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     public DistrictName getDistrictName() {
@@ -33,11 +26,11 @@ public class DistrictCard extends Card {
         if (priceToBuild == 1) {
             return districtName + "(" +
                     priceToBuild + " coins" +
-                    ", " + color + ")";
+                    ", " + super.getColor() + ")";
         } else {
             return districtName + "(" +
                     priceToBuild + " coins" +
-                    ", " + color + ")";
+                    ", " + super.getColor() + ")";
         }
     }
 

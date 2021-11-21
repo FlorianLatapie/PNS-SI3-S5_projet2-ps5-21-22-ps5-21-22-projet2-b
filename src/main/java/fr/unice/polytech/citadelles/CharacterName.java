@@ -1,6 +1,6 @@
 package fr.unice.polytech.citadelles;
 
-public enum CharacterNames {
+public enum CharacterName {
     ASSASSIN,
     THIEF,
     MAGICIAN,

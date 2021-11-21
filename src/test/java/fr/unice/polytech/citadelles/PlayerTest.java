@@ -113,4 +113,22 @@ class PlayerTest {
         p.buildDistrictCardsInHand(districtCards.get(3));
         assertEquals(4, p.getNbOfPoints());
     }
+
+
+    @Test
+    void chooseCharacterTest(){
+        assertThrows(RuntimeException.class, () -> {
+            p.chooseCharacter(new ArrayList<>());
+        });
+
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> cardsOfTheRound = doc.getNewCharacterCards();
+        Player playerWithMock = new Player(player1, districtCards, 2, mockRandom);
+
+        assertEquals(new DeckOfCards().getNewCharacterCards().get(0), playerWithMock.chooseCharacter(cardsOfTheRound));
+        assertEquals(new CharacterCard(CharacterName.ASSASSIN), playerWithMock.getCharacterCard());
+    }
 }

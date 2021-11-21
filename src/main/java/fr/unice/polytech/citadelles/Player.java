@@ -1,7 +1,9 @@
 package fr.unice.polytech.citadelles;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Player {
@@ -10,6 +12,7 @@ public class Player {
     private int coins;
     private String name;
     private Random random;
+    private CharacterCard characterCard;
 
     public Player(String name, List<DistrictCard> districtCards) {
         this(name, districtCards, 2, new Random());
@@ -27,27 +30,7 @@ public class Player {
         districtCardsBuilt = new ArrayList<>();
     }
 
-    public List<DistrictCard> getDistrictCardsInHand() {
-        return districtCardsInHand;
-    }
-
-    void buildDistrictCardsInHand(DistrictCard cardToBuild) {
-        removeCoins(cardToBuild.getPriceToBuild());
-        districtCardsInHand.remove(cardToBuild);
-        districtCardsBuilt.add(cardToBuild);
-    }
-
-    public List<DistrictCard> getDistrictCardsBuilt() {
-        return districtCardsBuilt;
-    }
-
-    public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
-        this.districtCardsBuilt = districtCardsBuilt;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
+    //---------------------------  Coins ... ---------------------------
 
     public void receiveCoins(int nbCoins) {
         this.coins += nbCoins;
@@ -63,18 +46,20 @@ public class Player {
         }
     }
 
-    public String getName() {
-        return name;
+    //---------------------------  Choices ... ---------------------------
+
+    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame){
+        if (characterCardDeckOfTheGame.isEmpty()){
+            throw new RuntimeException("Character deck of card is empty, "+ name +" cannot choose a card");
+        }
+        CharacterCard choice = characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
+        characterCard = choice;
+        return choice;
     }
 
     public boolean canBuildDistrict(DistrictCard district) {
         return coins >= district.getPriceToBuild();
     }
-
-    public String chooseCharacter(DeckOfCards deck){
-        return deck.getRandomCharacterCard().toString();
-    }
-
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
@@ -90,13 +75,41 @@ public class Player {
         return choice;
     }
 
+    void buildDistrictCardsInHand(DistrictCard cardToBuild) {
+        removeCoins(cardToBuild.getPriceToBuild());
+        districtCardsInHand.remove(cardToBuild);
+        districtCardsBuilt.add(cardToBuild);
+    }
 
+    //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
     }
-
     public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public CharacterCard getCharacterCard() {
+        return characterCard;
+    }
+
+    public List<DistrictCard> getDistrictCardsBuilt() {
+        return districtCardsBuilt;
+    }
+    public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
+        this.districtCardsBuilt = districtCardsBuilt;
+    }
+
+    public List<DistrictCard> getDistrictCardsInHand() {
+        return districtCardsInHand;
     }
 
     @Override

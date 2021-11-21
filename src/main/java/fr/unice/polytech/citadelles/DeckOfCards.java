@@ -2,13 +2,13 @@ package fr.unice.polytech.citadelles;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class DeckOfCards {
     private List<DistrictCard> districtCards;
-    private List<Character> characters;
+    private List<CharacterCard> characterCardCards;
     private Random random;
 
     public DeckOfCards() {
@@ -17,12 +17,14 @@ public class DeckOfCards {
 
     public DeckOfCards(Random random) {
         districtCards = new ArrayList<>();
-        characters = new ArrayList<>();
+        characterCardCards = new ArrayList<>();
         this.random = random;
         createDistrictCards();
+        createCharacterCards();
     }
 
     private List<DistrictCard> createDistrictCards() {
+        districtCards.clear();
         for (int i = 0; i < 3; i++) { //Temple
             districtCards.add(new DistrictCard(Color.BLUE, DistrictName.TEMPLE, 1));
         }
@@ -77,16 +79,17 @@ public class DeckOfCards {
         return districtCards;
     }
 
-    public void createCharacterCards(){
-        characters.removeAll(characters);
-        characters.add(new Character(CharacterNames.ASSASSIN));
-        characters.add(new Character(CharacterNames.THIEF));
-        characters.add(new Character(CharacterNames.MAGICIAN));
-        characters.add(new Character(CharacterNames.KING));
-        characters.add(new Character(CharacterNames.BISHOP));
-        characters.add(new Character(CharacterNames.MERCHANT));
-        characters.add(new Character(CharacterNames.ARCHITECT));
-        characters.add(new Character(CharacterNames.WARLORD));
+    public List<CharacterCard> createCharacterCards(){
+        characterCardCards.clear();
+        characterCardCards.add(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardCards.add(new CharacterCard(CharacterName.THIEF));
+        characterCardCards.add(new CharacterCard(CharacterName.MAGICIAN));
+        characterCardCards.add(new CharacterCard(CharacterName.KING));
+        characterCardCards.add(new CharacterCard(CharacterName.BISHOP));
+        characterCardCards.add(new CharacterCard(CharacterName.MERCHANT));
+        characterCardCards.add(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardCards.add(new CharacterCard(CharacterName.WARLORD));
+        return characterCardCards;
     }
 
     public DistrictCard getRandomDistrictCard() {
@@ -95,13 +98,9 @@ public class DeckOfCards {
         return card;
     }
 
-    public Character getRandomCharacterCard(){
-        Character card = characters.get(random.nextInt(characters.size()));
-        characters.remove(card);
-        return card;
+    public List<CharacterCard> getNewCharacterCards() {
+        return createCharacterCards();
     }
-
-
     public List<DistrictCard> getDistrictCards() {
         return districtCards;
     }
