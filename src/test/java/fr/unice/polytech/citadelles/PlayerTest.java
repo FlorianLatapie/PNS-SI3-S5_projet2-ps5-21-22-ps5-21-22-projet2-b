@@ -116,7 +116,7 @@ class PlayerTest {
 
 
     @Test
-    void chooseCharacterTest(){
+    void chooseCharacterTest() {
         assertThrows(RuntimeException.class, () -> {
             p.chooseCharacter(new ArrayList<>());
         });

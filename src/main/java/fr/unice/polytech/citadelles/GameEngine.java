@@ -41,9 +41,9 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0 , random);
+            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0, random);
             listOfPlayers.add(playerToAdd);
-            if(i==0) kingOfTheLastRound = playerToAdd;
+            if (i == 0) kingOfTheLastRound = playerToAdd;
         }
     }
 
@@ -58,14 +58,18 @@ public class GameEngine {
             characterCardDeckOfTheRound = deckOfCards.getNewCharacterCards(); // is a new copy of the 8 characters each new round
 
             for (Player player : listOfPlayers) {
-                askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound)+listOfPlayers.indexOf(player))%nbPlayers), characterCardDeckOfTheRound);
+                askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound) + listOfPlayers.indexOf(player)) % nbPlayers), characterCardDeckOfTheRound);
             }
 
             List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
             updateKing(listOfPlayersSorted);
+            io.printSeparator("All the players chose their role for round " + round +"!");
 
-            for (Player player : listOfPlayersSorted){
+            for (Player player : listOfPlayersSorted) {
+                io.println(player.getName() + " is " + player.getCharacterCard());
+
                 giveCoins(player);
+
                 io.printDistrictCardsInHandOf(player);
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
@@ -80,45 +84,57 @@ public class GameEngine {
         getWinner();
     }
 
-    private void askToBuildDistrict(Player player) {
-        if (player.chooseToBuildDistrict()) {
+     public boolean askToBuildDistrict(Player player) {
+        boolean choice = player.chooseToBuildDistrict();
+        if (choice) {
             io.println(player.getName() + " has chose to build a district");
             io.printDistrictCardsInHandOf(player);
         }
+        return choice;
     }
 
-    private void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
+    public void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
         Collections.sort(this.listOfPlayers,
                 (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
         io.printWinner(this.listOfPlayers);
     }
 
-    public void giveCoins(Player player) {
+    private void giveCoins(Player player) {
         int nbCoinsToAdd = 2;
-        io.println(player.getName() + " receives "+nbCoinsToAdd+" coins.");
+        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins.");
         player.receiveCoins(nbCoinsToAdd);
         io.printCoinsOf(player);
 
     }
 
-    public void askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound){
+    public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
         characterCardDeckOfTheRound.remove(choice);
         io.println(player.getName() + " chose " + player.getCharacterCard());
+        return choice;
     }
 
-    private List<Player> sortPlayerListByCharacterSequence(){
-        return (
-                listOfPlayers.stream()
+    public List<Player> sortPlayerListByCharacterSequence() {
+        return listOfPlayers.stream()
                 .sorted(Comparator.comparing(player -> player.getCharacterCard().getCharacterSequence()))
-                .collect(Collectors.toList())
-    );
+                .collect(Collectors.toList());
     }
 
-    private void updateKing(List<Player> listOfPlayers){
+    private void updateKing(List<Player> listOfPlayers) {
         listOfPlayers.forEach(player -> {
-            if(player.getCharacterCard().getCharacterSequence()==4){
+            if (player.getCharacterCard().getCharacterSequence() == 4) {
                 kingOfTheLastRound = player;
-            }});
+            }
+        });
+    }
+
+
+    // getters && setters
+    public List<Player> getListOfPlayers() {
+        return listOfPlayers;
+    }
+
+    public Player getKingOfTheLastRound() {
+        return kingOfTheLastRound;
     }
 }

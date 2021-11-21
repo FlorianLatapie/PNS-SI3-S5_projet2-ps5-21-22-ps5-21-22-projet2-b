@@ -1,9 +1,7 @@
 package fr.unice.polytech.citadelles;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class Player {
@@ -48,9 +46,9 @@ public class Player {
 
     //---------------------------  Choices ... ---------------------------
 
-    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame){
-        if (characterCardDeckOfTheGame.isEmpty()){
-            throw new RuntimeException("Character deck of card is empty, "+ name +" cannot choose a card");
+    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
+        if (characterCardDeckOfTheGame.isEmpty()) {
+            throw new RuntimeException("Character deck of card is empty, " + name + " cannot choose a card");
         }
         CharacterCard choice = characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
         characterCard = choice;
@@ -60,6 +58,7 @@ public class Player {
     public boolean canBuildDistrict(DistrictCard district) {
         return coins >= district.getPriceToBuild();
     }
+
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
@@ -85,6 +84,7 @@ public class Player {
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
     }
+
     public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
     }
@@ -104,6 +104,7 @@ public class Player {
     public List<DistrictCard> getDistrictCardsBuilt() {
         return districtCardsBuilt;
     }
+
     public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
         this.districtCardsBuilt = districtCardsBuilt;
     }

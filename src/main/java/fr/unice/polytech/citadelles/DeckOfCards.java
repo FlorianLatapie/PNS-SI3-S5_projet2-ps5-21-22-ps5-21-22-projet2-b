@@ -2,7 +2,6 @@ package fr.unice.polytech.citadelles;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -79,7 +78,7 @@ public class DeckOfCards {
         return districtCards;
     }
 
-    public List<CharacterCard> createCharacterCards(){
+    public List<CharacterCard> createCharacterCards() {
         characterCardCards.clear();
         characterCardCards.add(new CharacterCard(CharacterName.ASSASSIN));
         characterCardCards.add(new CharacterCard(CharacterName.THIEF));
@@ -101,6 +100,7 @@ public class DeckOfCards {
     public List<CharacterCard> getNewCharacterCards() {
         return createCharacterCards();
     }
+
     public List<DistrictCard> getDistrictCards() {
         return districtCards;
     }
