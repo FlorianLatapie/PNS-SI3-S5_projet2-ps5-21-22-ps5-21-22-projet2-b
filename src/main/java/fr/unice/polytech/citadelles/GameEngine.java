@@ -1,9 +1,7 @@
 package fr.unice.polytech.citadelles;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
@@ -14,6 +12,8 @@ public class GameEngine {
     private int nbPlayers;
     private List<Player> listOfPlayers;
     private List<Player> playersWhoPlacedThe8Cards;
+    private Player kingOfTheLastRound;
+
 
     private DeckOfCards deckOfCards;
 
@@ -41,7 +41,9 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            listOfPlayers.add(new Player("Player_" + (i + 1), districtCards, 0 , random));
+            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0 , random);
+            listOfPlayers.add(playerToAdd);
+            if(i==0) kingOfTheLastRound = playerToAdd;
         }
     }
 
@@ -56,10 +58,14 @@ public class GameEngine {
             characterCardDeckOfTheRound = deckOfCards.getNewCharacterCards(); // is a new copy of the 8 characters each new round
 
             for (Player player : listOfPlayers) {
-                askToChooseCharacter(player, characterCardDeckOfTheRound);
+                askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound)+listOfPlayers.indexOf(player))%nbPlayers), characterCardDeckOfTheRound);
+            }
 
+            List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
+            updateKing(listOfPlayersSorted);
+
+            for (Player player : listOfPlayersSorted){
                 giveCoins(player);
-
                 io.printDistrictCardsInHandOf(player);
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
@@ -99,5 +105,20 @@ public class GameEngine {
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
         characterCardDeckOfTheRound.remove(choice);
         io.println(player.getName() + " chose " + player.getCharacterCard());
+    }
+
+    private List<Player> sortPlayerListByCharacterSequence(){
+        return (
+                listOfPlayers.stream()
+                .sorted(Comparator.comparing(player -> player.getCharacterCard().getCharacterSequence()))
+                .collect(Collectors.toList())
+    );
+    }
+
+    private void updateKing(List<Player> listOfPlayers){
+        listOfPlayers.forEach(player -> {
+            if(player.getCharacterCard().getCharacterSequence()==4){
+                kingOfTheLastRound = player;
+            }});
     }
 }

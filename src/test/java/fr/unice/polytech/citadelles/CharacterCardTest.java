@@ -22,6 +22,6 @@ public class CharacterCardTest {
     }
     @Test
     void toStringTest(){
-        assertEquals("KING", new CharacterCard(CharacterName.KING).toString());
+        assertEquals("KING [sequence: 4, color: YELLOW]", new CharacterCard(CharacterName.KING).toString());
     }
 }

@@ -1,8 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-enum Color {
-    RED, GREEN, BLUE, YELLOW, GREY;
-}
 
 public class Card {
     private Color color;
@@ -14,4 +11,9 @@ public class Card {
     public void setColor(Color color) {
         this.color = color;
     }
+}
+
+
+enum Color {
+    RED, GREEN, BLUE, YELLOW, GREY;
 }
