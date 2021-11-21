@@ -1,5 +1,9 @@
 package fr.unice.polytech.citadelles;
 
+enum Color {
+    RED, GREEN, BLUE, YELLOW, GREY;
+}
+
 public class Card {
     private Color color;
 
