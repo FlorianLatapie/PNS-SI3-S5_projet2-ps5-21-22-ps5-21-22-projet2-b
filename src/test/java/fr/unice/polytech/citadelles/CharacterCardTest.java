@@ -3,9 +3,10 @@ package fr.unice.polytech.citadelles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class CharacterCardTest {
+class CharacterCardTest {
     CharacterCard king, thief;
 
     @BeforeEach
@@ -15,13 +16,14 @@ public class CharacterCardTest {
     }
 
     @Test
-    void equalsTest(){
+    void equalsTest() {
         assertEquals(king, new CharacterCard(CharacterName.KING));
         assertEquals(thief, new CharacterCard(CharacterName.THIEF));
         assertNotEquals(thief, 1);
     }
+
     @Test
-    void toStringTest(){
+    void toStringTest() {
         assertEquals("KING [sequence: 4, color: YELLOW]", new CharacterCard(CharacterName.KING).toString());
     }
 }

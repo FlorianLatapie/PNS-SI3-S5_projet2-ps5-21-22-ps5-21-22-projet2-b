@@ -80,6 +80,10 @@ public class Player {
         districtCardsBuilt.add(cardToBuild);
     }
 
+    public boolean chooseToGetTaxesAtBeginingOfTurn() {
+        return random.nextBoolean();
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();

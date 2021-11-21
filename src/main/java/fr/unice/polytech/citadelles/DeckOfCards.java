@@ -1,6 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

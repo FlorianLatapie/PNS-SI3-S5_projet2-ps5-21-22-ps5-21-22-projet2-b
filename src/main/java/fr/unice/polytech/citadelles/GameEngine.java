@@ -1,7 +1,7 @@
 package fr.unice.polytech.citadelles;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
@@ -63,18 +63,25 @@ public class GameEngine {
 
             List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
             updateKing(listOfPlayersSorted);
-            io.printSeparator("All the players chose their role for round " + round +"!");
+            io.printSeparator("All the players chose their role for round " + round + "!");
 
             for (Player player : listOfPlayersSorted) {
                 io.println(player.getName() + " is " + player.getCharacterCard());
 
-                giveCoins(player);
+                askCoinsOrDraw2cards(player);
+
+                boolean wantsToReceiveTaxesBeforeBuiling = askToGetTaxesNow(player);
+                if (wantsToReceiveTaxesBeforeBuiling) {
+                    getTaxes(player);
+                }
 
                 io.printDistrictCardsInHandOf(player);
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
 
-                io.printCoinsOf(player);
+                if (!wantsToReceiveTaxesBeforeBuiling) {
+                    getTaxes(player);
+                }
 
                 io.printSeparator("End of turn " + round + " for " + player.getName());
             }
@@ -84,7 +91,46 @@ public class GameEngine {
         getWinner();
     }
 
-     public boolean askToBuildDistrict(Player player) {
+    private void getTaxes(Player player) {
+        if (player.getCharacterCard().getColor().equals(Color.GREY)) {
+            io.println(player.getName() + " is " + player.getCharacterCard().getColor() + ", no taxes to compute");
+        } else {
+            AtomicInteger sum = new AtomicInteger();
+            io.println(player.getName() + " computing taxes ...");
+            if (player.getCharacterCard().getCharacterName().equals(CharacterName.MERCHANT)) {
+                sum.getAndIncrement();
+                player.receiveCoins(1);
+                io.println(player.getName() + " receives 1 coin because he is a merchant");
+            }
+
+            player.getDistrictCardsBuilt().forEach(
+                    districtCard -> {
+                        if (districtCard.getColor().equals(player.getCharacterCard().getColor())) {
+                            sum.getAndIncrement();
+                            player.receiveCoins(1);
+                            io.println(player.getName() + " receives 1 coin for " + districtCard);
+                        }
+                    });
+            if (sum.get() == 1) {
+                io.println(player.getName() + " taxes earned " + sum + " coin");
+            } else {
+                io.println(player.getName() + " taxes earned " + sum + " coins");
+            }
+
+            io.printCoinsOf(player);
+        }
+    }
+
+    private boolean askToGetTaxesNow(Player player) {
+        return player.chooseToGetTaxesAtBeginingOfTurn();
+    }
+
+    public void askCoinsOrDraw2cards(Player player) {
+        // drawing cards not yet implemented
+        giveCoins(player);
+    }
+
+    public boolean askToBuildDistrict(Player player) {
         boolean choice = player.chooseToBuildDistrict();
         if (choice) {
             io.println(player.getName() + " has chose to build a district");
@@ -101,7 +147,10 @@ public class GameEngine {
 
     private void giveCoins(Player player) {
         int nbCoinsToAdd = 2;
-        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins.");
+        /*if (nbCoinsToAdd == 1){
+            io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
+        } else {*/
+        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
         player.receiveCoins(nbCoinsToAdd);
         io.printCoinsOf(player);
 
@@ -117,7 +166,7 @@ public class GameEngine {
     public List<Player> sortPlayerListByCharacterSequence() {
         return listOfPlayers.stream()
                 .sorted(Comparator.comparing(player -> player.getCharacterCard().getCharacterSequence()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private void updateKing(List<Player> listOfPlayers) {

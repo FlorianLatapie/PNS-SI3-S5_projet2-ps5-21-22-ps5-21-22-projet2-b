@@ -25,7 +25,7 @@ public class DistrictCard extends Card {
     public String toString() {
         if (priceToBuild == 1) {
             return districtName + "(" +
-                    priceToBuild + " coins" +
+                    priceToBuild + " coin" +
                     ", " + super.getColor() + ")";
         } else {
             return districtName + "(" +
@@ -45,7 +45,6 @@ public class DistrictCard extends Card {
         return false;
     }
 }
-
 
 enum DistrictName {
     TEMPLE, CHURCH, MONASTERY, CITADEL, MANSION, CASTLE, PALACE, TAVERN, SHOP, MARKET, COUNTER, PORT, CITY_HALL, WATCH_TOWER, JAIL, BARRACKS, FORTRESS, NONE

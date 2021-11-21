@@ -131,4 +131,14 @@ class PlayerTest {
         assertEquals(new DeckOfCards().getNewCharacterCards().get(0), playerWithMock.chooseCharacter(cardsOfTheRound));
         assertEquals(new CharacterCard(CharacterName.ASSASSIN), playerWithMock.getCharacterCard());
     }
+
+    @Test
+    void chooseToGetTaxesAtBeginingOfTurnTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextBoolean()).thenReturn(true, false);
+
+        Player playerWithMock = new Player(player1, districtCards, 2, mockRandom);
+        assertTrue(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
+        assertFalse(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
+    }
 }

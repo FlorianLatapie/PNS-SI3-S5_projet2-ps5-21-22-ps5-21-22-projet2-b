@@ -5,12 +5,11 @@ import java.util.Arrays;
 public class CharacterCard extends Card {
     private CharacterName characterName;
     private int characterSequence;
-    private Color characterColor;
 
     public CharacterCard(CharacterName characterName) {
         this.characterName = characterName;
         this.characterSequence = Arrays.asList(CharacterName.values()).indexOf(characterName) + 1;
-        this.characterColor = assignCharacterIndexColor();
+        super.setColor(assignCharacterIndexColor());
     }
 
     public CharacterName getCharacterName() {
@@ -20,11 +19,6 @@ public class CharacterCard extends Card {
     public int getCharacterSequence() {
         return characterSequence;
     }
-
-    public Color getCharacterColor() {
-        return characterColor;
-    }
-
 
     private Color assignCharacterIndexColor() {
         switch (this.characterSequence) {
@@ -47,7 +41,7 @@ public class CharacterCard extends Card {
             CharacterCard cardToCompare = (CharacterCard) obj;
             return (this.getCharacterName().equals(cardToCompare.getCharacterName())
                     && this.getCharacterSequence() == (cardToCompare.getCharacterSequence())
-                    && this.getCharacterColor().equals(cardToCompare.getCharacterColor())
+                    && this.getColor().equals(cardToCompare.getColor())
             );
         }
         return false;
@@ -55,7 +49,7 @@ public class CharacterCard extends Card {
 
     @Override
     public String toString() {
-        return characterName.toString() + " [sequence: " + characterSequence + ", color: " + characterColor.toString() + "]";
+        return characterName.toString() + " [sequence: " + characterSequence + ", color: " + getColor().toString() + "]";
     }
 }
 
