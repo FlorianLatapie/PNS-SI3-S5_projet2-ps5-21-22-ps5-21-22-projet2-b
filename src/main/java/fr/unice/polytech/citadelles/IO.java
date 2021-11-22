@@ -38,9 +38,9 @@ public class IO {
         this.println("The winners podium !");
         winners.forEach(winner -> {
                     if (winner.getSumOfCardsBuilt() == 1) {
-                        System.out.println(winner.getName() + " with " + winner.getSumOfCardsBuilt() + " point");
+                        System.out.println(winner.getName() + " with " + winner.getNbOfPoints() + " point");
                     } else {
-                        System.out.println(winner.getName() + " with " + winner.getSumOfCardsBuilt() + " points");
+                        System.out.println(winner.getName() + " with " + winner.getNbOfPoints() + " points");
                     }
                 }
         );
