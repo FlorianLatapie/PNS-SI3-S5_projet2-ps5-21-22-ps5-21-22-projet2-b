@@ -53,7 +53,7 @@ public class GameEngine {
 
         io.printSeparator("The game starts !");
 
-        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 4) {
+        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 40) {
             io.printSeparator("Start of the round " + round);
             characterCardDeckOfTheRound = deckOfCards.getNewCharacterCards(); // is a new copy of the 8 characters each new round
 
@@ -91,6 +91,51 @@ public class GameEngine {
         getWinner();
     }
 
+
+
+    // public methods
+    public boolean askToBuildDistrict(Player player) {
+        boolean choice = player.chooseToBuildDistrict();
+        if (choice) {
+            io.println(player.getName() + " has chose to build a district");
+            io.printDistrictCardsInHandOf(player);
+        }
+        return choice;
+    }
+
+    public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
+        CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
+        characterCardDeckOfTheRound.remove(choice);
+        io.println(player.getName() + " chose " + player.getCharacterCard());
+        return choice;
+    }
+
+    public List<Player> sortPlayerListByCharacterSequence() {
+        return listOfPlayers.stream()
+                .sorted(Comparator.comparing(player -> player.getCharacterCard().getCharacterSequence()))
+                .toList();
+    }
+
+    public boolean askToGetTaxesNow(Player player) {
+        return player.chooseToGetTaxesAtBeginingOfTurn();
+    }
+
+    // private methods
+    private void giveCoins(Player player) {
+        int nbCoinsToAdd = 2;
+        /*if (nbCoinsToAdd == 1){
+            io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
+        } else {*/
+        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
+        player.receiveCoins(nbCoinsToAdd);
+        io.printCoinsOf(player);
+    }
+
+    private void askCoinsOrDraw2cards(Player player) {
+        // drawing cards not yet implemented
+        giveCoins(player);
+    }
+
     private void getTaxes(Player player) {
         if (player.getCharacterCard().getColor().equals(Color.GREY)) {
             io.println(player.getName() + " is " + player.getCharacterCard().getColor() + ", no taxes to compute");
@@ -121,62 +166,19 @@ public class GameEngine {
         }
     }
 
-    private boolean askToGetTaxesNow(Player player) {
-        return player.chooseToGetTaxesAtBeginingOfTurn();
-    }
-
-    public void askCoinsOrDraw2cards(Player player) {
-        // drawing cards not yet implemented
-        giveCoins(player);
-    }
-
-    public boolean askToBuildDistrict(Player player) {
-        boolean choice = player.chooseToBuildDistrict();
-        if (choice) {
-            io.println(player.getName() + " has chose to build a district");
-            io.printDistrictCardsInHandOf(player);
-        }
-        return choice;
-    }
-
-    public void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
+    private void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
         Collections.sort(this.listOfPlayers,
                 (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
         io.printWinner(this.listOfPlayers);
     }
 
-    private void giveCoins(Player player) {
-        int nbCoinsToAdd = 2;
-        /*if (nbCoinsToAdd == 1){
-            io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
-        } else {*/
-        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
-        player.receiveCoins(nbCoinsToAdd);
-        io.printCoinsOf(player);
-
-    }
-
-    public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
-        CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
-        characterCardDeckOfTheRound.remove(choice);
-        io.println(player.getName() + " chose " + player.getCharacterCard());
-        return choice;
-    }
-
-    public List<Player> sortPlayerListByCharacterSequence() {
-        return listOfPlayers.stream()
-                .sorted(Comparator.comparing(player -> player.getCharacterCard().getCharacterSequence()))
-                .toList();
-    }
-
     private void updateKing(List<Player> listOfPlayers) {
         listOfPlayers.forEach(player -> {
-            if (player.getCharacterCard().getCharacterSequence() == 4) {
+            if (player.getCharacterCard().getCharacterName() == CharacterName.KING) {
                 kingOfTheLastRound = player;
             }
         });
     }
-
 
     // getters && setters
     public List<Player> getListOfPlayers() {
