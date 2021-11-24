@@ -35,6 +35,17 @@ public class GameEngine {
         initPlayers();
     }
 
+    public GameEngine(Random random, Player ...players) {
+        this.random = random;
+        this.nbPlayers = nbPlayers;
+        io = new IO();
+        playersWhoPlacedThe8Cards = new ArrayList<>();
+
+        deckOfCards = new DeckOfCards(random);
+
+        listOfPlayers = List.of(players);
+    }
+
     private void initPlayers() {
         for (int i = 0; i < nbPlayers; i++) {
             List<DistrictCard> districtCards = new ArrayList<>();
@@ -104,6 +115,10 @@ public class GameEngine {
     }
 
     public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
+        if(characterCardDeckOfTheRound.isEmpty()){
+            throw new IllegalArgumentException("Character card ceck of the round is empty : the player can't choose a character card.");
+        }
+
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
         characterCardDeckOfTheRound.remove(choice);
         io.println(player.getName() + " chose " + player.getCharacterCard());

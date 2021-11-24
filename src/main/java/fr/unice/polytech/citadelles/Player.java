@@ -61,11 +61,15 @@ public class Player {
 
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
+
+        if(districtCardsInHand.isEmpty()) {
+            return false;
+        }
+
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
 
         if (!canBuildDistrict(district)) {
-            choice = false;
-            return choice;
+            return false;
         } else {
             if (choice) {
                 buildDistrictCardsInHand(district);
@@ -115,6 +119,10 @@ public class Player {
 
     public List<DistrictCard> getDistrictCardsInHand() {
         return districtCardsInHand;
+    }
+
+    public void setCharacterCard(CharacterCard characterCard) {
+        this.characterCard = characterCard;
     }
 
     @Override

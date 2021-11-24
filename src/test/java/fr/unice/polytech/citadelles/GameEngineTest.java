@@ -1,41 +1,62 @@
 package fr.unice.polytech.citadelles;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 class GameEngineTest {
-    //Needs to be commented otherwise the unit tests will always be at 100% coverage
-    /*GameEngine ge;
 
-    static ByteArrayOutputStream outContent;
-    static final PrintStream originalOut = System.out;
 
-    @BeforeAll
-    static void baSetUp() {
-        outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-    }
+    @Test
+    void askToChooseCharacterTest(){
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(),anyInt())).thenReturn(0);
+        GameEngine ge = new GameEngine(4, mockRandom);
 
-    @BeforeEach
-    void setUp() {
-        ge = new GameEngine();
-        outContent.reset();
+        DeckOfCards doc = new DeckOfCards();
+
+        List<CharacterCard> listChar = doc.getNewCharacterCards();
+        assertEquals(new CharacterCard(CharacterName.ASSASSIN), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.THIEF), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.KING), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.BISHOP), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.ARCHITECT), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals(new CharacterCard(CharacterName.WARLORD), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+
+        assertThrows(IllegalArgumentException.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+
     }
 
     @Test
-    void districtCardTest() {
-        //prints nothing before launch
-        assertTrue(outContent.toString().isEmpty());
-        assertTrue(outContent.toString().isBlank());
-        //random cards, we test only if it outputs
-        ge.launchGame();
-        assertFalse(outContent.toString().isEmpty());
-        assertFalse(outContent.toString().isBlank());
+    void sortPlayerListByCharacterSequenceTest(){
+        Player player1 = new Player("Player_1", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        Player player2 = new Player("Player_2", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        Player player3 = new Player("Player_3", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        Player player4 = new Player("Player_4", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+
+
+        player1.setCharacterCard(new CharacterCard(CharacterName.ARCHITECT));
+        player2.setCharacterCard(new CharacterCard(CharacterName.BISHOP));
+        player3.setCharacterCard(new CharacterCard(CharacterName.THIEF));
+        player4.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
+
+
+        GameEngine ge = new GameEngine(new Random(), player1, player2, player3, player4);
+        assertEquals(List.of(player4,player3,player2,player1), ge.sortPlayerListByCharacterSequence());
+
     }
 
-    @Test
-    void getWinnerTest(){
 
 
-    @AfterAll
-    static void restoreStreams() {
-        System.setOut(originalOut);
-    }*/
+
+
 }
