@@ -16,10 +16,10 @@ public class IO {
 
     public void printCoinsOf(Player player) {
         int coins = player.getCoins();
-        if (coins > 1) {
-            System.out.println(player.getName() + " has " + coins + " coins");
-        } else {
+        if (coins == 1) {
             System.out.println(player.getName() + " has " + coins + " coin");
+        } else {
+            System.out.println(player.getName() + " has " + coins + " coins");
         }
     }
 
@@ -37,7 +37,7 @@ public class IO {
     public void printWinner(List<Player> winners) {
         this.println("The winners podium !");
         winners.forEach(winner -> {
-                    if (winner.getSumOfCardsBuilt() == 1) {
+                    if (winner.getNbOfPoints() == 1) {
                         System.out.println(winner.getName() + " with " + winner.getNbOfPoints() + " point");
                     } else {
                         System.out.println(winner.getName() + " with " + winner.getNbOfPoints() + " points");

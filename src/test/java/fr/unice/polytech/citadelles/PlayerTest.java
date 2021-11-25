@@ -13,6 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class PlayerTest {
+    Random rand;
     Player p;
     String player1 = "Player_1";
     List<DistrictCard> districtCards;
@@ -24,7 +25,8 @@ class PlayerTest {
         for (int i = 1; i < 5; i++) {
             districtCards.add(new DistrictCard(Color.GREY, DistrictName.NONE, i));
         }
-        p = new Player(player1, districtCards, Integer.MAX_VALUE);
+        rand = new Random();
+        p = new Player(player1, districtCards, Integer.MAX_VALUE, rand);
     }
 
     @Test
@@ -140,5 +142,16 @@ class PlayerTest {
         Player playerWithMock = new Player(player1, districtCards, 2, mockRandom);
         assertTrue(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
         assertFalse(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
+    }
+
+    @Test
+    void toStringTest() {
+        assertEquals("Player Player_1{" + System.lineSeparator() +
+                "districtCardsInHand=[NONE(1 coin, GREY), NONE(2 coins, GREY), NONE(3 coins, GREY), NONE(4 coins, GREY)]," + System.lineSeparator() +
+                "districtCardsBuilt=[]," + System.lineSeparator() +
+                "coins=2147483647," + System.lineSeparator() +
+                "random=" + rand.toString() + "," + System.lineSeparator() +
+                "characterCard=null" + System.lineSeparator() +
+                "}", p.toString());
     }
 }

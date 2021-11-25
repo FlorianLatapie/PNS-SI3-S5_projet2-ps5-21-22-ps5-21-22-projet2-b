@@ -14,7 +14,6 @@ public class GameEngine {
     private List<Player> playersWhoPlacedThe8Cards;
     private Player kingOfTheLastRound;
 
-
     private DeckOfCards deckOfCards;
 
     private Random random;
@@ -37,13 +36,14 @@ public class GameEngine {
 
     public GameEngine(Random random, Player ...players) {
         this.random = random;
-        this.nbPlayers = nbPlayers;
         io = new IO();
         playersWhoPlacedThe8Cards = new ArrayList<>();
 
         deckOfCards = new DeckOfCards(random);
 
-        listOfPlayers = List.of(players);
+        listOfPlayers = new ArrayList<>(List.of(players));
+        kingOfTheLastRound = listOfPlayers.get(0);
+        nbPlayers = listOfPlayers.size();
     }
 
     private void initPlayers() {
@@ -64,16 +64,10 @@ public class GameEngine {
 
         io.printSeparator("The game starts !");
 
-        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 40) {
+        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 4) {
             io.printSeparator("Start of the round " + round);
-            characterCardDeckOfTheRound = deckOfCards.getNewCharacterCards(); // is a new copy of the 8 characters each new round
 
-            for (Player player : listOfPlayers) {
-                askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound) + listOfPlayers.indexOf(player)) % nbPlayers), characterCardDeckOfTheRound);
-            }
-
-            List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
-            updateKing(listOfPlayersSorted);
+            List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
             io.printSeparator("All the players chose their role for round " + round + "!");
 
             for (Player player : listOfPlayersSorted) {
@@ -102,6 +96,15 @@ public class GameEngine {
         getWinner();
     }
 
+    public List<Player> askPlayersRoleAndSortThemByRole(List<CharacterCard> characterCardDeckOfTheRound) {
+        for (Player player : listOfPlayers) {
+            askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound) + listOfPlayers.indexOf(player)) % nbPlayers), characterCardDeckOfTheRound);
+        }
+
+        List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
+        updateKing(listOfPlayersSorted);
+        return listOfPlayersSorted;
+    }
 
 
     // public methods
@@ -135,8 +138,7 @@ public class GameEngine {
         return player.chooseToGetTaxesAtBeginingOfTurn();
     }
 
-    // private methods
-    private void giveCoins(Player player) {
+    public void giveCoins(Player player) {
         int nbCoinsToAdd = 2;
         /*if (nbCoinsToAdd == 1){
             io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
@@ -146,22 +148,17 @@ public class GameEngine {
         io.printCoinsOf(player);
     }
 
-    private void askCoinsOrDraw2cards(Player player) {
+    public void askCoinsOrDraw2cards(Player player) {
         // drawing cards not yet implemented
         giveCoins(player);
     }
 
-    private void getTaxes(Player player) {
+    public void getTaxes(Player player) {
         if (player.getCharacterCard().getColor().equals(Color.GREY)) {
             io.println(player.getName() + " is " + player.getCharacterCard().getColor() + ", no taxes to compute");
         } else {
             AtomicInteger sum = new AtomicInteger();
             io.println(player.getName() + " computing taxes ...");
-            if (player.getCharacterCard().getCharacterName().equals(CharacterName.MERCHANT)) {
-                sum.getAndIncrement();
-                player.receiveCoins(1);
-                io.println(player.getName() + " receives 1 coin because he is a merchant");
-            }
 
             player.getDistrictCardsBuilt().forEach(
                     districtCard -> {
@@ -181,23 +178,30 @@ public class GameEngine {
         }
     }
 
-    private void getWinner() { // Player needs to implements Comparable<Player> to be cleaner
-        Collections.sort(this.listOfPlayers,
+    public List<Player> getWinner() { // Player needs to implements Comparable<Player> to be cleaner
+        List<Player> playersSorted = new ArrayList<>(listOfPlayers);
+        Collections.sort(playersSorted,
                 (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
-        io.printWinner(this.listOfPlayers);
+        io.printWinner(playersSorted);
+        return playersSorted;
     }
 
-    private void updateKing(List<Player> listOfPlayers) {
+    public Player updateKing(List<Player> listOfPlayers) {
         listOfPlayers.forEach(player -> {
             if (player.getCharacterCard().getCharacterName() == CharacterName.KING) {
                 kingOfTheLastRound = player;
             }
         });
+        return kingOfTheLastRound;
     }
 
     // getters && setters
     public List<Player> getListOfPlayers() {
         return listOfPlayers;
+    }
+
+    public DeckOfCards getDeckOfCards() {
+        return deckOfCards;
     }
 
     public Player getKingOfTheLastRound() {

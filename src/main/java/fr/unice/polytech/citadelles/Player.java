@@ -133,4 +133,15 @@ public class Player {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Player "+ name +"{" + System.lineSeparator() +
+                "districtCardsInHand=" + districtCardsInHand + "," + System.lineSeparator() +
+                "districtCardsBuilt=" + districtCardsBuilt + ","  + System.lineSeparator() +
+                "coins=" + coins + "," + System.lineSeparator() +
+                "random=" + random + "," + System.lineSeparator() +
+                "characterCard=" + characterCard + System.lineSeparator() +
+                '}';
+    }
 }
