@@ -13,6 +13,7 @@ public class GameEngine {
     private List<Player> listOfPlayers;
     private List<Player> playersWhoPlacedThe8Cards;
     private Player kingOfTheLastRound;
+    private Player kingByDefault;
 
     private DeckOfCards deckOfCards;
 
@@ -34,7 +35,7 @@ public class GameEngine {
         initPlayers();
     }
 
-    public GameEngine(Random random, Player ...players) {
+    public GameEngine(Random random, Player... players) {
         this.random = random;
         io = new IO();
         playersWhoPlacedThe8Cards = new ArrayList<>();
@@ -43,6 +44,7 @@ public class GameEngine {
 
         listOfPlayers = new ArrayList<>(List.of(players));
         kingOfTheLastRound = listOfPlayers.get(0);
+        kingByDefault = listOfPlayers.get(0);
         nbPlayers = listOfPlayers.size();
     }
 
@@ -54,7 +56,10 @@ public class GameEngine {
             }
             Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0, random);
             listOfPlayers.add(playerToAdd);
-            if (i == 0) kingOfTheLastRound = playerToAdd;
+            if (i == 0) {
+                kingOfTheLastRound = playerToAdd;
+                kingByDefault = playerToAdd;
+            }
         }
     }
 
@@ -98,7 +103,10 @@ public class GameEngine {
 
     public List<Player> askPlayersRoleAndSortThemByRole(List<CharacterCard> characterCardDeckOfTheRound) {
         for (Player player : listOfPlayers) {
-            askToChooseCharacter(listOfPlayers.get((listOfPlayers.indexOf(kingOfTheLastRound) + listOfPlayers.indexOf(player)) % nbPlayers), characterCardDeckOfTheRound);
+            askToChooseCharacter(
+                    listOfPlayers.get(
+                            (listOfPlayers.indexOf(kingOfTheLastRound) + listOfPlayers.indexOf(player)) % nbPlayers),
+                    characterCardDeckOfTheRound);
         }
 
         List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
@@ -118,7 +126,7 @@ public class GameEngine {
     }
 
     public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
-        if(characterCardDeckOfTheRound.isEmpty()){
+        if (characterCardDeckOfTheRound.isEmpty()) {
             throw new IllegalArgumentException("Character card ceck of the round is empty : the player can't choose a character card.");
         }
 
@@ -187,6 +195,7 @@ public class GameEngine {
     }
 
     public Player updateKing(List<Player> listOfPlayers) {
+        kingOfTheLastRound = kingByDefault;
         listOfPlayers.forEach(player -> {
             if (player.getCharacterCard().getCharacterName() == CharacterName.KING) {
                 kingOfTheLastRound = player;

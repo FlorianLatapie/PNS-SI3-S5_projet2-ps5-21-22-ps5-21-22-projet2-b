@@ -1,6 +1,7 @@
 package fr.unice.polytech.citadelles;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CharacterCard extends Card {
     private CharacterName characterName;
@@ -36,15 +37,16 @@ public class CharacterCard extends Card {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof CharacterCard) {
-            CharacterCard cardToCompare = (CharacterCard) obj;
-            return (this.getCharacterName().equals(cardToCompare.getCharacterName())
-                    && this.getCharacterSequence() == (cardToCompare.getCharacterSequence())
-                    && this.getColor().equals(cardToCompare.getColor())
-            );
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CharacterCard)) return false;
+        CharacterCard that = (CharacterCard) o;
+        return getCharacterSequence() == that.getCharacterSequence() && getCharacterName() == that.getCharacterName();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCharacterName(), getCharacterSequence());
     }
 
     @Override

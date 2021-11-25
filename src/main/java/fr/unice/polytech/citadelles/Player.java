@@ -2,6 +2,7 @@ package fr.unice.polytech.citadelles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Player {
@@ -39,7 +40,7 @@ public class Player {
             this.coins -= nbCoins;
             return true;
         } else {
-            throw new RuntimeException("It is impossible to remove coins because the player " + this.name + " does not have enough coins : "
+            throw new IllegalArgumentException("It is impossible to remove coins because the player " + this.name + " does not have enough coins: "
                     + this.coins + "-" + nbCoins + " = " + (this.coins - nbCoins) + " is less than 0");
         }
     }
@@ -48,7 +49,7 @@ public class Player {
 
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
         if (characterCardDeckOfTheGame.isEmpty()) {
-            throw new RuntimeException("Character deck of card is empty, " + name + " cannot choose a card");
+            throw new IllegalArgumentException("Character deck of card is empty, " + name + " cannot choose a card");
         }
         CharacterCard choice = characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
         characterCard = choice;
@@ -62,7 +63,7 @@ public class Player {
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
 
-        if(districtCardsInHand.isEmpty()) {
+        if (districtCardsInHand.isEmpty()) {
             return false;
         }
 
@@ -126,19 +127,23 @@ public class Player {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Player) {
-            Player playerToCompare = (Player) obj;
-            return this.getDistrictCardsInHand().equals(playerToCompare.getDistrictCardsInHand());
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return getCoins() == player.getCoins() && Objects.equals(getDistrictCardsInHand(), player.getDistrictCardsInHand()) && Objects.equals(getDistrictCardsBuilt(), player.getDistrictCardsBuilt()) && Objects.equals(getName(), player.getName()) && Objects.equals(getCharacterCard(), player.getCharacterCard());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDistrictCardsInHand(), getDistrictCardsBuilt(), getCoins(), getName(), getCharacterCard());
     }
 
     @Override
     public String toString() {
-        return "Player "+ name +"{" + System.lineSeparator() +
+        return "Player " + name + "{" + System.lineSeparator() +
                 "districtCardsInHand=" + districtCardsInHand + "," + System.lineSeparator() +
-                "districtCardsBuilt=" + districtCardsBuilt + ","  + System.lineSeparator() +
+                "districtCardsBuilt=" + districtCardsBuilt + "," + System.lineSeparator() +
                 "coins=" + coins + "," + System.lineSeparator() +
                 "random=" + random + "," + System.lineSeparator() +
                 "characterCard=" + characterCard + System.lineSeparator() +

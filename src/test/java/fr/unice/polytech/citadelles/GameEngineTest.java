@@ -48,7 +48,8 @@ class GameEngineTest {
         assertEquals(new CharacterCard(CharacterName.ARCHITECT), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
         assertEquals(new CharacterCard(CharacterName.WARLORD), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
 
-        assertThrows(IllegalArgumentException.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+        assertEquals("Character card ceck of the round is empty : the player can't choose a character card.", exception.getMessage());
 
     }
 
@@ -294,7 +295,7 @@ class GameEngineTest {
     }
 
     @Test
-    void askPlayersRoleAndSortThemByRole(){
+    void askPlayersRoleAndSortThemByRole() {
         Player player1 = mock(Player.class);
         when(player1.getName()).thenReturn("1");
         when(player1.getCharacterCard()).thenReturn(new CharacterCard(CharacterName.WARLORD));
@@ -318,7 +319,7 @@ class GameEngineTest {
     }
 
     @Test
-    void askPlayersRoleAndSortThemByRole2(){
+    void askPlayersRoleAndSortThemByRole2() {
         Player player1 = mock(Player.class);
         when(player1.getName()).thenReturn("1");
         when(player1.toString()).thenReturn("1");
@@ -371,7 +372,6 @@ class GameEngineTest {
         assertEquals(List.of(player1, player2, player3, player4), ge.askPlayersRoleAndSortThemByRole(ge.getDeckOfCards().getNewCharacterCards()));
         assertEquals(player2, ge.getKingOfTheLastRound());
     }
-
 
     @AfterAll
     static void restoreStreams() {

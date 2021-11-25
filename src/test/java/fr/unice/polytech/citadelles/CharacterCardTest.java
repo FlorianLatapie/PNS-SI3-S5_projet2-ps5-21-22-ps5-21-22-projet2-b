@@ -23,6 +23,12 @@ class CharacterCardTest {
     }
 
     @Test
+    void hashCodeTest() {
+        assertEquals(king.hashCode(), new CharacterCard(CharacterName.KING).hashCode());
+        assertEquals(thief.hashCode(), new CharacterCard(CharacterName.THIEF).hashCode());
+    }
+
+    @Test
     void toStringTest() {
         assertEquals("KING [sequence: 4, color: YELLOW]", new CharacterCard(CharacterName.KING).toString());
     }

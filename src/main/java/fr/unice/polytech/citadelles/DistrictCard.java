@@ -1,5 +1,7 @@
 package fr.unice.polytech.citadelles;
 
+import java.util.Objects;
+
 public class DistrictCard extends Card {
     private int priceToBuild;
     private DistrictName districtName;
@@ -7,7 +9,7 @@ public class DistrictCard extends Card {
     public DistrictCard(Color color, DistrictName districtName, int priceToBuild) {
         super.setColor(color);
         if (priceToBuild <= 0) { // cannot instantiate card if it is not greater than 0
-            throw new RuntimeException("The price of the card is not greater than 0 :" + priceToBuild);
+            throw new IllegalArgumentException("The price of the card is not greater than 0: " + priceToBuild);
         }
         this.priceToBuild = priceToBuild;
         this.districtName = districtName;
@@ -35,14 +37,16 @@ public class DistrictCard extends Card {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof DistrictCard) {
-            DistrictCard cardToCompare = (DistrictCard) obj;
-            return this.getPriceToBuild() == cardToCompare.getPriceToBuild()
-                    && this.getColor().equals(cardToCompare.getColor())
-                    && this.getDistrictName().equals(cardToCompare.getDistrictName());
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DistrictCard)) return false;
+        DistrictCard card = (DistrictCard) o;
+        return getPriceToBuild() == card.getPriceToBuild() && getDistrictName() == card.getDistrictName();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPriceToBuild(), getDistrictName());
     }
 }
 

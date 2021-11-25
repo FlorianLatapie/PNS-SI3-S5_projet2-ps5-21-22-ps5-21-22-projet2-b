@@ -30,11 +30,17 @@ class PlayerTest {
     }
 
     @Test
-    void districtCardTest() {
-        assertEquals(p, new Player(player1, districtCards));
+    void equalsTest() {
+        assertEquals(p, new Player(player1, districtCards, Integer.MAX_VALUE, new Random()));
         assertNotEquals(p, 1); // wrong order of arguments to test the .equals method of p and not the other object
         assertEquals(p.getDistrictCardsInHand(), new Player(player1, districtCards).getDistrictCardsInHand());
     }
+
+    @Test
+    void hashCodeTest() {
+        assertEquals(p.hashCode(), new Player(player1, districtCards, Integer.MAX_VALUE, new Random()).hashCode());
+    }
+
 
     @Test
     void buildDistrictCardTest() {
@@ -58,7 +64,8 @@ class PlayerTest {
         assertEquals(0, playerWithNoCoins.getCoins());
 
         Player hasToThrowError = new Player(player1, districtCards);
-        assertThrows(RuntimeException.class, () -> hasToThrowError.removeCoins(Integer.MAX_VALUE + 1));
+        Exception exception = assertThrows(Exception.class, () -> hasToThrowError.removeCoins(Integer.MAX_VALUE));
+        assertEquals("It is impossible to remove coins because the player Player_1 does not have enough coins: 2-2147483647 = -2147483645 is less than 0", exception.getMessage());
     }
 
     @Test
@@ -84,6 +91,9 @@ class PlayerTest {
         assertTrue(playerWithCoins.chooseToBuildDistrict());
         assertEquals(expectedBuilt, playerWithCoins.getDistrictCardsBuilt());
         assertTrue(playerWithCoins.getDistrictCardsInHand().isEmpty());
+
+        Player playerWithNoDistrictCards = new Player(player1, new ArrayList<>());
+        assertFalse(playerWithNoDistrictCards.chooseToBuildDistrict());
     }
 
     @Test
@@ -119,9 +129,11 @@ class PlayerTest {
 
     @Test
     void chooseCharacterTest() {
-        assertThrows(RuntimeException.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
             p.chooseCharacter(new ArrayList<>());
         });
+        assertEquals("Character deck of card is empty, Player_1 cannot choose a card", exception.getMessage());
+
 
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
