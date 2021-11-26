@@ -131,6 +131,10 @@ public class Player {
         return districtCardsInHand;
     }
 
+    public Strategy getStrategy() {
+        return strategy;
+    }
+
     public void setCharacterCard(CharacterCard characterCard) {
         this.characterCard = characterCard;
     }
