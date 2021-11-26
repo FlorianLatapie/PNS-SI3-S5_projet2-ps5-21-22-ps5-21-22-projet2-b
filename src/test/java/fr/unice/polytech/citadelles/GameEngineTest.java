@@ -55,10 +55,10 @@ class GameEngineTest {
 
     @Test
     void sortPlayerListByCharacterSequenceTest() {
-        Player player1 = new Player("Player_1", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player2 = new Player("Player_2", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player3 = new Player("Player_3", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player4 = new Player("Player_4", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        Player player1 = new Player("Player_1");
+        Player player2 = new Player("Player_2");
+        Player player3 = new Player("Player_3");
+        Player player4 = new Player("Player_4");
 
 
         player1.setCharacterCard(new CharacterCard(CharacterName.ARCHITECT));
@@ -116,15 +116,22 @@ class GameEngineTest {
         Player mockPlayer = mock(Player.class);
         when(mockPlayer.getName()).thenReturn("mockPlayerName");
         when(mockPlayer.getCoins()).thenReturn(2);
+        when(mockPlayer.chooseCoinsOverDrawingACard()).thenReturn(true, false);
 
         // add a "when()" when choice between the 2 options is implemented
 
         GameEngine ge = new GameEngine();
 
-        ge.askToChooseCoinsOrCard(mockPlayer);
+        ge.askToChooseCoinsOverDrawingACard(mockPlayer);
         assertEquals("mockPlayerName receives 2 coins" + System.lineSeparator() +
                 "mockPlayerName has 2 coins" + System.lineSeparator(), outContent.toString());
+
+        outContent.reset();
+        ge.askToChooseCoinsOverDrawingACard(mockPlayer);
+        assertTrue(outContent.toString().startsWith("mockPlayerName choose to draw a card" + System.lineSeparator() +
+                "mockPlayerName draws: "));
     }
+
     @Test
     void getTaxesTest() {
         GameEngine ge = new GameEngine();
@@ -266,10 +273,10 @@ class GameEngineTest {
 
     @Test
     void updateKingTest() {
-        Player player1 = new Player("Player_1", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player2 = new Player("Player_2", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player3 = new Player("Player_3", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
-        Player player4 = new Player("Player_4", List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        Player player1 = new Player("Player_1");
+        Player player2 = new Player("Player_2");
+        Player player3 = new Player("Player_3");
+        Player player4 = new Player("Player_4");
 
         player1.setCharacterCard(new CharacterCard(CharacterName.ARCHITECT));
         player2.setCharacterCard(new CharacterCard(CharacterName.BISHOP));

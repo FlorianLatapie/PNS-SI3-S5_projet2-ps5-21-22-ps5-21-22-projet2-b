@@ -58,6 +58,14 @@ class PlayerTest {
     }
 
     @Test
+    void receiveCardTest() {
+        Player player = new Player(player1);
+        player.receiveCard(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertEquals(List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 2)), player.getDistrictCardsInHand());
+        assertEquals(1, player.getDistrictCardsInHand().size());
+    }
+
+    @Test
     void removeCoinsTest() {
         Player playerWithNoCoins = new Player(player1, districtCards);
         playerWithNoCoins.removeCoins(2);
@@ -133,27 +141,6 @@ class PlayerTest {
             p.chooseCharacter(new ArrayList<>());
         });
         assertEquals("Character deck of card is empty, Player_1 cannot choose a card", exception.getMessage());
-
-
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
-
-        DeckOfCards doc = new DeckOfCards();
-        List<CharacterCard> cardsOfTheRound = doc.getNewCharacterCards();
-        Player playerWithMock = new Player(player1, districtCards, 2, mockRandom);
-
-        assertEquals(new DeckOfCards().getNewCharacterCards().get(0), playerWithMock.chooseCharacter(cardsOfTheRound));
-        assertEquals(new CharacterCard(CharacterName.ASSASSIN), playerWithMock.getCharacterCard());
-    }
-
-    @Test
-    void chooseToGetTaxesAtBeginingOfTurnTest() {
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextBoolean()).thenReturn(true, false);
-
-        Player playerWithMock = new Player(player1, districtCards, 2, mockRandom);
-        assertTrue(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
-        assertFalse(playerWithMock.chooseToGetTaxesAtBeginingOfTurn());
     }
 
     @Test

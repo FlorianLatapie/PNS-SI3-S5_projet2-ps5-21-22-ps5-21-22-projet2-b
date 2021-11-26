@@ -12,6 +12,11 @@ public class Player {
     private String name;
     private Random random;
     private CharacterCard characterCard;
+    private Strategy strategy;
+
+    public Player(String name) {
+        this(name, new ArrayList<>(), 2, new Random());
+    }
 
     public Player(String name, List<DistrictCard> districtCards) {
         this(name, districtCards, 2, new Random());
@@ -22,11 +27,17 @@ public class Player {
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins, Random random) {
+        this(name, districtCards, coins, random, new RandomStrategy());
+    }
+
+    public Player(String name, List<DistrictCard> districtCards, int coins, Random random, Strategy strategy) {
         this.name = name;
         this.coins = coins;
         this.random = random;
         districtCardsInHand = new ArrayList<>(districtCards);
         districtCardsBuilt = new ArrayList<>();
+        this.strategy = strategy;
+        strategy.init(this);
     }
 
     //---------------------------  Coins ... ---------------------------
@@ -44,42 +55,10 @@ public class Player {
                     + this.coins + "-" + nbCoins + " = " + (this.coins - nbCoins) + " is less than 0");
         }
     }
+
     //---------------------------  Cards ... ---------------------------
-    public void receiveCard(DistrictCard districtCard){districtCardsInHand.add(districtCard);}
-
-
-    //---------------------------  Choices ... ---------------------------
-
-    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
-        if (characterCardDeckOfTheGame.isEmpty()) {
-            throw new IllegalArgumentException("Character deck of card is empty, " + name + " cannot choose a card");
-        }
-        CharacterCard choice = characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
-        characterCard = choice;
-        return choice;
-    }
-
-    public boolean canBuildDistrict(DistrictCard district) {
-        return coins >= district.getPriceToBuild();
-    }
-
-    public boolean chooseToBuildDistrict() {
-        boolean choice = random.nextBoolean();
-
-        if (districtCardsInHand.isEmpty()) {
-            return false;
-        }
-
-        DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
-
-        if (!canBuildDistrict(district)) {
-            return false;
-        } else {
-            if (choice) {
-                buildDistrictCardsInHand(district);
-            }
-        }
-        return choice;
+    public void receiveCard(DistrictCard districtCard) {
+        districtCardsInHand.add(districtCard);
     }
 
     void buildDistrictCardsInHand(DistrictCard cardToBuild) {
@@ -88,22 +67,33 @@ public class Player {
         districtCardsBuilt.add(cardToBuild);
     }
 
-    public boolean chooseToGetTaxesAtBeginingOfTurn() {
-        return random.nextBoolean();
+    public boolean canBuildDistrict(DistrictCard district) {
+        return coins >= district.getPriceToBuild();
     }
 
-    public boolean canBuildADistrict(){ //check if player has enough coins to build a district
-        for(DistrictCard districtCard : districtCardsInHand){
-            if(canBuildDistrict(districtCard))
-                return true;
+    //---------------------------  Choices ... ---------------------------
+
+    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
+        if (characterCardDeckOfTheGame.isEmpty()) {
+            throw new IllegalArgumentException("Character deck of card is empty, " + name + " cannot choose a card");
         }
-        return false;
+        CharacterCard choice = strategy.chooseCharacter(characterCardDeckOfTheGame);
+        characterCard = choice;
+        return choice;
     }
 
-    public boolean chooseCoinsOrCard(){
-        //return random.nextBoolean();
-        return canBuildADistrict(); //si le joueur a assez de pièces pour construire un des quartiers alors il pioche une carte
+    public boolean chooseToBuildDistrict() {
+        return strategy.buildDistrict();
     }
+
+    public boolean chooseToGetTaxesAtBeginingOfTurn() {
+        return strategy.getTaxesAtBeginingOfTurn();
+    }
+
+    public boolean chooseCoinsOverDrawingACard() {
+        return strategy.getCoinsOverDrawingACard();
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
@@ -111,6 +101,10 @@ public class Player {
 
     public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
+    }
+
+    public Random getRandom() {
+        return random;
     }
 
     public String getName() {

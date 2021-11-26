@@ -54,7 +54,7 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0, random);
+            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 0, random, new RandomStrategy());
             listOfPlayers.add(playerToAdd);
             if (i == 0) {
                 kingOfTheLastRound = playerToAdd;
@@ -78,7 +78,7 @@ public class GameEngine {
             for (Player player : listOfPlayersSorted) {
                 io.println(player.getName() + " is " + player.getCharacterCard());
 
-                askToChooseCoinsOrCard(player);
+                askToChooseCoinsOverDrawingACard(player);
 
                 boolean wantsToReceiveTaxesBeforeBuiling = askToGetTaxesNow(player);
                 if (wantsToReceiveTaxesBeforeBuiling) {
@@ -156,15 +156,19 @@ public class GameEngine {
         io.printCoinsOf(player);
     }
 
-    public void giveCard(Player player){
+    public void giveCard(Player player) {
         DistrictCard card = deckOfCards.getRandomDistrictCard();
-        io.println(player.getName() + " choose to draw a card\n"+player.getName()+" draws: "+ card.toString());
+        io.println(player.getName() + " choose to draw a card");
+        io.println(player.getName() + " draws: " + card.toString());
         player.receiveCard(card);
     }
 
-    public void askToChooseCoinsOrCard(Player player) {
-        if(player.chooseCoinsOrCard()) giveCard(player);
-        else giveCoins(player);
+    public void askToChooseCoinsOverDrawingACard(Player player) {
+        if (player.chooseCoinsOverDrawingACard()) {
+            giveCoins(player);
+        } else {
+            giveCard(player);
+        }
     }
 
     public void getTaxes(Player player) {
