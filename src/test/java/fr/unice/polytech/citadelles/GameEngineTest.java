@@ -116,15 +116,15 @@ class GameEngineTest {
         Player mockPlayer = mock(Player.class);
         when(mockPlayer.getName()).thenReturn("mockPlayerName");
         when(mockPlayer.getCoins()).thenReturn(2);
+
         // add a "when()" when choice between the 2 options is implemented
 
         GameEngine ge = new GameEngine();
 
-        ge.askCoinsOrDraw2cards(mockPlayer);
+        ge.askToChooseCoinsOrCard(mockPlayer);
         assertEquals("mockPlayerName receives 2 coins" + System.lineSeparator() +
                 "mockPlayerName has 2 coins" + System.lineSeparator(), outContent.toString());
     }
-
     @Test
     void getTaxesTest() {
         GameEngine ge = new GameEngine();

@@ -1,9 +1,8 @@
 package fr.unice.polytech.citadelles;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Random;
 
 public class Player {
@@ -36,23 +35,24 @@ public class Player {
         this.coins += nbCoins;
     }
 
-    public void receiveCard(DistrictCard districtCard){districtCardsInHand.add(districtCard);}
-
     public boolean removeCoins(int nbCoins) {
         if (this.coins - nbCoins >= 0) {
             this.coins -= nbCoins;
             return true;
         } else {
-            throw new RuntimeException("It is impossible to remove coins because the player " + this.name + " does not have enough coins : "
+            throw new IllegalArgumentException("It is impossible to remove coins because the player " + this.name + " does not have enough coins: "
                     + this.coins + "-" + nbCoins + " = " + (this.coins - nbCoins) + " is less than 0");
         }
     }
+    //---------------------------  Cards ... ---------------------------
+    public void receiveCard(DistrictCard districtCard){districtCardsInHand.add(districtCard);}
+
 
     //---------------------------  Choices ... ---------------------------
 
-    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame){
-        if (characterCardDeckOfTheGame.isEmpty()){
-            throw new RuntimeException("Character deck of card is empty, "+ name +" cannot choose a card");
+    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
+        if (characterCardDeckOfTheGame.isEmpty()) {
+            throw new IllegalArgumentException("Character deck of card is empty, " + name + " cannot choose a card");
         }
         CharacterCard choice = characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
         characterCard = choice;
@@ -63,21 +63,17 @@ public class Player {
         return coins >= district.getPriceToBuild();
     }
 
-    public boolean canBuildADistrict(){ //check if player has enough coins to build a district
-        for(DistrictCard districtCard : districtCardsInHand){
-            if(canBuildDistrict(districtCard))
-                return true;
-        }
-        return false;
-    }
-
     public boolean chooseToBuildDistrict() {
         boolean choice = random.nextBoolean();
+
+        if (districtCardsInHand.isEmpty()) {
+            return false;
+        }
+
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
 
         if (!canBuildDistrict(district)) {
-            choice = false;
-            return choice;
+            return false;
         } else {
             if (choice) {
                 buildDistrictCardsInHand(district);
@@ -92,15 +88,27 @@ public class Player {
         districtCardsBuilt.add(cardToBuild);
     }
 
-    public boolean chooseCoinsOrCard(){
+    public boolean chooseToGetTaxesAtBeginingOfTurn() {
         return random.nextBoolean();
-       //return canBuildADistrict(); //si le joueur a assez de pièces pour construire un des quartiers alors il pioche une carte
     }
 
+    public boolean canBuildADistrict(){ //check if player has enough coins to build a district
+        for(DistrictCard districtCard : districtCardsInHand){
+            if(canBuildDistrict(districtCard))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean chooseCoinsOrCard(){
+        //return random.nextBoolean();
+        return canBuildADistrict(); //si le joueur a assez de pièces pour construire un des quartiers alors il pioche une carte
+    }
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
     }
+
     public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
         return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
     }
@@ -120,6 +128,7 @@ public class Player {
     public List<DistrictCard> getDistrictCardsBuilt() {
         return districtCardsBuilt;
     }
+
     public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
         this.districtCardsBuilt = districtCardsBuilt;
     }
@@ -128,12 +137,31 @@ public class Player {
         return districtCardsInHand;
     }
 
+    public void setCharacterCard(CharacterCard characterCard) {
+        this.characterCard = characterCard;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Player) {
-            Player playerToCompare = (Player) obj;
-            return this.getDistrictCardsInHand().equals(playerToCompare.getDistrictCardsInHand());
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return getCoins() == player.getCoins() && Objects.equals(getDistrictCardsInHand(), player.getDistrictCardsInHand()) && Objects.equals(getDistrictCardsBuilt(), player.getDistrictCardsBuilt()) && Objects.equals(getName(), player.getName()) && Objects.equals(getCharacterCard(), player.getCharacterCard());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDistrictCardsInHand(), getDistrictCardsBuilt(), getCoins(), getName(), getCharacterCard());
+    }
+
+    @Override
+    public String toString() {
+        return "Player " + name + "{" + System.lineSeparator() +
+                "districtCardsInHand=" + districtCardsInHand + "," + System.lineSeparator() +
+                "districtCardsBuilt=" + districtCardsBuilt + "," + System.lineSeparator() +
+                "coins=" + coins + "," + System.lineSeparator() +
+                "random=" + random + "," + System.lineSeparator() +
+                "characterCard=" + characterCard + System.lineSeparator() +
+                '}';
     }
 }
