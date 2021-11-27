@@ -1,6 +1,6 @@
 package fr.unice.polytech.citadelles;
 
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
+import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

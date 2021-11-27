@@ -1,5 +1,6 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,8 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.strategy.RandomStrategy;
+import fr.unice.polytech.citadelles.strategy.Strategy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -61,7 +64,7 @@ public class Player {
         districtCardsInHand.add(districtCard);
     }
 
-    void buildDistrictCardsInHand(DistrictCard cardToBuild) {
+    public void buildDistrictCardsInHand(DistrictCard cardToBuild) {
         removeCoins(cardToBuild.getPriceToBuild());
         districtCardsInHand.remove(cardToBuild);
         districtCardsBuilt.add(cardToBuild);

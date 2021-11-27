@@ -1,5 +1,7 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

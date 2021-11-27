@@ -54,7 +54,3 @@ public class CharacterCard extends Card {
         return characterName.toString() + " [sequence: " + characterSequence + ", color: " + getColor().toString() + "]";
     }
 }
-
-enum CharacterName {
-    ASSASSIN, THIEF, MAGICIAN, KING, BISHOP, MERCHANT, ARCHITECT, WARLORD;
-}

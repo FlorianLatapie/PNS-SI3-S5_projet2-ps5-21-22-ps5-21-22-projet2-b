@@ -11,7 +11,3 @@ public class Card {
         return color;
     }
 }
-
-enum Color {
-    RED, GREEN, BLUE, YELLOW, GREY;
-}

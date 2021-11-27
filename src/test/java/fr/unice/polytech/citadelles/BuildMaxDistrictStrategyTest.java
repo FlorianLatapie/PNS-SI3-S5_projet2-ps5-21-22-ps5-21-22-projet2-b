@@ -1,11 +1,10 @@
 package fr.unice.polytech.citadelles;
 
-import org.junit.jupiter.api.BeforeEach;
+import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -14,11 +13,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class BuildMaxDistrictStrategyTest {
-    List<DistrictCard> districtCards;
-    List<DistrictCard> districtCardsV2;
+    static List<DistrictCard> districtCards;
+    static List<DistrictCard> districtCardsV2;
+    static List<DistrictCard> districtCardsImmutable;
+    static List<DistrictCard> districtCardsImmutableV2;
 
-    @BeforeEach
-    void init(){
+    @BeforeAll
+    static void init(){
         districtCards = new ArrayList<>();
         districtCards.add(new DistrictCard(Color.GREY, DistrictName.MONASTERY, 4));
         districtCards.add(new DistrictCard(Color.GREY, DistrictName.SHOP, 3));
@@ -26,17 +27,21 @@ public class BuildMaxDistrictStrategyTest {
         districtCards.add(new DistrictCard(Color.RED, DistrictName.TAVERN, 1));
         districtCards.add(new DistrictCard(Color.BLUE, DistrictName.JAIL, 1));
 
+        districtCardsImmutable = Collections.unmodifiableList(districtCards);
+
         districtCardsV2 = new ArrayList<>();
         districtCardsV2.add(new DistrictCard(Color.YELLOW, DistrictName.PALACE, 5));
         districtCardsV2.add(new DistrictCard(Color.RED, DistrictName.FORTRESS, 5));
         districtCardsV2.add(new DistrictCard(Color.GREEN, DistrictName.TAVERN, 1));
         districtCardsV2.add(new DistrictCard(Color.YELLOW, DistrictName.MANSION, 3));
+
+        districtCardsImmutableV2 = Collections.unmodifiableList(districtCardsV2);
     }
 
     @Test
     public void chooseCharacterTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
+        Player player = new Player("Player 1", districtCardsImmutable, 2, new Random(), districtStrategy);
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
@@ -48,9 +53,9 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void chooseCharacterTestWithMostColorsInHand(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 100, new Random(), districtStrategy);
+        Player player = new Player("Player 1", districtCardsImmutable, 100, new Random(), districtStrategy);
 
-        for (DistrictCard card : districtCards) {
+        for (DistrictCard card : districtCardsImmutable) {
             player.buildDistrictCardsInHand(card);
         }
 
@@ -67,10 +72,10 @@ public class BuildMaxDistrictStrategyTest {
     public void chooseCharacterTestWithMostColorsInHand2(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
 
-        Player player = new Player("Player 1", districtCardsV2, 100, new Random(), districtStrategy);
+        Player player = new Player("Player 1", districtCardsImmutableV2, 100, new Random(), districtStrategy);
 
-        player.buildDistrictCardsInHand(districtCardsV2.get(2));
-        player.buildDistrictCardsInHand(districtCardsV2.get(3));
+        player.buildDistrictCardsInHand(districtCardsImmutableV2.get(2));
+        player.buildDistrictCardsInHand(districtCardsImmutableV2.get(3));
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
@@ -87,9 +92,9 @@ public class BuildMaxDistrictStrategyTest {
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 100, mockRandom, districtStrategy);
+        Player player = new Player("Player 1", districtCardsImmutable, 100, mockRandom, districtStrategy);
 
-        for (DistrictCard card : districtCards) {
+        for (DistrictCard card : districtCardsImmutable) {
             player.buildDistrictCardsInHand(card);
         }
 
@@ -109,7 +114,7 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void getCoinsOverDrawingACardTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
+        Player player1 = new Player("Player 1", districtCardsImmutable, 0, new Random(), districtStrategy);
         assertEquals(true, districtStrategy.getCoinsOverDrawingACard());
 
         List<DistrictCard> emptyList = new ArrayList<>();
@@ -120,7 +125,7 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void getTaxesAtBeginingOfTurnTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
+        Player player = new Player("Player 1", districtCardsImmutable, 2, new Random(), districtStrategy);
         //Always true (part of the strategy)
         assertEquals(true, districtStrategy.getTaxesAtBeginingOfTurn());
     }
@@ -128,13 +133,13 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void mostCommonColorInBuiltDistrictsTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Color color = districtStrategy.mostCommonColorInBuiltDistricts(districtCards);
+        Color color = districtStrategy.mostCommonColorInBuiltDistricts(districtCardsImmutable);
         assertEquals(Color.GREY, color);
     }
 
     @Test void getCheapestDistrictCardTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        DistrictCard districtCard = districtStrategy.getCheapestDistrictCard(districtCards);
+        DistrictCard districtCard = districtStrategy.getCheapestDistrictCard(districtCardsImmutable);
         //Gets the first cheapest card
         assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());
     }
@@ -142,7 +147,7 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void buildDistrict(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
+        Player player1 = new Player("Player 1", districtCardsImmutable, 0, new Random(), districtStrategy);
         //Not enough coins
         assertEquals(false, districtStrategy.buildDistrict());
 
@@ -151,18 +156,18 @@ public class BuildMaxDistrictStrategyTest {
         //Empty List
         assertEquals(false, districtStrategy.buildDistrict());
 
-        Player player3 = new Player("Player 3", districtCards, 1, new Random(), districtStrategy);
+        Player player3 = new Player("Player 3", districtCardsImmutable, 1, new Random(), districtStrategy);
         assertEquals(true, districtStrategy.buildDistrict());
     }
 
     @Test
     void equalsTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
+        Player player1 = new Player("Player 1", districtCardsImmutable, 2, new Random(), districtStrategy);
         districtStrategy.init(player1);
 
         BuildMaxDistrictStrategy districtStrategy2 = new BuildMaxDistrictStrategy();
-        Player player2 = new Player("Player 2", districtCards, 3, new Random(), districtStrategy);
+        Player player2 = new Player("Player 2", districtCardsImmutable, 3, new Random(), districtStrategy);
         districtStrategy2.init(player2);
 
         assertEquals(districtStrategy, districtStrategy2);
