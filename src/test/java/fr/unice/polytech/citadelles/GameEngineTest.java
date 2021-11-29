@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,11 +40,14 @@ class GameEngineTest {
 
         DeckOfCards doc = new DeckOfCards();
 
-        if(ge.getListOfPlayers().get(0).getStrategy() instanceof BuildMaxDistrictStrategy){
+        if (ge.getListOfPlayers().get(0).getStrategy() instanceof BuildMaxDistrictStrategy) {
             List<CharacterCard> listChar = doc.getNewCharacterCards();
             assertEquals(new CharacterCard(CharacterName.MERCHANT), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
-        }
-        else {
+            listChar.clear();
+            Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
+            assertEquals("Character card deck of the round is empty : the player can't choose a character card.", exception.getMessage());
+
+        } else {
             List<CharacterCard> listChar = doc.getNewCharacterCards();
             assertEquals(new CharacterCard(CharacterName.ASSASSIN), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
             assertEquals(new CharacterCard(CharacterName.THIEF), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
@@ -55,7 +59,7 @@ class GameEngineTest {
             assertEquals(new CharacterCard(CharacterName.WARLORD), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
 
             Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
-            assertEquals("Character card ceck of the round is empty : the player can't choose a character card.", exception.getMessage());
+            assertEquals("Character card deck of the round is empty : the player can't choose a character card.", exception.getMessage());
         }
     }
 
@@ -384,6 +388,51 @@ class GameEngineTest {
 
         assertEquals(List.of(player1, player2, player3, player4), ge.askPlayersRoleAndSortThemByRole(ge.getDeckOfCards().getNewCharacterCards()));
         assertEquals(player2, ge.getKingOfTheLastRound());
+    }
+
+    @Test
+    void hasThisPlayerPlaced8CardsTest() {
+        Player mockPlayer1 = mock(Player.class);
+        when(mockPlayer1.getName()).thenReturn("mockPlayer1");
+        when(mockPlayer1.toString()).thenReturn("1");
+        List<DistrictCard> listP1 = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            listP1.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+        }
+        when(mockPlayer1.getDistrictCardsBuilt()).thenReturn(listP1);
+
+        Player mockPlayer2 = mock(Player.class);
+        when(mockPlayer2.getName()).thenReturn("mockPlayer2");
+        when(mockPlayer2.toString()).thenReturn("2");
+        List<DistrictCard> listP2 = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            listP2.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+        }
+        when(mockPlayer2.getDistrictCardsBuilt()).thenReturn(listP2);
+
+        Player mockPlayer3 = mock(Player.class);
+        when(mockPlayer3.getName()).thenReturn("mockPlayer3");
+        when(mockPlayer3.toString()).thenReturn("3");
+        List<DistrictCard> listP3 = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            listP3.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+        }
+        when(mockPlayer3.getDistrictCardsBuilt()).thenReturn(listP3);
+
+        GameEngine ge = new GameEngine(new Random(), mockPlayer1, mockPlayer2, mockPlayer3);
+
+        assertTrue(ge.hasThisPlayerPlaced8Cards(mockPlayer1));
+        assertEquals(List.of(mockPlayer1), ge.getPlayersWhoBuilt8Cards());
+        assertEquals("mockPlayer1 has placed 8 cards!" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+        assertFalse(ge.hasThisPlayerPlaced8Cards(mockPlayer2));
+        assertEquals(List.of(mockPlayer1), ge.getPlayersWhoBuilt8Cards());
+        assertEquals("", outContent.toString());
+        outContent.reset();
+        assertTrue(ge.hasThisPlayerPlaced8Cards(mockPlayer3));
+        assertEquals(List.of(mockPlayer1, mockPlayer3), ge.getPlayersWhoBuilt8Cards());
+        assertEquals("mockPlayer3 has placed 8 cards!" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
     }
 
     @AfterAll

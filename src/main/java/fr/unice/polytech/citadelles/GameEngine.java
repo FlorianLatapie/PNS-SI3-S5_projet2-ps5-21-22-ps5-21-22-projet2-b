@@ -13,7 +13,7 @@ public class GameEngine {
 
     private int nbPlayers;
     private List<Player> listOfPlayers;
-    private List<Player> playersWhoPlacedThe8Cards;
+    private List<Player> playersWhoBuilt8Cards;
     private Player kingOfTheLastRound;
     private Player kingByDefault;
 
@@ -30,7 +30,7 @@ public class GameEngine {
         this.nbPlayers = nbPlayers;
         listOfPlayers = new ArrayList<>();
         io = new IO();
-        playersWhoPlacedThe8Cards = new ArrayList<>();
+        playersWhoBuilt8Cards = new ArrayList<>();
 
         deckOfCards = new DeckOfCards(random);
 
@@ -40,7 +40,7 @@ public class GameEngine {
     public GameEngine(Random random, Player... players) {
         this.random = random;
         io = new IO();
-        playersWhoPlacedThe8Cards = new ArrayList<>();
+        playersWhoBuilt8Cards = new ArrayList<>();
 
         deckOfCards = new DeckOfCards(random);
 
@@ -71,7 +71,7 @@ public class GameEngine {
 
         io.printSeparator("The game starts !");
 
-        while (playersWhoPlacedThe8Cards.isEmpty() && round <= 4) {
+        while (playersWhoBuilt8Cards.isEmpty()) {
             io.printSeparator("Start of the round " + round);
 
             List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
@@ -95,12 +95,22 @@ public class GameEngine {
                     getTaxes(player);
                 }
 
+                hasThisPlayerPlaced8Cards(player);
                 io.printSeparator("End of turn " + round + " for " + player.getName());
             }
             round++;
         }
         io.printSeparator("The game is over !");
         getWinner();
+    }
+
+    public boolean hasThisPlayerPlaced8Cards(Player player) {
+        boolean hasPlaced8 = player.getDistrictCardsBuilt().size() >= 8;
+        if (hasPlaced8) {
+            playersWhoBuilt8Cards.add(player);
+            io.println(player.getName() + " has placed 8 cards!");
+        }
+        return hasPlaced8;
     }
 
     public List<Player> askPlayersRoleAndSortThemByRole(List<CharacterCard> characterCardDeckOfTheRound) {
@@ -116,8 +126,6 @@ public class GameEngine {
         return listOfPlayersSorted;
     }
 
-
-    // public methods
     public boolean askToBuildDistrict(Player player) {
         boolean choice = player.chooseToBuildDistrict();
         if (choice) {
@@ -129,7 +137,7 @@ public class GameEngine {
 
     public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
         if (characterCardDeckOfTheRound.isEmpty()) {
-            throw new IllegalArgumentException("Character card ceck of the round is empty : the player can't choose a character card.");
+            throw new IllegalArgumentException("Character card deck of the round is empty : the player can't choose a character card.");
         }
 
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
@@ -227,5 +235,9 @@ public class GameEngine {
 
     public Player getKingOfTheLastRound() {
         return kingOfTheLastRound;
+    }
+
+    public List<Player> getPlayersWhoBuilt8Cards() {
+        return playersWhoBuilt8Cards;
     }
 }

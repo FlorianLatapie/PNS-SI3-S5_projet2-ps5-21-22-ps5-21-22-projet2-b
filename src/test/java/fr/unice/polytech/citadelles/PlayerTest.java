@@ -79,7 +79,7 @@ class PlayerTest {
     @Test
     void canBuildDistrictTest() {
         Player playerWith2Coins = new Player(player1, districtCards);
-        assertEquals(true, playerWith2Coins.canBuildDistrict(new DistrictCard(Color.GREY, DistrictName.NONE, 2)));
+        assertTrue(playerWith2Coins.canBuildDistrict(new DistrictCard(Color.GREY, DistrictName.NONE, 2)));
     }
 
     @Test
