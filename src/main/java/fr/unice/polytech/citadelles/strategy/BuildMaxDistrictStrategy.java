@@ -75,23 +75,22 @@ public class BuildMaxDistrictStrategy implements Strategy {
     }
 
     public Color mostCommonColorInBuiltDistricts(List<DistrictCard> builtDistricts) {
-        Map<Color, Integer> search = new HashMap<>();
+        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0;
+        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
+        List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
+        colorsToSearch.remove(Color.GREY);
 
-        for (DistrictCard d : builtDistricts) {
-            Integer nbItems = search.get(d.getColor());
-            search.put(d.getColor(), nbItems == null ? 1 : nbItems + 1);
-        }
-
-        int max = 0;
-        Color colorMax = null;
-
-        for (Color c : search.keySet()) {
-            if (search.get(c) > max) {
-                max = search.get(c);
-                colorMax = c;
+        for (int i = 0; i < colorsToSearch.size(); i++) {
+            for (DistrictCard districtCard : builtDistricts) {
+                if (districtCard.getColor().equals(colorsToSearch.get(i))) {
+                    countOfEachColor.set(i, countOfEachColor.get(i) + 1);
+                }
             }
         }
-        return colorMax;
+        int firstMaxCount = Collections.max(countOfEachColor);
+        int index = countOfEachColor.indexOf(firstMaxCount);
+
+        return Color.values()[index];
     }
 
     public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCardsInHand) {

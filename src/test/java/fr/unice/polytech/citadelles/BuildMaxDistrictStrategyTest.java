@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
 
 import java.util.*;
 
@@ -58,27 +59,30 @@ public class BuildMaxDistrictStrategyTest {
 
         CharacterCard character = player.chooseCharacter(characterCardsOfTheRound);
         //Takes the last character of the most common color in the hand
-        assertEquals(new CharacterCard(CharacterName.ASSASSIN), character);
+        assertEquals(new CharacterCard(CharacterName.WARLORD), character);
     }
 
     @Test
     public void chooseCharacterTestWithMostColorsInHand2() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
 
-        Player player = new Player("Player 1", districtCardsV2, 100, new Random(), districtStrategy);
+        // just to be sure that is NOT a random choice
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(-1);
 
-        player.buildDistrictCardsInHand(districtCardsV2.get(3));
+        Player player = new Player("Player 1", districtCardsV2, 100, mockRandom, districtStrategy);
+
+        player.buildDistrictCardsInHand(districtCardsV2.get(1));
         player.buildDistrictCardsInHand(districtCardsV2.get(2));
+        player.buildDistrictCardsInHand(districtCardsV2.get(3));
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MERCHANT));
 
-        System.out.println(player.getDistrictCardsBuilt());
-        System.out.println();
         CharacterCard character = player.chooseCharacter(characterCardsOfTheRound);
         //Takes the last character of the most common color in the hand
-        assertEquals(new CharacterCard(CharacterName.KING), character);
+        assertEquals(new CharacterCard(CharacterName.WARLORD), character);
     }
 
     @Test
@@ -128,8 +132,45 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     public void mostCommonColorInBuiltDistrictsTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Color color = districtStrategy.mostCommonColorInBuiltDistricts(districtCards);
-        assertEquals(Color.GREY, color);
+        List<DistrictCard> dc = new ArrayList<>(List.of(
+                new DistrictCard(Color.RED, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
+                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10)
+
+        ));
+
+        Color color = districtStrategy.mostCommonColorInBuiltDistricts(dc);
+        assertEquals(Color.RED, color);
+        List<DistrictCard> dc2 = new ArrayList<>(List.of(
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
+                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.RED, DistrictName.NONE, 10)
+
+        ));
+        // arbitrary choice of order in case of a tie: RED, GREEN, BLUE, YELLOW
+        assertEquals(Color.RED, districtStrategy.mostCommonColorInBuiltDistricts(dc2));
+
+        List<DistrictCard> dc3 = new ArrayList<>(List.of(
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
+                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
+                new DistrictCard(Color.RED, DistrictName.NONE, 10)
+
+        ));
+
+        assertEquals(Color.BLUE, districtStrategy.mostCommonColorInBuiltDistricts(dc3));
     }
 
     @Test
