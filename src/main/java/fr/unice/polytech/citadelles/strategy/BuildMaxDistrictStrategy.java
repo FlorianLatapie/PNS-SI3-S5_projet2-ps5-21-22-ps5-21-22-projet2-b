@@ -31,7 +31,12 @@ public class BuildMaxDistrictStrategy implements Strategy {
 
     @Override
     public boolean getCoinsOverDrawingACard() {
-        return !player.getDistrictCardsInHand().isEmpty(); // get coins if cards in hand are not empty
+        if(!player.getDistrictCardsInHand().isEmpty()){ // get coins if cards in hand are not empty
+            return !player.canBuildDistrict(player.getDistrictCardsInHandSorted().get(0));
+        }
+        else{
+            return false;
+        }
     }
 
     @Override

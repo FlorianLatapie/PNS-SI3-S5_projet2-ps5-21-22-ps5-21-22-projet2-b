@@ -3,10 +3,8 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
@@ -132,6 +130,13 @@ public class Player {
 
     public List<DistrictCard> getDistrictCardsInHand() {
         return districtCardsInHand;
+    }
+
+    public List<DistrictCard> getDistrictCardsInHandSorted() {
+        return getDistrictCardsInHand()
+                .stream()
+                .sorted(Comparator.comparing(elem -> elem.getPriceToBuild()))
+                .collect(Collectors.toList());
     }
 
     public Strategy getStrategy() {
