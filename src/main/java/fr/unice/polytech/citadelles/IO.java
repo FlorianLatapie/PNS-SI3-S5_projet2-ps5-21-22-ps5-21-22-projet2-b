@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class IO {
     public void printDistrictCardsInHandOf(Player player) {
-        System.out.println(player.getName() + " has the following district cards in hand      : " + player.getDistrictCardsInHand());
+        System.out.println(player.getName() + " has the following district cards in hand          : " + player.getDistrictCardsInHand());
     }
 
     public void printDistrictCardsBuiltBy(Player player) {
-        System.out.println(player.getName() + " has the following district cards on the table : " + player.getDistrictCardsBuilt());
+        System.out.println(player.getName() + " has the following district cards on the table ("+player.getDistrictCardsBuilt().size()+") : " + player.getDistrictCardsBuilt());
     }
 
     public void printCoinsOf(Player player) {

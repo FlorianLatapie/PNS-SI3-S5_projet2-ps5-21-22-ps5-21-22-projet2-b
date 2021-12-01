@@ -69,7 +69,7 @@ public class Player {
     }
 
     public boolean canBuildDistrict(DistrictCard district) {
-        return coins >= district.getPriceToBuild();
+        return coins >= district.getPriceToBuild() && isAllowedToBuildDistrict(district);
     }
 
     //---------------------------  Choices ... ---------------------------
@@ -169,5 +169,9 @@ public class Player {
                 "random=" + random + "," + System.lineSeparator() +
                 "characterCard=" + characterCard + System.lineSeparator() +
                 '}';
+    }
+
+    public boolean isAllowedToBuildDistrict(DistrictCard districtCard) {
+        return !districtCardsBuilt.contains(districtCard);
     }
 }

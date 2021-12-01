@@ -32,7 +32,8 @@ public class BuildMaxDistrictStrategy implements Strategy {
     @Override
     public boolean getCoinsOverDrawingACard() {
         if(!player.getDistrictCardsInHand().isEmpty()){ // get coins if cards in hand are not empty
-            return !player.canBuildDistrict(player.getDistrictCardsInHandSorted().get(0));
+            DistrictCard districtCard = player.getDistrictCardsInHandSorted().get(0);
+            return player.isAllowedToBuildDistrict(districtCard) && !player.canBuildDistrict(districtCard);
         }
         else{
             return false;
@@ -55,7 +56,7 @@ public class BuildMaxDistrictStrategy implements Strategy {
         }
 
         DistrictCard cheapestCardInHand = getCheapestDistrictCard(districtCardsInHand);
-
+        if(cheapestCardInHand==null) return false;
         if (!player.canBuildDistrict(cheapestCardInHand)) {
             return false;
         } else {
@@ -99,8 +100,10 @@ public class BuildMaxDistrictStrategy implements Strategy {
     }
 
     public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCardsInHand) {
-        return districtCardsInHand.stream()
+        List<DistrictCard> copy = new ArrayList<>(districtCardsInHand);
+        copy.removeAll(player.getDistrictCardsBuilt());
+        return copy.stream()
                 .min(Comparator.comparing(DistrictCard::getPriceToBuild))
-                .orElseThrow(NoSuchElementException::new);
+                .orElse(null);
     }
 }

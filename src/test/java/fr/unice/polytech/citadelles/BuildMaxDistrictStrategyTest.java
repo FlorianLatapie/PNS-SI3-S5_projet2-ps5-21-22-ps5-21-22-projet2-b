@@ -176,6 +176,7 @@ public class BuildMaxDistrictStrategyTest {
     @Test
     void getCheapestDistrictCardTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        Player player = new Player("player", new ArrayList<>(), 2, new Random(), districtStrategy);
         DistrictCard districtCard = districtStrategy.getCheapestDistrictCard(districtCards);
         //Gets the first cheapest card
         assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());

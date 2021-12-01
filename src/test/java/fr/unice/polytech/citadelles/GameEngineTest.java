@@ -104,7 +104,7 @@ class GameEngineTest {
 
         assertTrue(ge.askToBuildDistrict(mockPlayer));
         assertEquals("mockPlayerName has chose to build a district" + System.lineSeparator() +
-                "mockPlayerName has the following district cards in hand      : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
+                "mockPlayerName has the following district cards in hand          : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
         assertFalse(ge.askToBuildDistrict(mockPlayer));
     }
 
