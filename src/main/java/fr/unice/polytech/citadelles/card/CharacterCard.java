@@ -1,4 +1,7 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.card;
+
+import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
 
 import java.util.Arrays;
 import java.util.Objects;

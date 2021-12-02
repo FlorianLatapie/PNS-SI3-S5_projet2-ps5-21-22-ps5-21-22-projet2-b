@@ -1,5 +1,12 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DeckOfCards;
+import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.enums.DistrictName;
+import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

@@ -1,5 +1,9 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.enums.DistrictName;
+import fr.unice.polytech.citadelles.player.Player;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +83,7 @@ class IOTest {
     @Test
     void printSeparatorTest() {
         io.printSeparator("test");
-        assertEquals("----------------------------------------------------------------------------- test -----------------------------------------------------------------------------" + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+        assertEquals("--------------------------------------------------------------------- test ---------------------------------------------------------------------" + System.lineSeparator() + System.lineSeparator(), outContent.toString());
     }
 
     @Test

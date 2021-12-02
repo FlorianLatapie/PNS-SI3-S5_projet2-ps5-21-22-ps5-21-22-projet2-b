@@ -1,5 +1,7 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.player;
 
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 

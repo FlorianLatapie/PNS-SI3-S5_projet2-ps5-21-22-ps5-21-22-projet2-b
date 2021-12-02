@@ -1,10 +1,15 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DeckOfCards;
+import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French

@@ -1,5 +1,7 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.player.Player;
+
 import java.util.List;
 
 /**
@@ -24,8 +26,8 @@ public class IO {
     }
 
     public void printSeparator(String text) {
-        String separator = "-----------------------------------------------------------------------------";
-        if (!text.isEmpty()) text = " " + text + " ";
+        String separator = "---------------------------------------------------------------------";
+        if (!text.isEmpty()) text = " " + text.trim() + " ";
         System.out.println(separator + text + separator + System.lineSeparator());
     }
 

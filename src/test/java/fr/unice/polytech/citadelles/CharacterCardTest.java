@@ -1,5 +1,8 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

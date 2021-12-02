@@ -1,4 +1,6 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.card;
+
+import fr.unice.polytech.citadelles.enums.Color;
 
 public class Card {
     private Color color;

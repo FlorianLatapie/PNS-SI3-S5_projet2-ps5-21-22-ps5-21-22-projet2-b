@@ -1,7 +1,7 @@
 package fr.unice.polytech.citadelles.strategy;
 
-import fr.unice.polytech.citadelles.CharacterCard;
-import fr.unice.polytech.citadelles.Player;
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
 

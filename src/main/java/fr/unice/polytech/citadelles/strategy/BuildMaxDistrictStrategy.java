@@ -1,7 +1,10 @@
 package fr.unice.polytech.citadelles.strategy;
 
-import fr.unice.polytech.citadelles.CharacterName;
-import fr.unice.polytech.citadelles.*;
+import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.*;
 
@@ -85,6 +88,10 @@ public class BuildMaxDistrictStrategy implements Strategy {
         List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
         List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
         colorsToSearch.remove(Color.GREY);
+
+        if (countOfEachColor.size() != colorsToSearch.size()){
+            throw new RuntimeException("countOfEachColor and colorsToSearch sizes are not equal : " + countOfEachColor.size() + " vs " + colorsToSearch.size());
+        }
 
         for (int i = 0; i < colorsToSearch.size(); i++) {
             for (DistrictCard districtCard : builtDistricts) {

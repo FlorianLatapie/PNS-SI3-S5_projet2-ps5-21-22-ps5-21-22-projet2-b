@@ -1,8 +1,8 @@
 package fr.unice.polytech.citadelles.strategy;
 
-import fr.unice.polytech.citadelles.CharacterCard;
-import fr.unice.polytech.citadelles.DistrictCard;
-import fr.unice.polytech.citadelles.Player;
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
 import java.util.Objects;
