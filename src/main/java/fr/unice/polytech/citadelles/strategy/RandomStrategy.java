@@ -23,7 +23,7 @@ public class RandomStrategy implements Strategy {
     }
 
     @Override
-    public boolean getTaxesAtBeginingOfTurn() {
+    public boolean getTaxesAtBeginningOfTurn() {
         return random.nextBoolean();
     }
 
@@ -61,5 +61,10 @@ public class RandomStrategy implements Strategy {
         if (!(o instanceof RandomStrategy)) return false;
         RandomStrategy that = (RandomStrategy) o;
         return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, random);
     }
 }

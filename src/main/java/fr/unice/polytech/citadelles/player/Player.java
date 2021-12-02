@@ -6,9 +6,8 @@ import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Player {
+public class Player{
     private List<DistrictCard> districtCardsInHand;
     private List<DistrictCard> districtCardsBuilt;
     private int coins;
@@ -89,8 +88,8 @@ public class Player {
         return strategy.buildDistrict();
     }
 
-    public boolean chooseToGetTaxesAtBeginingOfTurn() {
-        return strategy.getTaxesAtBeginingOfTurn();
+    public boolean chooseToGetTaxesAtBeginningOfTurn() {
+        return strategy.getTaxesAtBeginningOfTurn();
     }
 
     public boolean chooseCoinsOverDrawingACard() {
@@ -102,8 +101,8 @@ public class Player {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
     }
 
-    public Integer getNbOfPoints() { // Integer au lieu de int pour avoir la méthode .compareTo() utilisé dans GameEngine
-        return this.getSumOfCardsBuilt(); // comme ca quand on aura les roles il suffit d'ajouter des méthodes et de les additionner
+    public Integer getNbOfPoints() { // Integer instead of int in order to use the .compareTo() method used in GameEngine
+        return this.getSumOfCardsBuilt();
     }
 
     public Random getRandom() {
@@ -137,8 +136,8 @@ public class Player {
     public List<DistrictCard> getDistrictCardsInHandSorted() {
         return getDistrictCardsInHand()
                 .stream()
-                .sorted(Comparator.comparing(elem -> elem.getPriceToBuild()))
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparing(DistrictCard::getPriceToBuild))
+                .toList();
     }
 
     public Strategy getStrategy() {

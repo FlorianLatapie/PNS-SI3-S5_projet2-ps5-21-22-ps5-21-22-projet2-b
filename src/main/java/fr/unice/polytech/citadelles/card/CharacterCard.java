@@ -25,18 +25,13 @@ public class CharacterCard extends Card {
     }
 
     private Color assignCharacterIndexColor() {
-        switch (this.characterSequence) {
-            case 4:
-                return Color.YELLOW;
-            case 5:
-                return Color.BLUE;
-            case 6:
-                return Color.GREEN;
-            case 8:
-                return Color.RED;
-            default:
-                return Color.GREY;
-        }
+        return switch (this.characterSequence) {
+            case 4 -> Color.YELLOW;
+            case 5 -> Color.BLUE;
+            case 6 -> Color.GREEN;
+            case 8 -> Color.RED;
+            default -> Color.GREY;
+        };
     }
 
     @Override

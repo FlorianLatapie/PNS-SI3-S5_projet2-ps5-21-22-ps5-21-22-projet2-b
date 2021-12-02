@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DistrictCardTest {
-    DistrictCard dc, dcRed, dcGreen, dcBlue, dcYellow, dcGrey;
+    DistrictCard dcRed, dcGreen, dcBlue, dcYellow, dcGrey;
 
     @BeforeEach
     void setUp() {

@@ -52,7 +52,7 @@ class GameEngineTest {
             assertEquals(new CharacterCard(CharacterName.MERCHANT), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
             listChar.clear();
             Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
-            assertEquals("Character card deck of the round is empty : the player can't choose a character card.", exception.getMessage());
+            assertEquals("characterCardDeckOfTheRound is empty: the player Player_1 cannot choose a character card.", exception.getMessage());
 
         } else {
             List<CharacterCard> listChar = doc.getNewCharacterCards();
@@ -92,7 +92,7 @@ class GameEngineTest {
     @Test
     void askToGetTaxesNowTest() {
         Player mockPlayer = mock(Player.class);
-        when(mockPlayer.chooseToGetTaxesAtBeginingOfTurn()).thenReturn(true, false);
+        when(mockPlayer.chooseToGetTaxesAtBeginningOfTurn()).thenReturn(true, false);
 
         GameEngine ge = new GameEngine();
 
@@ -110,7 +110,7 @@ class GameEngineTest {
         GameEngine ge = new GameEngine();
 
         assertTrue(ge.askToBuildDistrict(mockPlayer));
-        assertEquals("mockPlayerName has chose to build a district" + System.lineSeparator() +
+        assertEquals("mockPlayerName has chosen to build a district" + System.lineSeparator() +
                 "mockPlayerName has the following district cards in hand          : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
         assertFalse(ge.askToBuildDistrict(mockPlayer));
     }

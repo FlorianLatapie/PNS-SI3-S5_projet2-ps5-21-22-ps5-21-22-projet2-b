@@ -1,7 +1,5 @@
 package fr.unice.polytech.citadelles.card;
 
-import fr.unice.polytech.citadelles.card.CharacterCard;
-import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;

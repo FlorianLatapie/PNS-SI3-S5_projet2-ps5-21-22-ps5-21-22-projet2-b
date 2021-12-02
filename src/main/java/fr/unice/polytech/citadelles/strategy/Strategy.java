@@ -10,7 +10,7 @@ public interface Strategy {
 
     boolean getCoinsOverDrawingACard();
 
-    boolean getTaxesAtBeginingOfTurn();
+    boolean getTaxesAtBeginningOfTurn();
 
     boolean buildDistrict();
 

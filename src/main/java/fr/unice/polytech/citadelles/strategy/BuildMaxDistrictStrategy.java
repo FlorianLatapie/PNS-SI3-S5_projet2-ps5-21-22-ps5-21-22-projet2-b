@@ -44,15 +44,13 @@ public class BuildMaxDistrictStrategy implements Strategy {
     }
 
     @Override
-    public boolean getTaxesAtBeginingOfTurn() {
+    public boolean getTaxesAtBeginningOfTurn() {
         return true;
     }
 
     @Override
     public boolean buildDistrict() {
         List<DistrictCard> districtCardsInHand = player.getDistrictCardsInHand();
-
-        Boolean choice = true;
 
         if (districtCardsInHand.isEmpty()) {
             return false;
@@ -66,7 +64,7 @@ public class BuildMaxDistrictStrategy implements Strategy {
             player.buildDistrictCardsInHand(cheapestCardInHand);
         }
 
-        return choice;
+        return true;
     }
 
     @Override
@@ -81,6 +79,11 @@ public class BuildMaxDistrictStrategy implements Strategy {
         if (!(o instanceof BuildMaxDistrictStrategy)) return false;
         BuildMaxDistrictStrategy that = (BuildMaxDistrictStrategy) o;
         return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, random);
     }
 
     public Color mostCommonColorInBuiltDistricts(List<DistrictCard> builtDistricts) {

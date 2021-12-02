@@ -73,7 +73,6 @@ public class GameEngine {
 
     public void launchGame() {
         int round = 1;
-        List<CharacterCard> characterCardDeckOfTheRound;
 
         io.printSeparator("The game starts !");
 
@@ -81,15 +80,15 @@ public class GameEngine {
             io.printSeparator("Start of the round " + round);
 
             List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
-            io.printSeparator("All the players chose their role for round " + round + "!");
+            io.printSeparator("All players have chosen their role for round " + round + "!");
 
             for (Player player : listOfPlayersSorted) {
                 io.println(player.getName() + " is " + player.getCharacterCard());
 
                 askToChooseCoinsOverDrawingACard(player);
 
-                boolean wantsToReceiveTaxesBeforeBuiling = askToGetTaxesNow(player);
-                if (wantsToReceiveTaxesBeforeBuiling) {
+                boolean wantsToReceiveTaxesBeforeBuilding = askToGetTaxesNow(player);
+                if (wantsToReceiveTaxesBeforeBuilding) {
                     getTaxes(player);
                 }
 
@@ -97,7 +96,7 @@ public class GameEngine {
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
 
-                if (!wantsToReceiveTaxesBeforeBuiling) {
+                if (!wantsToReceiveTaxesBeforeBuilding) {
                     getTaxes(player);
                 }
 
@@ -135,7 +134,7 @@ public class GameEngine {
     public boolean askToBuildDistrict(Player player) {
         boolean choice = player.chooseToBuildDistrict();
         if (choice) {
-            io.println(player.getName() + " has chose to build a district");
+            io.println(player.getName() + " has chosen to build a district");
             io.printDistrictCardsInHandOf(player);
         }
         return choice;
@@ -143,12 +142,12 @@ public class GameEngine {
 
     public CharacterCard askToChooseCharacter(Player player, List<CharacterCard> characterCardDeckOfTheRound) {
         if (characterCardDeckOfTheRound.isEmpty()) {
-            throw new IllegalArgumentException("Character card deck of the round is empty : the player can't choose a character card.");
+            throw new IllegalArgumentException("characterCardDeckOfTheRound is empty: the player " + player.getName() + " cannot choose a character card.");
         }
 
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
         characterCardDeckOfTheRound.remove(choice);
-        io.println(player.getName() + " chose " + player.getCharacterCard());
+        io.println(player.getName() + " chose the " + player.getCharacterCard() + "role");
         return choice;
     }
 
@@ -159,7 +158,7 @@ public class GameEngine {
     }
 
     public boolean askToGetTaxesNow(Player player) {
-        return player.chooseToGetTaxesAtBeginingOfTurn();
+        return player.chooseToGetTaxesAtBeginningOfTurn();
     }
 
     public void giveCoins(Player player) {
@@ -212,10 +211,9 @@ public class GameEngine {
         }
     }
 
-    public List<Player> getWinner() { // Player needs to implements Comparable<Player> to be cleaner
+    public List<Player> getWinner() { // Player needs to implement Comparable<Player> to be cleaner
         List<Player> playersSorted = new ArrayList<>(listOfPlayers);
-        Collections.sort(playersSorted,
-                (player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
+        playersSorted.sort((player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
         io.printWinner(playersSorted);
         return playersSorted;
     }

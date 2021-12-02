@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class RandomStrategyTest {
+class RandomStrategyTest {
     List<DistrictCard> districtCards;
     @BeforeEach
     void init(){
@@ -61,17 +61,17 @@ public class RandomStrategyTest {
     }
 
     @Test
-    void getTaxesAtBeginingOfTurnTest(){
+    void getTaxesAtBeginningOfTurnTest(){
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
         RandomStrategy spy = spy(new RandomStrategy());
         Player player = new Player("Player 1", districtCards, 2, mockRandom,  spy);
 
-        assertTrue(player.chooseToGetTaxesAtBeginingOfTurn());
-        assertFalse(player.chooseToGetTaxesAtBeginingOfTurn());
+        assertTrue(player.chooseToGetTaxesAtBeginningOfTurn());
+        assertFalse(player.chooseToGetTaxesAtBeginningOfTurn());
 
-        verify(spy, times(2)).getTaxesAtBeginingOfTurn();
+        verify(spy, times(2)).getTaxesAtBeginningOfTurn();
     }
 
     @Test

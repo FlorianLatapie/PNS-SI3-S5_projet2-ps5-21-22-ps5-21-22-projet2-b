@@ -141,9 +141,7 @@ class PlayerTest {
 
     @Test
     void chooseCharacterTest() {
-        Exception exception = assertThrows(Exception.class, () -> {
-            p.chooseCharacter(new ArrayList<>());
-        });
+        Exception exception = assertThrows(Exception.class, () -> p.chooseCharacter(new ArrayList<>()));
         assertEquals("Character deck of card is empty, Player_1 cannot choose a card", exception.getMessage());
     }
 

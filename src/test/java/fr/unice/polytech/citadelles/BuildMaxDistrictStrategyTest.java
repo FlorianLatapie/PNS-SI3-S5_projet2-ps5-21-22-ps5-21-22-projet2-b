@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BuildMaxDistrictStrategyTest {
+class BuildMaxDistrictStrategyTest {
     static List<DistrictCard> districtCards;
     static List<DistrictCard> districtCardsV2;
 
@@ -39,7 +39,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void chooseCharacterTest() {
+    void chooseCharacterTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
 
@@ -51,7 +51,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void chooseCharacterTestWithMostColorsInHand() {
+    void chooseCharacterTestWithMostColorsInHand() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player = new Player("Player 1", districtCards, 100, new Random(), districtStrategy);
 
@@ -69,7 +69,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void chooseCharacterTestWithMostColorsInHand2() {
+    void chooseCharacterTestWithMostColorsInHand2() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
 
         // just to be sure that is NOT a random choice
@@ -92,7 +92,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void chooseCharacterTestRandom() {
+    void chooseCharacterTestRandom() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
@@ -117,7 +117,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void getCoinsOverDrawingACardTest() {
+    void getCoinsOverDrawingACardTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
         assertTrue(districtStrategy.getCoinsOverDrawingACard());
@@ -128,15 +128,15 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void getTaxesAtBeginingOfTurnTest() {
+    void getTaxesAtBeginningOfTurnTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
         //Always true (part of the strategy)
-        assertTrue(districtStrategy.getTaxesAtBeginingOfTurn());
+        assertTrue(districtStrategy.getTaxesAtBeginningOfTurn());
     }
 
     @Test
-    public void mostCommonColorInBuiltDistrictsTest() {
+    void mostCommonColorInBuiltDistrictsTest() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         List<DistrictCard> dc = new ArrayList<>(List.of(
                 new DistrictCard(Color.RED, DistrictName.NONE, 10),
@@ -189,7 +189,7 @@ public class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    public void buildDistrict() {
+    void buildDistrict() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
         //Not enough coins
@@ -215,6 +215,6 @@ public class BuildMaxDistrictStrategyTest {
         districtStrategy2.init(player2);
 
         assertEquals(districtStrategy, districtStrategy2);
-        assertNotEquals(districtStrategy, 1); // wrong order of arguments to test the .equals method of p and not the other object
+        assertNotEquals(districtStrategy, 1); // wrong order of arguments to test the .equals method of districtStrategy and not the other object
     }
 }
