@@ -88,8 +88,7 @@ public class GameEngine {
 
         while (playersWhoBuilt8Cards.isEmpty()) {
             io.printSeparator("Start of the round " + round);
-            everyoneCanPlay();
-            stolenCharacter = null;
+            resetThePenalties();
 
             List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
             io.printSeparator("All players have chosen their role for round " + round + "!");
@@ -172,8 +171,9 @@ public class GameEngine {
         }
     }
 
-    public void everyoneCanPlay() {
+    public void resetThePenalties() {
         this.playerThatCantPlay = null;
+        this.stolenCharacter = null;
     }
 
     public Player updatePlayersThatCantPlay(CharacterCard characterCard) {
@@ -332,6 +332,10 @@ public class GameEngine {
 
     public boolean isStolenCharacter(CharacterCard characterCard) {
         return characterCard.equals(stolenCharacter);
+    }
+
+    public void setStolenCharacter(CharacterCard stolenCharacter) {
+        this.stolenCharacter = stolenCharacter;
     }
 
     public void setPlayerThatCantPlay(Player playerThatCantPlay) {

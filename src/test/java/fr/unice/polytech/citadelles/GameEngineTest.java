@@ -474,21 +474,21 @@ class GameEngineTest {
         assertFalse(ge.canThisPlayerPlay(player));
         assertTrue(ge.canThisPlayerPlay(player2));
 
-        ge.everyoneCanPlay();
+        ge.resetThePenalties();
 
         assertTrue(ge.canThisPlayerPlay(player));
         assertTrue(ge.canThisPlayerPlay(player2));
     }
 
     @Test
-    void everyoneCanPlayTest() {
+    void resetThePenaltiesTest() {
         GameEngine ge = new GameEngine();
 
         Player player = new Player("player");
 
         ge.setPlayerThatCantPlay(player);
 
-        ge.everyoneCanPlay();
+        ge.resetThePenalties();
         assertNull(ge.getPlayerThatCantPlay());
     }
 
@@ -576,6 +576,21 @@ class GameEngineTest {
 
         assertEquals(player, ge.getPlayerWithCharacter(new CharacterCard(CharacterName.ASSASSIN)));
         assertNull(ge.getPlayerWithCharacter(new CharacterCard(CharacterName.THIEF)));
+    }
+
+    @Test
+    void isStolenCharacterTest(){
+        GameEngine ge = new GameEngine();
+
+        ge.setStolenCharacter(new CharacterCard(CharacterName.ASSASSIN));
+
+        assertTrue(ge.isStolenCharacter((new CharacterCard(CharacterName.ASSASSIN))));
+        assertFalse(ge.isStolenCharacter((new CharacterCard(CharacterName.THIEF))));
+
+        ge.resetThePenalties();
+
+        assertFalse(ge.isStolenCharacter((new CharacterCard(CharacterName.ASSASSIN))));
+        assertFalse(ge.isStolenCharacter((new CharacterCard(CharacterName.THIEF))));
     }
 
     @AfterAll
