@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * IO means Input/Output
@@ -13,7 +14,7 @@ public class IO {
     }
 
     public void printDistrictCardsBuiltBy(Player player) {
-        this.println(player.getName() + " has the following district cards on the table ("+player.getDistrictCardsBuilt().size()+") : " + player.getDistrictCardsBuilt());
+        this.println(player.getName() + " has the following district cards on the table (" + player.getDistrictCardsBuilt().size() + ") : " + player.getDistrictCardsBuilt());
     }
 
     public void printCoinsOf(Player player) {
@@ -46,5 +47,13 @@ public class IO {
                     }
                 }
         );
+    }
+
+    public void printTaxesEarned(Player player, AtomicInteger sum) {
+        if (sum.get() == 1) {
+            this.println(player.getName() + " taxes earned " + sum + " coin");
+        } else {
+            this.println(player.getName() + " taxes earned " + sum + " coins");
+        }
     }
 }

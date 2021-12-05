@@ -442,6 +442,111 @@ class GameEngineTest {
         outContent.reset();
     }
 
+    @Test
+    void canThisPlayerPlayTest() {
+        GameEngine ge = new GameEngine();
+
+        Player player = new Player("player");
+        Player player2 = new Player("player2");
+
+        ge.setPlayerThatCantPlay(player);
+
+        assertFalse(ge.canThisPlayerPlay(player));
+        assertTrue(ge.canThisPlayerPlay(player2));
+
+        ge.everyoneCanPlay();
+
+        assertTrue(ge.canThisPlayerPlay(player));
+        assertTrue(ge.canThisPlayerPlay(player2));
+    }
+
+    @Test
+    void everyoneCanPlayTest() {
+        GameEngine ge = new GameEngine();
+
+        Player player = new Player("player");
+
+        ge.setPlayerThatCantPlay(player);
+
+        ge.everyoneCanPlay();
+        assertNull(ge.getPlayerThatCantPlay());
+    }
+
+    @Test
+    void callCharacterCardActionTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+
+        Player player = new Player("player", new ArrayList<>(), 100, mockRandom);
+        player.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
+        Player player2 = new Player("player2", new ArrayList<>(), 100, mockRandom);
+        player2.setCharacterCard(new CharacterCard(CharacterName.THIEF));
+        Player player3 = new Player("player3", new ArrayList<>(), 100, mockRandom);
+        player3.setCharacterCard(new CharacterCard(CharacterName.MAGICIAN));
+        Player player4 = new Player("player4", new ArrayList<>(), 100, mockRandom);
+        player4.setCharacterCard(new CharacterCard(CharacterName.KING));
+        Player player5 = new Player("player5", new ArrayList<>(), 100, mockRandom);
+        player5.setCharacterCard(new CharacterCard(CharacterName.BISHOP));
+        Player player6 = new Player("player6", new ArrayList<>(), 100, mockRandom);
+        player6.setCharacterCard(new CharacterCard(CharacterName.MERCHANT));
+        Player player7 = new Player("player7", new ArrayList<>(), 100, mockRandom);
+        player7.setCharacterCard(new CharacterCard(CharacterName.ARCHITECT));
+        Player player8 = new Player("player8", new ArrayList<>(), 100, mockRandom);
+        player8.setCharacterCard(new CharacterCard(CharacterName.WARLORD));
+
+        GameEngine ge = new GameEngine(mockRandom, player, player2, player3, player4, player5, player6, player7, player8);
+
+        ge.callCharacterCardAction(player);
+        assertEquals("player does his power ..." + System.lineSeparator() +
+                "player killed THIEF [sequence: 2, color: GREY]" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player2);
+        assertEquals("player2 does his power ..." + System.lineSeparator() +
+                "player is THIEF which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player3);
+        assertEquals("player3 does his power ..." + System.lineSeparator() +
+                "player is MAGICIAN which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player4);
+        assertEquals("player4 does his power ..." + System.lineSeparator() +
+                "player is KING which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player5);
+        assertEquals("player5 does his power ..." + System.lineSeparator() +
+                "player is BISHOP which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player6);
+        assertEquals("player6 does his power ..." + System.lineSeparator() +
+                "player is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(player7);
+        assertEquals("player7 does his power ..." + System.lineSeparator() +
+                "player is ARCHITECT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+        ge.callCharacterCardAction(player8);
+        assertEquals("player8 does his power ..." + System.lineSeparator() +
+                "player is WARLORD which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+    }
+
+    @Test
+    void updatePlayersThatCantPlayTest() {
+        Player player = new Player("player");
+        player.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
+
+        GameEngine ge = new GameEngine(new Random(), player);
+
+        assertEquals(player, ge.updatePlayersThatCantPlay(new CharacterCard(CharacterName.ASSASSIN)));
+        assertEquals(player, ge.getPlayerThatCantPlay());
+    }
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);

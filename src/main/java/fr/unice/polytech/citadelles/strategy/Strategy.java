@@ -4,17 +4,26 @@ import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
+import java.util.Random;
 
-public interface Strategy {
-    CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
+public abstract class Strategy {
+    Player player;
+    Random random;
 
-    boolean getCoinsOverDrawingACard();
+    public abstract CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
 
-    boolean getTaxesAtBeginningOfTurn();
+    public abstract boolean getCoinsOverDrawingACard();
 
-    boolean buildDistrict();
+    public abstract boolean getTaxesAtBeginningOfTurn();
 
-    void init(Player player);
+    public abstract boolean buildDistrict();
 
-    // public abstract boolean usePower();
+    public void init(Player player) {
+        this.player = player;
+        this.random = player.getRandom();
+    }
+
+    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
+        return killableCharacterCards.get(random.nextInt(0, killableCharacterCards.size()));
+    }
 }

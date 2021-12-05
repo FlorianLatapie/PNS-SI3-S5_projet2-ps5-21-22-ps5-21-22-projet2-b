@@ -7,7 +7,7 @@ import fr.unice.polytech.citadelles.strategy.Strategy;
 
 import java.util.*;
 
-public class Player{
+public class Player {
     private List<DistrictCard> districtCardsInHand;
     private List<DistrictCard> districtCardsBuilt;
     private int coins;
@@ -96,6 +96,11 @@ public class Player{
         return strategy.getCoinsOverDrawingACard();
     }
 
+    //--------------------------- CharacterCard powers / actions  ---------------------------
+    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
+        return strategy.killCharacterCard(killableCharacterCards);
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
@@ -175,4 +180,6 @@ public class Player{
     public boolean isAllowedToBuildDistrict(DistrictCard districtCard) {
         return !districtCardsBuilt.contains(districtCard);
     }
+
+
 }

@@ -11,7 +11,10 @@ import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -202,6 +205,13 @@ class BuildMaxDistrictStrategyTest {
 
         Player player3 = new Player("Player 3", districtCards, 1, new Random(), districtStrategy);
         assertTrue(districtStrategy.buildDistrict());
+    }
+
+    @Test
+    void hashCodeTest() {
+        Random random = new Random();
+        Player player = new Player("Player 1", districtCards, 200, random, new BuildMaxDistrictStrategy());
+        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
     }
 
     @Test

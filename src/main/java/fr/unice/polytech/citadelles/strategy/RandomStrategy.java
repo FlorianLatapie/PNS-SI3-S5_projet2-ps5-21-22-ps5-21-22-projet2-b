@@ -2,15 +2,11 @@ package fr.unice.polytech.citadelles.strategy;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
-public class RandomStrategy implements Strategy {
-    private Player player;
-    private Random random;
+public class RandomStrategy extends Strategy {
 
     @Override
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
@@ -47,12 +43,6 @@ public class RandomStrategy implements Strategy {
             }
         }
         return choice;
-    }
-
-    @Override
-    public void init(Player player) {
-        this.player = player;
-        this.random = player.getRandom();
     }
 
     @Override

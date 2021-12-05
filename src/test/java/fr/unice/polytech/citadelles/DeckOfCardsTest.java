@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,6 +26,16 @@ class DeckOfCardsTest {
         doc = new DeckOfCards(mockRandom);
 
         assertEquals(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2), doc.getRandomDistrictCard());
+    }
+
+    @Test
+    void getRandomDistrictCardTest2() {
+        doc = new DeckOfCards(new Random());
+        for (int i = 0; i < 54; i++) {
+            doc.getRandomDistrictCard();
+        }
+        Exception exception = assertThrows(Exception.class, () -> doc.getRandomDistrictCard());
+        assertEquals("districtCards is empty !", exception.getMessage());
     }
 
     @Test

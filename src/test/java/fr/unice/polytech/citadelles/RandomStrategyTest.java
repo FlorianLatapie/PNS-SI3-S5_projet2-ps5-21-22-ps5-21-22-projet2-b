@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,8 +22,9 @@ import static org.mockito.Mockito.*;
 
 class RandomStrategyTest {
     List<DistrictCard> districtCards;
+
     @BeforeEach
-    void init(){
+    void init() {
         districtCards = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             districtCards.add(new DistrictCard(Color.GREY, DistrictName.NONE, i));
@@ -31,7 +33,7 @@ class RandomStrategyTest {
     }
 
     @Test
-    void chooseCharacterTest(){
+    void chooseCharacterTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
@@ -47,26 +49,26 @@ class RandomStrategyTest {
     }
 
     @Test
-    void getCoinsOverDrawingACardTest(){
+    void getCoinsOverDrawingACardTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
         RandomStrategy spy = spy(new RandomStrategy());
         Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
 
-       assertTrue(player.chooseCoinsOverDrawingACard());
-       assertFalse(player.chooseCoinsOverDrawingACard());
+        assertTrue(player.chooseCoinsOverDrawingACard());
+        assertFalse(player.chooseCoinsOverDrawingACard());
 
         verify(spy, times(2)).getCoinsOverDrawingACard();
     }
 
     @Test
-    void getTaxesAtBeginningOfTurnTest(){
+    void getTaxesAtBeginningOfTurnTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
         RandomStrategy spy = spy(new RandomStrategy());
-        Player player = new Player("Player 1", districtCards, 2, mockRandom,  spy);
+        Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
 
         assertTrue(player.chooseToGetTaxesAtBeginningOfTurn());
         assertFalse(player.chooseToGetTaxesAtBeginningOfTurn());
@@ -75,7 +77,7 @@ class RandomStrategyTest {
     }
 
     @Test
-    void chooseToBuildDistrictTest(){
+    void chooseToBuildDistrictTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
@@ -92,6 +94,34 @@ class RandomStrategyTest {
         assertFalse(player.chooseToBuildDistrict());
 
         verify(spy, times(2)).buildDistrict();
+    }
+
+    @Test
+    void killCharacterCardTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0, 1, 2, 3, 4, 5);
+
+        List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player player = new Player("Player 1", dc, 200, mockRandom, new RandomStrategy());
+
+        List<CharacterCard> characterCards = new DeckOfCards().getNewCharacterCards();
+        characterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCards.remove(new CharacterCard(CharacterName.BISHOP));
+
+        assertEquals(new CharacterCard(CharacterName.THIEF), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.KING), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.ARCHITECT), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.WARLORD), player.killCharacterCard(characterCards));
+    }
+
+    @Test
+    void hashCodeTest() {
+        Random random = new Random();
+        Player player = new Player("Player 1", districtCards, 200, random, new RandomStrategy());
+        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
     }
 
     @Test

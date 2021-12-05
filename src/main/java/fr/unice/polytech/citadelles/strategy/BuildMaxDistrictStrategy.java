@@ -1,17 +1,13 @@
 package fr.unice.polytech.citadelles.strategy;
 
-import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
-import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.*;
 
-public class BuildMaxDistrictStrategy implements Strategy {
-    private Player player;
-    private Random random;
-
+public class BuildMaxDistrictStrategy extends Strategy {
     @Override
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
         CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
@@ -34,11 +30,10 @@ public class BuildMaxDistrictStrategy implements Strategy {
 
     @Override
     public boolean getCoinsOverDrawingACard() {
-        if(!player.getDistrictCardsInHand().isEmpty()){ // get coins if cards in hand are not empty
+        if (!player.getDistrictCardsInHand().isEmpty()) { // get coins if cards in hand are not empty
             DistrictCard districtCard = player.getDistrictCardsInHandSorted().get(0);
             return player.isAllowedToBuildDistrict(districtCard) && !player.canBuildDistrict(districtCard);
-        }
-        else{
+        } else {
             return false;
         }
     }
@@ -57,7 +52,7 @@ public class BuildMaxDistrictStrategy implements Strategy {
         }
 
         DistrictCard cheapestCardInHand = getCheapestDistrictCard(districtCardsInHand);
-        if(cheapestCardInHand==null) return false;
+        if (cheapestCardInHand == null) return false;
         if (!player.canBuildDistrict(cheapestCardInHand)) {
             return false;
         } else {
@@ -65,12 +60,6 @@ public class BuildMaxDistrictStrategy implements Strategy {
         }
 
         return true;
-    }
-
-    @Override
-    public void init(Player player) {
-        this.player = player;
-        this.random = player.getRandom();
     }
 
     @Override
@@ -92,7 +81,7 @@ public class BuildMaxDistrictStrategy implements Strategy {
         List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
         colorsToSearch.remove(Color.GREY);
 
-        if (countOfEachColor.size() != colorsToSearch.size()){
+        if (countOfEachColor.size() != colorsToSearch.size()) {
             throw new RuntimeException("countOfEachColor and colorsToSearch sizes are not equal : " + countOfEachColor.size() + " vs " + colorsToSearch.size());
         }
 
