@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
@@ -99,7 +98,7 @@ public class GameEngine {
                 if (canThisPlayerPlay(player)) {
                     io.println(player.getName() + " is " + player.getCharacterCard());
 
-                    if (isStolenCharacter(player.getCharacterCard())){
+                    if (isStolenCharacter(player.getCharacterCard())) {
                         io.println(player.getName() + " lost " + player.getCoins() + " coins because of the thief");
                         player.removeCoins(player.getCoins());
                         io.println(player.getName() + " has " + player.getCoins() + " coins");
@@ -135,7 +134,7 @@ public class GameEngine {
     }
 
     public void giveMoneyToThief(Player thief, Player player) {
-        if(player!=null){
+        if (player != null) {
             thief.receiveCoins(player.getCoins());
         }
     }
@@ -178,12 +177,7 @@ public class GameEngine {
     }
 
     public Player updatePlayersThatCantPlay(CharacterCard characterCard) {
-        listOfPlayers.forEach(
-                player -> {
-                    if (player.getCharacterCard().equals(characterCard)) {
-                        playerThatCantPlay = player;
-                    }
-                });
+        playerThatCantPlay = this.getPlayerWithCharacter(characterCard);
         return playerThatCantPlay;
     }
 
@@ -304,16 +298,14 @@ public class GameEngine {
 
     // getters && setters
 
-    private Player getPlayerWithCharacter(CharacterCard character) {
-
+    public Player getPlayerWithCharacter(CharacterCard character) {
         List<Player> players = listOfPlayers.stream()
                 .filter(elem -> elem.getCharacterCard().equals(character))
-                .collect(Collectors.toList());
+                .toList();
 
-        if(players.size()>0){
+        if (!players.isEmpty()) {
             return players.get(0);
-        }
-        else{
+        } else {
             return null;
         }
     }

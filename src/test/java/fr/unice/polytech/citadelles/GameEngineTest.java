@@ -567,6 +567,17 @@ class GameEngineTest {
         assertEquals(player, ge.getPlayerThatCantPlay());
     }
 
+    @Test
+    void getPlayerWithCharacterTest(){
+        Player player = new Player("player");
+        player.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
+
+        GameEngine ge = new GameEngine(new Random(), player);
+
+        assertEquals(player, ge.getPlayerWithCharacter(new CharacterCard(CharacterName.ASSASSIN)));
+        assertNull(ge.getPlayerWithCharacter(new CharacterCard(CharacterName.THIEF)));
+    }
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);

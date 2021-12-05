@@ -155,4 +155,12 @@ class PlayerTest {
                 "characterCard=null" + System.lineSeparator() +
                 "}", p.toString());
     }
+
+    @Test
+    void isAllowedToBuildDistrictTest() {
+        assertTrue(p.isAllowedToBuildDistrict(new DistrictCard(Color.GREEN, DistrictName.TAVERN, 10)));
+
+        p.buildDistrictCardsInHand(p.getDistrictCardsInHand().get(0));
+        assertFalse(p.isAllowedToBuildDistrict(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+    }
 }
