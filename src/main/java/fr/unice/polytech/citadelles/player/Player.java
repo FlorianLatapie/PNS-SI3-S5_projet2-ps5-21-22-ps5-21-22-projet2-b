@@ -138,12 +138,6 @@ public class Player {
         return districtCardsInHand;
     }
 
-    public List<DistrictCard> getDistrictCardsInHandSorted() {
-        return getDistrictCardsInHand()
-                .stream()
-                .sorted(Comparator.comparing(DistrictCard::getPriceToBuild))
-                .toList();
-    }
 
     public Strategy getStrategy() {
         return strategy;
@@ -180,6 +174,4 @@ public class Player {
     public boolean isAllowedToBuildDistrict(DistrictCard districtCard) {
         return !districtCardsBuilt.contains(districtCard);
     }
-
-
 }

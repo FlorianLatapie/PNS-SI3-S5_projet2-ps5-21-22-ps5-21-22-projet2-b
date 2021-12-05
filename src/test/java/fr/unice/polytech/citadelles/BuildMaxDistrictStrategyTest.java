@@ -139,59 +139,6 @@ class BuildMaxDistrictStrategyTest {
     }
 
     @Test
-    void mostCommonColorInBuiltDistrictsTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        List<DistrictCard> dc = new ArrayList<>(List.of(
-                new DistrictCard(Color.RED, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
-                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
-                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10)
-
-        ));
-
-        Color color = districtStrategy.mostCommonColorInBuiltDistricts(dc);
-        assertEquals(Color.RED, color);
-        List<DistrictCard> dc2 = new ArrayList<>(List.of(
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
-                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
-                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.RED, DistrictName.NONE, 10)
-
-        ));
-        // arbitrary choice of order in case of a tie: RED, GREEN, BLUE, YELLOW
-        assertEquals(Color.RED, districtStrategy.mostCommonColorInBuiltDistricts(dc2));
-
-        List<DistrictCard> dc3 = new ArrayList<>(List.of(
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREEN, DistrictName.NONE, 10),
-                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
-                new DistrictCard(Color.BLUE, DistrictName.NONE, 10),
-                new DistrictCard(Color.YELLOW, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.GREY, DistrictName.NONE, 10),
-                new DistrictCard(Color.RED, DistrictName.NONE, 10)
-
-        ));
-
-        assertEquals(Color.BLUE, districtStrategy.mostCommonColorInBuiltDistricts(dc3));
-    }
-
-    @Test
-    void getCheapestDistrictCardTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("player", new ArrayList<>(), 2, new Random(), districtStrategy);
-        DistrictCard districtCard = districtStrategy.getCheapestDistrictCard(districtCards);
-        //Gets the first cheapest card
-        assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());
-    }
-
-    @Test
     void buildDistrict() {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);

@@ -53,6 +53,7 @@ class GameEngineTest {
             listChar.clear();
             Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
             assertEquals("characterCardDeckOfTheRound is empty: the player Player_1 cannot choose a character card.", exception.getMessage());
+            assertEquals("Player_1 chose MERCHANT [sequence: 6, color: GREEN]" + System.lineSeparator(), outContent.toString());
 
         } else {
             List<CharacterCard> listChar = doc.getNewCharacterCards();
@@ -503,36 +504,36 @@ class GameEngineTest {
 
         ge.callCharacterCardAction(player2);
         assertEquals("player2 does his power ..." + System.lineSeparator() +
-                "player is THIEF which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player2 is THIEF which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player3);
         assertEquals("player3 does his power ..." + System.lineSeparator() +
-                "player is MAGICIAN which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player3 is MAGICIAN which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player4);
         assertEquals("player4 does his power ..." + System.lineSeparator() +
-                "player is KING which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player4 is KING which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player5);
         assertEquals("player5 does his power ..." + System.lineSeparator() +
-                "player is BISHOP which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player5 is BISHOP which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player6);
         assertEquals("player6 does his power ..." + System.lineSeparator() +
-                "player is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player6 is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player7);
         assertEquals("player7 does his power ..." + System.lineSeparator() +
-                "player is ARCHITECT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player7 is ARCHITECT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
         ge.callCharacterCardAction(player8);
         assertEquals("player8 does his power ..." + System.lineSeparator() +
-                "player is WARLORD which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "player8 is WARLORD which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
     }
 

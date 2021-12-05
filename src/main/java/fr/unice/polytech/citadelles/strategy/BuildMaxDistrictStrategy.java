@@ -4,10 +4,14 @@ import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.player.PlayerTools;
 
 import java.util.*;
 
 public class BuildMaxDistrictStrategy extends Strategy {
+    private PlayerTools playerTools;
+
     @Override
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
         CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
@@ -17,7 +21,7 @@ public class BuildMaxDistrictStrategy extends Strategy {
             return favChar;
         } else {
             if (!builtDistricts.isEmpty()) {
-                Color mostFrequentColor = mostCommonColorInBuiltDistricts(builtDistricts);
+                Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
                 for (CharacterCard characterCard : characterCardDeckOfTheGame) {
                     if (characterCard.getColor().equals(mostFrequentColor)) {
                         return characterCard;
@@ -31,7 +35,7 @@ public class BuildMaxDistrictStrategy extends Strategy {
     @Override
     public boolean getCoinsOverDrawingACard() {
         if (!player.getDistrictCardsInHand().isEmpty()) { // get coins if cards in hand are not empty
-            DistrictCard districtCard = player.getDistrictCardsInHandSorted().get(0);
+            DistrictCard districtCard = playerTools.getCheapestCardInHand();
             return player.isAllowedToBuildDistrict(districtCard) && !player.canBuildDistrict(districtCard);
         } else {
             return false;
@@ -51,7 +55,7 @@ public class BuildMaxDistrictStrategy extends Strategy {
             return false;
         }
 
-        DistrictCard cheapestCardInHand = getCheapestDistrictCard(districtCardsInHand);
+        DistrictCard cheapestCardInHand = playerTools.getCheapestDistrictCard();
         if (cheapestCardInHand == null) return false;
         if (!player.canBuildDistrict(cheapestCardInHand)) {
             return false;
@@ -75,34 +79,10 @@ public class BuildMaxDistrictStrategy extends Strategy {
         return Objects.hash(player, random);
     }
 
-    public Color mostCommonColorInBuiltDistricts(List<DistrictCard> builtDistricts) {
-        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0;
-        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
-        List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
-        colorsToSearch.remove(Color.GREY);
-
-        if (countOfEachColor.size() != colorsToSearch.size()) {
-            throw new RuntimeException("countOfEachColor and colorsToSearch sizes are not equal : " + countOfEachColor.size() + " vs " + colorsToSearch.size());
-        }
-
-        for (int i = 0; i < colorsToSearch.size(); i++) {
-            for (DistrictCard districtCard : builtDistricts) {
-                if (districtCard.getColor().equals(colorsToSearch.get(i))) {
-                    countOfEachColor.set(i, countOfEachColor.get(i) + 1);
-                }
-            }
-        }
-        int firstMaxCount = Collections.max(countOfEachColor);
-        int index = countOfEachColor.indexOf(firstMaxCount);
-
-        return Color.values()[index];
-    }
-
-    public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCardsInHand) {
-        List<DistrictCard> copy = new ArrayList<>(districtCardsInHand);
-        copy.removeAll(player.getDistrictCardsBuilt());
-        return copy.stream()
-                .min(Comparator.comparing(DistrictCard::getPriceToBuild))
-                .orElse(null);
+    @Override
+    public void init(Player player){
+        this.player = player;
+        this.random = player.getRandom();
+        this.playerTools = new PlayerTools(player);
     }
 }

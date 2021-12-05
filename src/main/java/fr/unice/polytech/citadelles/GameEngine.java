@@ -196,7 +196,7 @@ public class GameEngine {
 
         CharacterCard choice = player.chooseCharacter(characterCardDeckOfTheRound);
         characterCardDeckOfTheRound.remove(choice);
-        io.println(player.getName() + " chose the " + player.getCharacterCard() + "role");
+        io.println(player.getName() + " chose " + player.getCharacterCard());
         return choice;
     }
 
