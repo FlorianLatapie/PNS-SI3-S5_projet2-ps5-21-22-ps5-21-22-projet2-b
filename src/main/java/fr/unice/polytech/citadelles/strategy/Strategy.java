@@ -26,4 +26,8 @@ public abstract class Strategy {
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return killableCharacterCards.get(random.nextInt(0, killableCharacterCards.size()));
     }
+
+    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards){
+        return ableToStealCharacterCards.get(random.nextInt(0, ableToStealCharacterCards.size()));
+    }
 }

@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
@@ -31,7 +32,11 @@ public class GameEngine {
 
     private DeckOfCards deckOfCards;
 
+    private CharacterCard characterKilled;
+    private CharacterCard stolenCharacter;
+
     private Random random;
+
 
     public GameEngine() {
         this(4, new Random());
@@ -85,6 +90,7 @@ public class GameEngine {
         while (playersWhoBuilt8Cards.isEmpty()) {
             io.printSeparator("Start of the round " + round);
             everyoneCanPlay();
+            stolenCharacter = null;
 
             List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
             io.printSeparator("All players have chosen their role for round " + round + "!");
@@ -92,6 +98,12 @@ public class GameEngine {
             for (Player player : listOfPlayersSorted) {
                 if (canThisPlayerPlay(player)) {
                     io.println(player.getName() + " is " + player.getCharacterCard());
+
+                    if (isStolenCharacter(player.getCharacterCard())){
+                        io.println(player.getName() + " lost " + player.getCoins() + " coins because of the thief");
+                        player.removeCoins(player.getCoins());
+                        io.println(player.getName() + " has " + player.getCoins() + " coins");
+                    }
 
                     askToChooseCoinsOverDrawingACard(player);
 
@@ -122,22 +134,39 @@ public class GameEngine {
         getWinner();
     }
 
+    public void giveMoneyToThief(Player thief, Player player) {
+        if(player!=null){
+            thief.receiveCoins(player.getCoins());
+        }
+    }
+
     public boolean canThisPlayerPlay(Player player) {
         return !player.equals(playerThatCantPlay);
     }
 
     public void callCharacterCardAction(Player player) {
-        io.println(player.getName() + " does his power ...");
+        io.println(player.getName() + " uses his power ...");
         switch (player.getCharacterCard().getCharacterName()) {
             case ASSASSIN:
                 List<CharacterCard> killableCharacterCards = deckOfCards.getNewCharacterCards();
                 killableCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN)); // cannot suicide
                 killableCharacterCards.remove(new CharacterCard(CharacterName.BISHOP)); // because we cannot kill the BISHOP
-                CharacterCard characterCard = player.killCharacterCard(killableCharacterCards);
+                characterKilled = player.killCharacterCard(killableCharacterCards);
 
-                updatePlayersThatCantPlay(characterCard);
+                updatePlayersThatCantPlay(characterKilled);
 
-                io.println(player.getName() + " killed " + characterCard);
+                io.println(player.getName() + " killed " + characterKilled);
+                break;
+            case THIEF:
+                List<CharacterCard> ableToStealCharacterCards = deckOfCards.getNewCharacterCards();
+                ableToStealCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
+                ableToStealCharacterCards.remove(new CharacterCard(CharacterName.THIEF));
+                ableToStealCharacterCards.remove(characterKilled);
+                stolenCharacter = player.stealCharacterCard(ableToStealCharacterCards);
+
+                giveMoneyToThief(player, getPlayerWithCharacter(stolenCharacter));
+
+                io.println(player.getName() + " stole " + stolenCharacter);
                 break;
             default:
                 io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
@@ -274,6 +303,21 @@ public class GameEngine {
     }
 
     // getters && setters
+
+    private Player getPlayerWithCharacter(CharacterCard character) {
+
+        List<Player> players = listOfPlayers.stream()
+                .filter(elem -> elem.getCharacterCard().equals(character))
+                .collect(Collectors.toList());
+
+        if(players.size()>0){
+            return players.get(0);
+        }
+        else{
+            return null;
+        }
+    }
+
     public List<Player> getListOfPlayers() {
         return listOfPlayers;
     }
@@ -292,6 +336,10 @@ public class GameEngine {
 
     public Player getPlayerThatCantPlay() {
         return playerThatCantPlay;
+    }
+
+    public boolean isStolenCharacter(CharacterCard characterCard) {
+        return characterCard.equals(stolenCharacter);
     }
 
     public void setPlayerThatCantPlay(Player playerThatCantPlay) {

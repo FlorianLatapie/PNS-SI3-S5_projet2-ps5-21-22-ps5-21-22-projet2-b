@@ -444,6 +444,25 @@ class GameEngineTest {
     }
 
     @Test
+    void giveMoneyToThiefTest(){
+        GameEngine ge = new GameEngine();
+
+        Player player = new Player("player");
+        Player player2 = new Player("player2");
+
+        player2.receiveCoins(3);
+
+        assertEquals(2, player.getCoins());
+        assertEquals(5, player2.getCoins());
+
+        ge.giveMoneyToThief(player,player2);
+
+        assertEquals(7, player.getCoins());
+        assertEquals(5, player2.getCoins());
+
+    }
+
+    @Test
     void canThisPlayerPlayTest() {
         GameEngine ge = new GameEngine();
 
@@ -498,41 +517,41 @@ class GameEngineTest {
         GameEngine ge = new GameEngine(mockRandom, player, player2, player3, player4, player5, player6, player7, player8);
 
         ge.callCharacterCardAction(player);
-        assertEquals("player does his power ..." + System.lineSeparator() +
+        assertEquals("player uses his power ..." + System.lineSeparator() +
                 "player killed THIEF [sequence: 2, color: GREY]" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player2);
-        assertEquals("player2 does his power ..." + System.lineSeparator() +
-                "player2 is THIEF which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        assertEquals("player2 uses his power ..." + System.lineSeparator() +
+                "player2 stole MAGICIAN [sequence: 3, color: GREY]" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player3);
-        assertEquals("player3 does his power ..." + System.lineSeparator() +
+        assertEquals("player3 uses his power ..." + System.lineSeparator() +
                 "player3 is MAGICIAN which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player4);
-        assertEquals("player4 does his power ..." + System.lineSeparator() +
+        assertEquals("player4 uses his power ..." + System.lineSeparator() +
                 "player4 is KING which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player5);
-        assertEquals("player5 does his power ..." + System.lineSeparator() +
+        assertEquals("player5 uses his power ..." + System.lineSeparator() +
                 "player5 is BISHOP which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player6);
-        assertEquals("player6 does his power ..." + System.lineSeparator() +
+        assertEquals("player6 uses his power ..." + System.lineSeparator() +
                 "player6 is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player7);
-        assertEquals("player7 does his power ..." + System.lineSeparator() +
+        assertEquals("player7 uses his power ..." + System.lineSeparator() +
                 "player7 is ARCHITECT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
         ge.callCharacterCardAction(player8);
-        assertEquals("player8 does his power ..." + System.lineSeparator() +
+        assertEquals("player8 uses his power ..." + System.lineSeparator() +
                 "player8 is WARLORD which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
     }

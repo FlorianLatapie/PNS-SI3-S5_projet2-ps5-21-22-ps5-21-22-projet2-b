@@ -118,6 +118,27 @@ class RandomStrategyTest {
     }
 
     @Test
+    void stealCharacterCardTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0, 1, 2, 3, 4, 5);
+
+        List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player player = new Player("Player 1", dc, 200, mockRandom, new RandomStrategy());
+
+        List<CharacterCard> characterCards = new DeckOfCards().getNewCharacterCards();
+        characterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCards.remove(new CharacterCard(CharacterName.THIEF));
+        characterCards.remove(new CharacterCard(CharacterName.BISHOP));
+
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), player.stealCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.KING), player.stealCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), player.stealCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.ARCHITECT), player.stealCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.WARLORD), player.stealCharacterCard(characterCards));
+    }
+
+    @Test
     void hashCodeTest() {
         Random random = new Random();
         Player player = new Player("Player 1", districtCards, 200, random, new RandomStrategy());

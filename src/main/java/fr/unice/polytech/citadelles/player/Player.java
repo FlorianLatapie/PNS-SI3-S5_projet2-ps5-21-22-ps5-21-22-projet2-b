@@ -101,6 +101,10 @@ public class Player {
         return strategy.killCharacterCard(killableCharacterCards);
     }
 
+    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards) {
+        return strategy.stealCharacterCard(ableToStealCharacterCards);
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
