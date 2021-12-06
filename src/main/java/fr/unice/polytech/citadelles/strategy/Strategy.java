@@ -31,4 +31,28 @@ public abstract class Strategy {
     public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards){
         return ableToStealCharacterCards.get(random.nextInt(0, ableToStealCharacterCards.size()));
     }
+
+    public Player magicianMove(List<Player> players){
+        if (random.nextBoolean()){
+            return players.get(random.nextInt(0, players.size()));
+        }
+        else{
+            return null;
+        }
+    }
+
+    public DistrictCard changeCardToOther(){
+        List<DistrictCard> cards = player.getDistrictCardsInHand();
+        DistrictCard res;
+        if(cards.size()>0){
+            res = cards.get(random.nextInt(0, cards.size()));
+            cards.remove(res);
+        }
+        else{
+            res = null;
+        }
+
+        player.setDistrictCardsInHand(cards);
+        return res;
+    }
 }

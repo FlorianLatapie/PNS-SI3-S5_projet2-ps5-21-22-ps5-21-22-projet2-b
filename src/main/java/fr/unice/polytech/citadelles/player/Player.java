@@ -105,6 +105,10 @@ public class Player {
         return strategy.stealCharacterCard(ableToStealCharacterCards);
     }
 
+    public Player magicianMove(List<Player> players) {
+        return strategy.magicianMove(players);
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
@@ -136,6 +140,10 @@ public class Player {
 
     public void setDistrictCardsBuilt(List<DistrictCard> districtCardsBuilt) {
         this.districtCardsBuilt = districtCardsBuilt;
+    }
+
+    public void setDistrictCardsInHand(List<DistrictCard> districtCardsInHand) {
+        this.districtCardsInHand = districtCardsInHand;
     }
 
     public List<DistrictCard> getDistrictCardsInHand() {
@@ -177,5 +185,9 @@ public class Player {
 
     public boolean isAllowedToBuildDistrict(DistrictCard districtCard) {
         return !districtCardsBuilt.contains(districtCard);
+    }
+
+    public DistrictCard changeCardToOther() {
+        return strategy.changeCardToOther();
     }
 }

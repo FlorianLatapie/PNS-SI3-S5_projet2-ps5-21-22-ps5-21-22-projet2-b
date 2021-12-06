@@ -165,6 +165,20 @@ public class GameEngine {
 
                 io.println(player.getName() + " stole " + stolenCharacter);
                 break;
+            case MAGICIAN:
+                List<Player> players = new ArrayList<>(listOfPlayers);
+                players.remove(player);
+                Player chooseByMagician = player.magicianMove(players);
+
+                if(chooseByMagician!=null){
+                    giveDeckToMagician(player, chooseByMagician);
+                    io.println(player.getName() + " take the deck of " + chooseByMagician.getName());
+                    io.printDistrictCardsInHandOf(player);
+                }
+                else{
+                    changeCardMagician(player);
+                }
+                break;
             default:
                 io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
         }
@@ -174,6 +188,21 @@ public class GameEngine {
         this.playerThatCantPlay = null;
         this.stolenCharacter = null;
     }
+
+    private void changeCardMagician(Player player) {
+        DistrictCard cardToChange = player.changeCardToOther();
+        if(cardToChange!=null){
+            io.println(player.getName() + " choose to change the card : " + cardToChange.toString());
+            giveCard(player);
+        }
+    }
+
+    private void giveDeckToMagician(Player player, Player chooseByMagician) {
+        List<DistrictCard> temp = player.getDistrictCardsInHand();
+        player.setDistrictCardsInHand(chooseByMagician.getDistrictCardsInHand());
+        chooseByMagician.setDistrictCardsInHand(temp);
+    }
+
 
     public Player updatePlayersThatCantPlay(CharacterCard characterCard) {
         playerThatCantPlay = this.getPlayerWithCharacter(characterCard);

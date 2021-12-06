@@ -527,8 +527,7 @@ class GameEngineTest {
         outContent.reset();
 
         ge.callCharacterCardAction(player3);
-        assertEquals("player3 uses his power ..." + System.lineSeparator() +
-                "player3 is MAGICIAN which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        assertEquals("player3 uses his power ..." + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player4);
