@@ -6,6 +6,7 @@ import fr.unice.polytech.citadelles.enums.DistrictName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class DeckOfCards {
@@ -96,7 +97,7 @@ public class DeckOfCards {
 
     public DistrictCard getRandomDistrictCard() {
         if (districtCards.isEmpty()){
-            throw new RuntimeException("districtCards is empty !");
+            return null;
         }
         DistrictCard card = districtCards.get(random.nextInt(districtCards.size()));
         districtCards.remove(card);

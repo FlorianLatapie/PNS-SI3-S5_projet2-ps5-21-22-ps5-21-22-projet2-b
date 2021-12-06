@@ -125,6 +125,19 @@ class PlayerTest {
     }
 
     @Test
+    void drawADistrictCardTest(){
+        List<DistrictCard> expectedCardInHand = new ArrayList<>();
+        expectedCardInHand.add(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player p = new Player("Player");
+        assertEquals(0, p.getDistrictCardsInHand().size());
+        assertTrue(p.drawADistrictCard(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+
+        assertEquals(1, p.getDistrictCardsInHand().size());
+        assertEquals(expectedCardInHand, p.getDistrictCardsInHand());
+    }
+
+    @Test
     void getSumOfCardsBuiltTest() {
         assertEquals(0, p.getSumOfCardsBuilt());
         p.buildDistrictCardsInHand(districtCards.get(3));

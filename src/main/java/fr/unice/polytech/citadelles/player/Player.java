@@ -117,6 +117,10 @@ public class Player {
         DistrictCard districtCardChoose = strategy.warlordChooseDistrictToDestroy(districtCardsOfPlayerThatCanBeDestroy);
         return  districtCardChoose;
     }
+    
+    public boolean drawADistrictCard(DistrictCard card){
+        return districtCardsInHand.add(card);
+    }
 
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
@@ -158,7 +162,6 @@ public class Player {
     public List<DistrictCard> getDistrictCardsInHand() {
         return districtCardsInHand;
     }
-
 
     public Strategy getStrategy() {
         return strategy;

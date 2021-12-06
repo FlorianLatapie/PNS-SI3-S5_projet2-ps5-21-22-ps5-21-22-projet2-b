@@ -132,9 +132,25 @@ public class GameEngine {
         getWinner();
     }
 
+    //--------------------------------- POWERS -------------------------------------
     public void giveMoneyToThief(Player thief, Player player) {
         if (player != null) {
             thief.receiveCoins(player.getCoins());
+        }
+    }
+
+    public void give2DistrictCardsToArchitect(Player player){
+        DistrictCard c1 = deckOfCards.getRandomDistrictCard();
+        if(c1 != null){
+            player.drawADistrictCard(c1);
+            DistrictCard c2 = deckOfCards.getRandomDistrictCard();
+            if(c2 != null){
+                player.drawADistrictCard(c2);
+            } else {
+                io.println(player.getName() + " can't draw a district card because the deck is empty.");
+            }
+        } else {
+            io.println(player.getName() + " can't draw a district card because the deck is empty.");
         }
     }
 
@@ -220,6 +236,16 @@ public class GameEngine {
 
 
 
+            case ARCHITECT:
+                io.println(player.getName() + " draws 2 more district cards...");
+                give2DistrictCardsToArchitect(player);
+                io.printDistrictCardsInHandOf(player);
+                io.println(player.getName() + " can build 2 more districts...");
+                io.println(player.getName() + " has " + player.getCoins() + " coins");
+                askToBuildDistrict(player);
+                askToBuildDistrict(player);
+                io.printDistrictCardsBuiltBy(player);
+                break;
             default:
                 io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
         }
@@ -249,6 +275,7 @@ public class GameEngine {
         playerThatCantPlay = this.getPlayerWithCharacter(characterCard);
         return playerThatCantPlay;
     }
+    //------------------------------------------------------------------------------
 
     public boolean hasThisPlayerPlaced8Cards(Player player) {
         boolean hasPlaced8 = player.getDistrictCardsBuilt().size() >= 8;
@@ -410,5 +437,9 @@ public class GameEngine {
 
     public void setPlayerThatCantPlay(Player playerThatCantPlay) {
         this.playerThatCantPlay = playerThatCantPlay;
+    }
+
+    public void setDeckOfCards(DeckOfCards deckOfCards) {
+        this.deckOfCards = deckOfCards;
     }
 }

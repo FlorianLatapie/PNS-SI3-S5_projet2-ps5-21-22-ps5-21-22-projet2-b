@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -510,12 +510,22 @@ class GameEngineTest {
         player5.setCharacterCard(new CharacterCard(CharacterName.BISHOP));
         Player player6 = new Player("player6", new ArrayList<>(), 100, mockRandom);
         player6.setCharacterCard(new CharacterCard(CharacterName.MERCHANT));
-        Player player7 = new Player("player7", new ArrayList<>(), 100, mockRandom);
-        player7.setCharacterCard(new CharacterCard(CharacterName.ARCHITECT));
+
+        Player mockPlayer7 = mock(Player.class);
+        when(mockPlayer7.getCharacterCard()).thenReturn(new CharacterCard(CharacterName.ARCHITECT));
+        when(mockPlayer7.chooseToBuildDistrict()).thenReturn(new DistrictCard(Color.GREY, DistrictName.NONE, 20));
+        when(mockPlayer7.getName()).thenReturn("Mock_Player_7");
+        when(mockPlayer7.drawADistrictCard(any())).thenReturn(true);
+        when(mockPlayer7.getCoins()).thenReturn(100);
+        when(mockPlayer7.getDistrictCardsInHand()).thenReturn(new ArrayList<>(List.of(
+                new DistrictCard(Color.RED, DistrictName.NONE, 2),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 3)
+        )));
+
         Player player8 = new Player("player8", new ArrayList<>(), 100, mockRandom);
         player8.setCharacterCard(new CharacterCard(CharacterName.WARLORD));
 
-        GameEngine ge = new GameEngine(mockRandom, player, player2, player3, player4, player5, player6, player7, player8);
+        GameEngine ge = new GameEngine(mockRandom, player, player2, player3, player4, player5, player6, mockPlayer7, player8);
 
         ge.callCharacterCardAction(player);
         assertEquals("player uses his power ..." + System.lineSeparator() +
@@ -546,10 +556,19 @@ class GameEngineTest {
                 "player6 is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
-        ge.callCharacterCardAction(player7);
-        assertEquals("player7 uses his power ..." + System.lineSeparator() +
-                "player7 is ARCHITECT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+        ge.callCharacterCardAction(mockPlayer7);
+        assertEquals("Mock_Player_7 uses his power ..." + System.lineSeparator() +
+                "Mock_Player_7 draws 2 more district cards..." + System.lineSeparator() +
+                "Mock_Player_7 has the following district cards in hand          : [NONE(2 coins, RED), NONE(3 coins, BLUE)]" + System.lineSeparator() +
+                "Mock_Player_7 can build 2 more districts..." + System.lineSeparator() +
+                "Mock_Player_7 has 100 coins" + System.lineSeparator() +
+                "Mock_Player_7 has chosen to build a district : NONE(20 coins, GREY)" + System.lineSeparator() +
+                "Mock_Player_7 has the following district cards in hand          : [NONE(2 coins, RED), NONE(3 coins, BLUE)]" + System.lineSeparator() +
+                "Mock_Player_7 has chosen to build a district : NONE(20 coins, GREY)" + System.lineSeparator() +
+                "Mock_Player_7 has the following district cards in hand          : [NONE(2 coins, RED), NONE(3 coins, BLUE)]" + System.lineSeparator() +
+                "Mock_Player_7 has the following district cards on the table (0) : []" + System.lineSeparator(), outContent.toString());
         outContent.reset();
+
         ge.callCharacterCardAction(player8);
         assertEquals("player8 uses his power ..." + System.lineSeparator() +
                 "Warlord don't use his power"+  System.lineSeparator(), outContent.toString());
@@ -623,6 +642,47 @@ class GameEngineTest {
         player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.MONASTERY, 2));
         assertEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
     }
+    void give2DistrictCardsToArchitectTest() {
+        Player player = new Player("Player");
+
+        DeckOfCards deck = mock(DeckOfCards.class);
+        when(deck.getRandomDistrictCard()).thenReturn(
+                new DistrictCard(Color.GREEN, DistrictName.TAVERN, 2),
+                new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3),
+                new DistrictCard(Color.RED, DistrictName.JAIL, 1),
+                null
+        );
+
+        GameEngine ge = new GameEngine(new Random(), player);
+        ge.setDeckOfCards(deck);
+        ge.give2DistrictCardsToArchitect(player);
+
+        assertEquals(List.of(
+                        new DistrictCard(Color.GREEN, DistrictName.TAVERN, 2),
+                        new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3)),
+                player.getDistrictCardsInHand());
+        assertEquals("", outContent.toString());
+        outContent.reset();
+
+        ge.give2DistrictCardsToArchitect(player);
+        assertEquals(List.of(
+                        new DistrictCard(Color.GREEN, DistrictName.TAVERN, 2),
+                        new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3),
+                        new DistrictCard(Color.RED, DistrictName.JAIL, 1)),
+                player.getDistrictCardsInHand());
+        assertEquals("Player can't draw a district card because the deck is empty." + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.give2DistrictCardsToArchitect(player);
+        assertEquals(List.of(
+                        new DistrictCard(Color.GREEN, DistrictName.TAVERN, 2),
+                        new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3),
+                        new DistrictCard(Color.RED, DistrictName.JAIL, 1)),
+                player.getDistrictCardsInHand());
+        assertEquals("Player can't draw a district card because the deck is empty." + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+    }
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);

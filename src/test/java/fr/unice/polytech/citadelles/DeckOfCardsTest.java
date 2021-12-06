@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,8 +33,9 @@ class DeckOfCardsTest {
         for (int i = 0; i < 54; i++) {
             doc.getRandomDistrictCard();
         }
-        Exception exception = assertThrows(Exception.class, () -> doc.getRandomDistrictCard());
-        assertEquals("districtCards is empty !", exception.getMessage());
+        /*Exception exception = assertThrows(Exception.class, () -> doc.getRandomDistrictCard());
+        assertEquals("districtCards is empty !", exception.getMessage());*/
+        assertEquals(null, doc.getRandomDistrictCard());
     }
 
     @Test
