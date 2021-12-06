@@ -104,14 +104,14 @@ class GameEngineTest {
     @Test
     void askToBuildDistrictTest() {
         Player mockPlayer = mock(Player.class);
-        when(mockPlayer.chooseToBuildDistrict()).thenReturn(true, false);
+        when(mockPlayer.chooseToBuildDistrict()).thenReturn(new DistrictCard(Color.GREY, DistrictName.NONE, 1), null);
         when(mockPlayer.getName()).thenReturn("mockPlayerName");
         when(mockPlayer.getDistrictCardsInHand()).thenReturn(List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
 
         GameEngine ge = new GameEngine();
 
         assertTrue(ge.askToBuildDistrict(mockPlayer));
-        assertEquals("mockPlayerName has chosen to build a district" + System.lineSeparator() +
+        assertEquals("mockPlayerName has chosen to build a district : NONE(1 coin, GREY)" + System.lineSeparator() +
                 "mockPlayerName has the following district cards in hand          : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
         assertFalse(ge.askToBuildDistrict(mockPlayer));
     }
@@ -444,7 +444,7 @@ class GameEngineTest {
     }
 
     @Test
-    void giveMoneyToThiefTest(){
+    void giveMoneyToThiefTest() {
         GameEngine ge = new GameEngine();
 
         Player player = new Player("player");
@@ -455,7 +455,7 @@ class GameEngineTest {
         assertEquals(2, player.getCoins());
         assertEquals(5, player2.getCoins());
 
-        ge.giveMoneyToThief(player,player2);
+        ge.giveMoneyToThief(player, player2);
 
         assertEquals(7, player.getCoins());
         assertEquals(5, player2.getCoins());
@@ -568,7 +568,7 @@ class GameEngineTest {
     }
 
     @Test
-    void getPlayerWithCharacterTest(){
+    void getPlayerWithCharacterTest() {
         Player player = new Player("player");
         player.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
 
@@ -579,7 +579,7 @@ class GameEngineTest {
     }
 
     @Test
-    void isStolenCharacterTest(){
+    void isStolenCharacterTest() {
         GameEngine ge = new GameEngine();
 
         ge.setStolenCharacter(new CharacterCard(CharacterName.ASSASSIN));

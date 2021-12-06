@@ -1,6 +1,7 @@
 package fr.unice.polytech.citadelles.strategy;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class Strategy {
 
     public abstract boolean getTaxesAtBeginningOfTurn();
 
-    public abstract boolean buildDistrict();
+    public abstract DistrictCard buildDistrict();
 
     public void init(Player player) {
         this.player = player;

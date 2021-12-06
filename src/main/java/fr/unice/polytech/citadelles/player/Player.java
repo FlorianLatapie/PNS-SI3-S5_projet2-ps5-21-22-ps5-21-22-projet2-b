@@ -84,7 +84,7 @@ public class Player {
         return choice;
     }
 
-    public boolean chooseToBuildDistrict() {
+    public DistrictCard chooseToBuildDistrict() {
         return strategy.buildDistrict();
     }
 

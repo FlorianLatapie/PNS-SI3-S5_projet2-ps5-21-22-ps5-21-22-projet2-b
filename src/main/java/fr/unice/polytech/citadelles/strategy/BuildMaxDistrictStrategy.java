@@ -48,22 +48,22 @@ public class BuildMaxDistrictStrategy extends Strategy {
     }
 
     @Override
-    public boolean buildDistrict() {
+    public DistrictCard buildDistrict() {
         List<DistrictCard> districtCardsInHand = player.getDistrictCardsInHand();
 
         if (districtCardsInHand.isEmpty()) {
-            return false;
+            return null;
         }
 
         DistrictCard cheapestCardInHand = playerTools.getCheapestDistrictCard();
-        if (cheapestCardInHand == null) return false;
+        if (cheapestCardInHand == null) return null;
         if (!player.canBuildDistrict(cheapestCardInHand)) {
-            return false;
+            return null;
         } else {
             player.buildDistrictCardsInHand(cheapestCardInHand);
         }
 
-        return true;
+        return cheapestCardInHand;
     }
 
     @Override

@@ -148,7 +148,6 @@ public class GameEngine {
             case ASSASSIN:
                 List<CharacterCard> killableCharacterCards = deckOfCards.getNewCharacterCards();
                 killableCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN)); // cannot suicide
-                killableCharacterCards.remove(new CharacterCard(CharacterName.BISHOP)); // because we cannot kill the BISHOP
                 characterKilled = player.killCharacterCard(killableCharacterCards);
 
                 updatePlayersThatCantPlay(characterKilled);
@@ -204,9 +203,10 @@ public class GameEngine {
     }
 
     public boolean askToBuildDistrict(Player player) {
-        boolean choice = player.chooseToBuildDistrict();
+        DistrictCard districtCard = player.chooseToBuildDistrict();
+        boolean choice = districtCard != null;
         if (choice) {
-            io.println(player.getName() + " has chosen to build a district");
+            io.println(player.getName() + " has chosen to build a district : " + districtCard);
             io.printDistrictCardsInHandOf(player);
         }
         return choice;

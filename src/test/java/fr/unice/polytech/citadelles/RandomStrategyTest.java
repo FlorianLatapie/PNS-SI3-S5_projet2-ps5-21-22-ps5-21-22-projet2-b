@@ -88,10 +88,10 @@ class RandomStrategyTest {
 
         List<DistrictCard> expectedBuilt = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        assertTrue(player.chooseToBuildDistrict());
+        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), player.chooseToBuildDistrict());
         assertEquals(expectedBuilt, player.getDistrictCardsBuilt());
         assertTrue(player.getDistrictCardsInHand().isEmpty());
-        assertFalse(player.chooseToBuildDistrict());
+        assertNull(player.chooseToBuildDistrict());
 
         verify(spy, times(2)).buildDistrict();
     }
@@ -99,7 +99,7 @@ class RandomStrategyTest {
     @Test
     void killCharacterCardTest() {
         Random mockRandom = mock(Random.class);
-        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0, 1, 2, 3, 4, 5);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0, 1, 2, 3, 4, 5, 6);
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
@@ -107,11 +107,11 @@ class RandomStrategyTest {
 
         List<CharacterCard> characterCards = new DeckOfCards().getNewCharacterCards();
         characterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
-        characterCards.remove(new CharacterCard(CharacterName.BISHOP));
 
         assertEquals(new CharacterCard(CharacterName.THIEF), player.killCharacterCard(characterCards));
         assertEquals(new CharacterCard(CharacterName.MAGICIAN), player.killCharacterCard(characterCards));
         assertEquals(new CharacterCard(CharacterName.KING), player.killCharacterCard(characterCards));
+        assertEquals(new CharacterCard(CharacterName.BISHOP), player.killCharacterCard(characterCards));
         assertEquals(new CharacterCard(CharacterName.MERCHANT), player.killCharacterCard(characterCards));
         assertEquals(new CharacterCard(CharacterName.ARCHITECT), player.killCharacterCard(characterCards));
         assertEquals(new CharacterCard(CharacterName.WARLORD), player.killCharacterCard(characterCards));

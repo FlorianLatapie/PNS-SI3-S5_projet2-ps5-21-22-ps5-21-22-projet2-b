@@ -24,25 +24,25 @@ public class RandomStrategy extends Strategy {
     }
 
     @Override
-    public boolean buildDistrict() {
+    public DistrictCard buildDistrict() {
         List<DistrictCard> districtCardsInHand = player.getDistrictCardsInHand();
 
         boolean choice = random.nextBoolean();
 
         if (districtCardsInHand.isEmpty()) {
-            return false;
+            return null;
         }
 
         DistrictCard district = districtCardsInHand.get(random.nextInt(0, districtCardsInHand.size()));
 
         if (!player.canBuildDistrict(district)) {
-            return false;
+            return null;
         } else {
             if (choice) {
                 player.buildDistrictCardsInHand(district);
             }
         }
-        return choice;
+        return district;
     }
 
     @Override

@@ -100,12 +100,12 @@ class PlayerTest {
 
         Player playerWithCoins = new Player("1", districtCards, 100, mockRandom);
 
-        assertTrue(playerWithCoins.chooseToBuildDistrict());
+        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), playerWithCoins.chooseToBuildDistrict());
         assertEquals(expectedBuilt, playerWithCoins.getDistrictCardsBuilt());
         assertTrue(playerWithCoins.getDistrictCardsInHand().isEmpty());
 
         Player playerWithNoDistrictCards = new Player(player1, new ArrayList<>());
-        assertFalse(playerWithNoDistrictCards.chooseToBuildDistrict());
+        assertNull(playerWithNoDistrictCards.chooseToBuildDistrict());
     }
 
     @Test
@@ -119,7 +119,7 @@ class PlayerTest {
 
         Player playerWithNoCoins = new Player("1", districtCards, 0, mockRandom);
 
-        assertFalse(playerWithNoCoins.chooseToBuildDistrict());
+        assertNull(playerWithNoCoins.chooseToBuildDistrict());
         assertTrue(playerWithNoCoins.getDistrictCardsBuilt().isEmpty());
         assertFalse(playerWithNoCoins.getDistrictCardsInHand().isEmpty());
     }

@@ -143,15 +143,15 @@ class BuildMaxDistrictStrategyTest {
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
         //Not enough coins
-        assertFalse(districtStrategy.buildDistrict());
+        assertNull(districtStrategy.buildDistrict());
 
         List<DistrictCard> emptyList = new ArrayList<>();
         Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
         //Empty List
-        assertFalse(districtStrategy.buildDistrict());
+        assertNull(districtStrategy.buildDistrict());
 
         Player player3 = new Player("Player 3", districtCards, 1, new Random(), districtStrategy);
-        assertTrue(districtStrategy.buildDistrict());
+        assertEquals(new DistrictCard(Color.GREEN, DistrictName.TAVERN, 1), districtStrategy.buildDistrict());
     }
 
     @Test
