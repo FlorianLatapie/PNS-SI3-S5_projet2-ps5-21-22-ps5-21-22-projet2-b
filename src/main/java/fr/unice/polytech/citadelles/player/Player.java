@@ -109,6 +109,15 @@ public class Player {
         return strategy.magicianMove(players);
     }
 
+    public Player warlordChoosePlayer(List<Player> players) {return strategy.getSometimesRandomPlayer(players);}
+
+    public DistrictCard warlordChooseDistrictToDestroy(Player player){
+        List<DistrictCard> districtCardsOfPlayerThatCanBeDestroy = new ArrayList<>(player.districtCardsBuilt);
+        districtCardsOfPlayerThatCanBeDestroy = districtCardsOfPlayerThatCanBeDestroy.stream().filter(c -> c.getPriceToBuild()-1<= coins).toList();
+        DistrictCard districtCardChoose = strategy.warlordChooseDistrictToDestroy(districtCardsOfPlayerThatCanBeDestroy);
+        return  districtCardChoose;
+    }
+
     //---------------------------  Getter, Setters, Overrides ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
@@ -189,5 +198,9 @@ public class Player {
 
     public DistrictCard changeCardToOther() {
         return strategy.changeCardToOther();
+    }
+
+    public void removeDistrictCardBuilt(DistrictCard districtCardToRemove){
+        districtCardsBuilt.remove(districtCardToRemove);
     }
 }

@@ -142,6 +142,34 @@ public class GameEngine {
         return !player.equals(playerThatCantPlay);
     }
 
+    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players){
+        Boolean canDestroy = false;
+        List<Player> playerThatHasDestructibleDistricts = new ArrayList<>();
+        for(Player player : players){
+            canDestroy = false;
+            if(player.getDistrictCardsBuilt() != null){
+                for(DistrictCard card : player.getDistrictCardsBuilt()){
+                    if(card.getPriceToBuild()-1 <= warlord.getCoins()) canDestroy = true;
+                }
+                if(canDestroy) playerThatHasDestructibleDistricts.add(player);
+            }
+        }
+        return playerThatHasDestructibleDistricts;
+    }
+
+    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChooseByWarlord){
+        if(playerChooseByWarlord != null){
+            DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChooseByWarlord);
+            warlord.removeCoins(districtCardChooseByWarLord.getPriceToBuild()-1);
+            playerChooseByWarlord.removeDistrictCardBuilt(districtCardChooseByWarLord);
+            System.out.println(warlord.getName() + " destroys "+ districtCardChooseByWarLord.getDistrictName()+ " of "+playerChooseByWarlord.getName()+". It costs him: "+ (districtCardChooseByWarLord.getPriceToBuild()-1)+ " gold");
+        }
+        else {
+            System.out.println("Warlord don't use his power");
+        }
+    }
+
+
     public void callCharacterCardAction(Player player) {
         io.println(player.getName() + " uses his power ...");
         switch (player.getCharacterCard().getCharacterName()) {
@@ -179,6 +207,19 @@ public class GameEngine {
                     changeCardMagician(player);
                 }
                 break;
+
+            case WARLORD:
+                List<Player> listWarlordPlayers = new ArrayList<>(listOfPlayers);
+
+                listWarlordPlayers.remove(player);
+                listWarlordPlayers.remove(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)));
+                listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers); //a voir
+                Player playerChooseByWarlord = player.warlordChoosePlayer(listWarlordPlayers);
+                warlordRemoveDistrictCardOfPlayer(player, playerChooseByWarlord);
+                break;
+
+
+
             default:
                 io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
         }

@@ -163,4 +163,16 @@ class PlayerTest {
         p.buildDistrictCardsInHand(p.getDistrictCardsInHand().get(0));
         assertFalse(p.isAllowedToBuildDistrict(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
     }
+
+    @Test
+    void warlordChooseDistrictToDestroyTest(){
+        Player player = new Player("player1");
+        Player warlord = new Player("warlord", new ArrayList<DistrictCard>(), 2);
+        List<DistrictCard> dc = new ArrayList<>();
+        dc.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2));
+        player.setDistrictCardsBuilt(dc);
+        assertEquals(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2), warlord.warlordChooseDistrictToDestroy(player));
+        warlord.removeCoins(2);
+        assertNull(warlord.warlordChooseDistrictToDestroy(player));
+    }
 }

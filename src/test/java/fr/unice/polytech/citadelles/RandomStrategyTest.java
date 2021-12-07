@@ -177,4 +177,27 @@ class RandomStrategyTest {
         assertEquals(randomStrategy, randomStrategy2);
         assertNotEquals(randomStrategy, 1); // wrong order of arguments to test the .equals method of p and not the other object
     }
+
+    @Test
+    void getSometimesRandomPlayerTest(){
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextBoolean()).thenReturn(true, false);
+        when(mockRandom.nextInt(anyInt(),anyInt())).thenReturn(1,1);
+
+        List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player player = new Player("Player 1", dc, 200, mockRandom, new RandomStrategy());
+        Player player2 = new Player("Player 2", dc, 200, mockRandom, new RandomStrategy());
+
+        List<Player> players = List.of(player,player2);
+
+        assertEquals(player2, player.warlordChoosePlayer(players));
+        assertEquals(null, player.warlordChoosePlayer(players));
+    }
+
+    @Test
+    void warlordChooseDistrictToDestroyTest(){
+
+    }
 }
+

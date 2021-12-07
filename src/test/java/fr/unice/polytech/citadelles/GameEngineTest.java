@@ -1,5 +1,6 @@
 package fr.unice.polytech.citadelles;
 
+import com.sun.source.tree.LiteralTree;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
@@ -551,7 +552,7 @@ class GameEngineTest {
         outContent.reset();
         ge.callCharacterCardAction(player8);
         assertEquals("player8 uses his power ..." + System.lineSeparator() +
-                "player8 is WARLORD which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                "Warlord don't use his power"+  System.lineSeparator(), outContent.toString());
         outContent.reset();
     }
 
@@ -592,6 +593,36 @@ class GameEngineTest {
         assertFalse(ge.isStolenCharacter((new CharacterCard(CharacterName.THIEF))));
     }
 
+    @Test
+    void warlordRemoveDistrictCardOfPlayerTest(){
+        GameEngine ge = new GameEngine();
+        Player warlord = new Player("Player_1", new ArrayList<DistrictCard>(), 100);
+        Player player1 = new Player("Player_2");
+
+        player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
+        List<DistrictCard> districtCardList = new ArrayList<>();
+        districtCardList.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
+        ge.warlordRemoveDistrictCardOfPlayer(warlord, player1);
+        assertNotEquals(districtCardList,player1.getDistrictCardsBuilt());
+
+    }
+
+    @Test
+    void canWarlordDestroyACardFromCharacterTest(){
+        GameEngine ge = new GameEngine();
+        Player warlord = new Player("Player_1", new ArrayList<DistrictCard>(), 2);
+        Player player1 = new Player("Player_2");
+        player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        assertEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
+        player1.getDistrictCardsBuilt().remove(0);
+        assertNotEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
+        player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3));
+        assertEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
+        player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.MONASTERY, 2));
+        assertEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
+    }
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);
