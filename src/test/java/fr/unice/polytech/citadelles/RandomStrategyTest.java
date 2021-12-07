@@ -194,10 +194,5 @@ class RandomStrategyTest {
         assertEquals(player2, player.warlordChoosePlayer(players));
         assertEquals(null, player.warlordChoosePlayer(players));
     }
-
-    @Test
-    void warlordChooseDistrictToDestroyTest(){
-
-    }
 }
 
