@@ -553,7 +553,8 @@ class GameEngineTest {
 
         ge.callCharacterCardAction(player6);
         assertEquals("player6 uses his power ..." + System.lineSeparator() +
-                "player6 is MERCHANT which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
+                        "player6 receives 1 coin" + System.lineSeparator() +
+                        "player6 has 101 coins" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(mockPlayer7);
@@ -642,6 +643,8 @@ class GameEngineTest {
         player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.MONASTERY, 2));
         assertEquals(players, ge.canWarlordDestroyACardFromCharacter(warlord, players));
     }
+
+    @Test
     void give2DistrictCardsToArchitectTest() {
         Player player = new Player("Player");
 

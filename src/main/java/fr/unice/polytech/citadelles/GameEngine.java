@@ -233,9 +233,6 @@ public class GameEngine {
                 Player playerChooseByWarlord = player.warlordChoosePlayer(listWarlordPlayers);
                 warlordRemoveDistrictCardOfPlayer(player, playerChooseByWarlord);
                 break;
-
-
-
             case ARCHITECT:
                 io.println(player.getName() + " draws 2 more district cards...");
                 give2DistrictCardsToArchitect(player);
@@ -246,6 +243,10 @@ public class GameEngine {
                 askToBuildDistrict(player);
                 io.printDistrictCardsBuiltBy(player);
                 break;
+            case MERCHANT:
+                giveCoins(player, 1);
+                break;
+
             default:
                 io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
         }
@@ -330,14 +331,19 @@ public class GameEngine {
         return player.chooseToGetTaxesAtBeginningOfTurn();
     }
 
-    public void giveCoins(Player player) {
-        int nbCoinsToAdd = 2;
-        /*if (nbCoinsToAdd == 1){
+    public int giveCoins(Player player) {
+        return giveCoins(player, 2);
+    }
+
+    public int giveCoins(Player player, int nbCoinsToAdd) {
+        if (nbCoinsToAdd == 1){
             io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
-        } else {*/
-        io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
+        } else {
+            io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
+        }
         player.receiveCoins(nbCoinsToAdd);
         io.printCoinsOf(player);
+        return nbCoinsToAdd;
     }
 
     public void giveCard(Player player) {
