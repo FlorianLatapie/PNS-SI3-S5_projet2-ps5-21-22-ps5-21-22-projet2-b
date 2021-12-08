@@ -261,15 +261,15 @@ public class GameEngine {
         this.stolenCharacter = null;
     }
 
-    private void changeCardMagician(Player player) {
+    public void changeCardMagician(Player player) {
         DistrictCard cardToChange = player.changeCardToOther();
         if(cardToChange!=null){
-            io.println(player.getName() + " choose to change the card : " + cardToChange.toString());
+            io.println(player.getName() + " choose to change the card : " + cardToChange);
             giveCard(player);
         }
     }
 
-    private void giveDeckToMagician(Player player, Player chooseByMagician) {
+    public void giveDeckToMagician(Player player, Player chooseByMagician) {
         List<DistrictCard> temp = player.getDistrictCardsInHand();
         player.setDistrictCardsInHand(chooseByMagician.getDistrictCardsInHand());
         chooseByMagician.setDistrictCardsInHand(temp);

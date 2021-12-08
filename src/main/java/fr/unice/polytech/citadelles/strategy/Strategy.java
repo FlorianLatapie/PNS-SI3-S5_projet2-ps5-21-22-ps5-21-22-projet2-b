@@ -28,43 +28,40 @@ public abstract class Strategy {
         return killableCharacterCards.get(random.nextInt(0, killableCharacterCards.size()));
     }
 
-    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards){
+    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards) {
         return ableToStealCharacterCards.get(random.nextInt(0, ableToStealCharacterCards.size()));
     }
 
-    public Player getSometimesRandomPlayer(List<Player> players){
-        if (random.nextBoolean() && players.size()>0){
+    public Player getSometimesRandomPlayer(List<Player> players) {
+        if (random.nextBoolean() && players.size() > 0) {
             return players.get(random.nextInt(0, players.size()));
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public Player magicianMove(List<Player> players){
-        if (random.nextBoolean()){
+    public Player magicianMove(List<Player> players) {
+        if (random.nextBoolean()) {
             return players.get(random.nextInt(0, players.size()));
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy){
-        if(districtCardsThatCanBeDestroy.size()>0){
+    public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy) {
+        if (districtCardsThatCanBeDestroy.size() > 0) {
             return districtCardsThatCanBeDestroy.get(random.nextInt(0, districtCardsThatCanBeDestroy.size()));
         }
         return null;
     }
 
-    public DistrictCard changeCardToOther(){
+    public DistrictCard changeCardToOther() {
         List<DistrictCard> cards = player.getDistrictCardsInHand();
         DistrictCard res;
-        if(cards.size()>0){
+        if (cards.size() > 0) {
             res = cards.get(random.nextInt(0, cards.size()));
             cards.remove(res);
-        }
-        else{
+        } else {
             res = null;
         }
 

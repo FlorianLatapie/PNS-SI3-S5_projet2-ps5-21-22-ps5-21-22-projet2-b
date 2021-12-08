@@ -502,8 +502,14 @@ class GameEngineTest {
         player.setCharacterCard(new CharacterCard(CharacterName.ASSASSIN));
         Player player2 = new Player("player2", new ArrayList<>(), 100, mockRandom);
         player2.setCharacterCard(new CharacterCard(CharacterName.THIEF));
-        Player player3 = new Player("player3", new ArrayList<>(), 100, mockRandom);
-        player3.setCharacterCard(new CharacterCard(CharacterName.MAGICIAN));
+
+        Player mockPlayer3 = mock(Player.class);
+        when(mockPlayer3.getCharacterCard()).thenReturn(new CharacterCard(CharacterName.MAGICIAN));
+        when(mockPlayer3.magicianMove(any())).thenReturn(player2, null);
+        when(mockPlayer3.changeCardToOther()).thenReturn(new DistrictCard(Color.GREY,DistrictName.NONE, 1));
+        when(mockPlayer3.getName()).thenReturn("Mock_Player_3");
+
+
         Player player4 = new Player("player4", new ArrayList<>(), 100, mockRandom);
         player4.setCharacterCard(new CharacterCard(CharacterName.KING));
         Player player5 = new Player("player5", new ArrayList<>(), 100, mockRandom);
@@ -525,7 +531,7 @@ class GameEngineTest {
         Player player8 = new Player("player8", new ArrayList<>(), 100, mockRandom);
         player8.setCharacterCard(new CharacterCard(CharacterName.WARLORD));
 
-        GameEngine ge = new GameEngine(mockRandom, player, player2, player3, player4, player5, player6, mockPlayer7, player8);
+        GameEngine ge = new GameEngine(mockRandom, player, player2, mockPlayer3, player4, player5, player6, mockPlayer7, player8);
 
         ge.callCharacterCardAction(player);
         assertEquals("player uses his power ..." + System.lineSeparator() +
@@ -537,8 +543,17 @@ class GameEngineTest {
                 "player2 stole MAGICIAN [sequence: 3, color: GREY]" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
-        ge.callCharacterCardAction(player3);
-        assertEquals("player3 uses his power ..." + System.lineSeparator(), outContent.toString());
+        ge.callCharacterCardAction(mockPlayer3);
+        assertEquals("Mock_Player_3 uses his power ..." + System.lineSeparator() +
+                "Mock_Player_3 take the deck of player2" + System.lineSeparator() +
+                "Mock_Player_3 has the following district cards in hand          : []" + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.callCharacterCardAction(mockPlayer3);
+        assertEquals("Mock_Player_3 uses his power ..." + System.lineSeparator() +
+                "Mock_Player_3 choose to change the card : NONE(1 coin, GREY)" + System.lineSeparator() +
+            "Mock_Player_3 choose to draw a card" + System.lineSeparator() +
+            "Mock_Player_3 draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player4);
@@ -553,8 +568,8 @@ class GameEngineTest {
 
         ge.callCharacterCardAction(player6);
         assertEquals("player6 uses his power ..." + System.lineSeparator() +
-                        "player6 receives 1 coin" + System.lineSeparator() +
-                        "player6 has 101 coins" + System.lineSeparator(), outContent.toString());
+                "player6 receives 1 coin" + System.lineSeparator() +
+                "player6 has 101 coins" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(mockPlayer7);
@@ -572,7 +587,7 @@ class GameEngineTest {
 
         ge.callCharacterCardAction(player8);
         assertEquals("player8 uses his power ..." + System.lineSeparator() +
-                "Warlord don't use his power"+  System.lineSeparator(), outContent.toString());
+                "Warlord don't use his power" + System.lineSeparator(), outContent.toString());
         outContent.reset();
     }
 
@@ -614,7 +629,7 @@ class GameEngineTest {
     }
 
     @Test
-    void warlordRemoveDistrictCardOfPlayerTest(){
+    void warlordRemoveDistrictCardOfPlayerTest() {
         GameEngine ge = new GameEngine();
         Player warlord = new Player("Player_1", new ArrayList<DistrictCard>(), 100);
         Player player1 = new Player("Player_2");
@@ -623,12 +638,12 @@ class GameEngineTest {
         List<DistrictCard> districtCardList = new ArrayList<>();
         districtCardList.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
         ge.warlordRemoveDistrictCardOfPlayer(warlord, player1);
-        assertNotEquals(districtCardList,player1.getDistrictCardsBuilt());
+        assertNotEquals(districtCardList, player1.getDistrictCardsBuilt());
 
     }
 
     @Test
-    void canWarlordDestroyACardFromCharacterTest(){
+    void canWarlordDestroyACardFromCharacterTest() {
         GameEngine ge = new GameEngine();
         Player warlord = new Player("Player_1", new ArrayList<DistrictCard>(), 2);
         Player player1 = new Player("Player_2");
@@ -684,6 +699,46 @@ class GameEngineTest {
                 player.getDistrictCardsInHand());
         assertEquals("Player can't draw a district card because the deck is empty." + System.lineSeparator(), outContent.toString());
         outContent.reset();
+    }
+
+    @Test
+    void changeCardMagicianTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+        when(mockRandom.nextInt(anyInt())).thenReturn(0);
+
+        List<DistrictCard> deck = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1), new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2));
+
+        Player player = new Player("Player", deck, 10, mockRandom);
+
+        GameEngine ge = new GameEngine(mockRandom, player);
+
+        ge.changeCardMagician(player);
+
+        assertEquals("Player choose to change the card : NONE(1 coin, GREY)" + System.lineSeparator() +
+                "Player choose to draw a card" + System.lineSeparator() +
+                "Player draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
+    }
+
+    @Test
+    void giveDeckToMagicianTest() {
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+        when(mockRandom.nextInt(anyInt())).thenReturn(0);
+
+
+        List<DistrictCard> deck = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+        List<DistrictCard> deck2 = List.of(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2));
+
+        Player player = new Player("Player 1", deck, 10, mockRandom);
+        Player player2 = new Player("Player 2", deck2, 10, mockRandom);
+
+        GameEngine ge = new GameEngine(mockRandom, player);
+
+        ge.giveDeckToMagician(player, player2);
+
+        assertEquals(deck2, player.getDistrictCardsInHand());
+        assertEquals(deck, player2.getDistrictCardsInHand());
     }
 
     @AfterAll

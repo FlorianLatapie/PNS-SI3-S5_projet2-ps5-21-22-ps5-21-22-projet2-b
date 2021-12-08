@@ -194,5 +194,21 @@ class RandomStrategyTest {
         assertEquals(player2, player.warlordChoosePlayer(players));
         assertEquals(null, player.warlordChoosePlayer(players));
     }
+
+    @Test
+    void changeCardToOtherTest(){
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(),anyInt())).thenReturn(0);
+
+        List<DistrictCard> deck = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
+
+        Player player = new Player("Player", deck, 10, mockRandom);
+
+        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1),player.changeCardToOther());
+
+        player = new Player("Player", new ArrayList<>(), 10, mockRandom);
+
+        assertEquals(null,player.changeCardToOther());
+    }
 }
 
