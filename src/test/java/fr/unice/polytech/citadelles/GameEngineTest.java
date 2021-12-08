@@ -460,7 +460,6 @@ class GameEngineTest {
 
         assertEquals(7, player.getCoins());
         assertEquals(5, player2.getCoins());
-
     }
 
     @Test
@@ -624,7 +623,6 @@ class GameEngineTest {
         districtCardList.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
         ge.warlordRemoveDistrictCardOfPlayer(warlord, player1);
         assertNotEquals(districtCardList, player1.getDistrictCardsBuilt());
-
     }
 
     @Test
@@ -704,6 +702,7 @@ class GameEngineTest {
                 "Player choose to draw a card" + System.lineSeparator() +
                 "Player draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
     }
+
 
     @Test
     void giveDeckToMagicianTest() {

@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.player.Player;
@@ -133,127 +134,30 @@ public class GameEngine {
     }
 
     //--------------------------------- POWERS -------------------------------------
-    public void giveMoneyToThief(Player thief, Player player) {
-        if (player != null) {
-            thief.receiveCoins(player.getCoins());
-        }
-    }
-
-    public void give2DistrictCardsToArchitect(Player player){
-        DistrictCard c1 = deckOfCards.getRandomDistrictCard();
-        if(c1 != null){
-            player.drawADistrictCard(c1);
-            DistrictCard c2 = deckOfCards.getRandomDistrictCard();
-            if(c2 != null){
-                player.drawADistrictCard(c2);
-            } else {
-                io.println(player.getName() + " can't draw a district card because the deck is empty.");
-            }
-        } else {
-            io.println(player.getName() + " can't draw a district card because the deck is empty.");
-        }
-    }
 
     public boolean canThisPlayerPlay(Player player) {
         return !player.equals(playerThatCantPlay);
     }
 
-    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players){
-        Boolean canDestroy = false;
-        List<Player> playerThatHasDestructibleDistricts = new ArrayList<>();
-        for(Player player : players){
-            canDestroy = false;
-            if(player.getDistrictCardsBuilt() != null){
-                for(DistrictCard card : player.getDistrictCardsBuilt()){
-                    if(card.getPriceToBuild()-1 <= warlord.getCoins()) canDestroy = true;
-                }
-                if(canDestroy) playerThatHasDestructibleDistricts.add(player);
-            }
-        }
-        return playerThatHasDestructibleDistricts;
-    }
-
-    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChooseByWarlord){
-        if(playerChooseByWarlord != null){
-            DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChooseByWarlord);
-            warlord.removeCoins(districtCardChooseByWarLord.getPriceToBuild()-1);
-            playerChooseByWarlord.removeDistrictCardBuilt(districtCardChooseByWarLord);
-            System.out.println(warlord.getName() + " destroys "+ districtCardChooseByWarLord.getDistrictName()+ " of "+playerChooseByWarlord.getName()+". It costs him: "+ (districtCardChooseByWarLord.getPriceToBuild()-1)+ " gold");
-        }
-        else {
-            System.out.println("Warlord don't use his power");
-        }
-    }
-
-
     public void callCharacterCardAction(Player player) {
         switch (player.getCharacterCard().getCharacterName()) {
             case ASSASSIN:
-                io.println(player.getName() + " uses his power ...");
-                List<CharacterCard> killableCharacterCards = deckOfCards.getNewCharacterCards();
-                killableCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN)); // cannot suicide
-                characterKilled = player.killCharacterCard(killableCharacterCards);
-
-                updatePlayersThatCantPlay(characterKilled);
-
-                io.println(player.getName() + " killed " + characterKilled);
+                new Assassin(this).callCharacterCardAction(player);
                 break;
             case THIEF:
-                io.println(player.getName() + " uses his power ...");
-                List<CharacterCard> ableToStealCharacterCards = deckOfCards.getNewCharacterCards();
-                ableToStealCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
-                ableToStealCharacterCards.remove(new CharacterCard(CharacterName.THIEF));
-                ableToStealCharacterCards.remove(characterKilled);
-                stolenCharacter = player.stealCharacterCard(ableToStealCharacterCards);
-
-                giveMoneyToThief(player, getPlayerWithCharacter(stolenCharacter));
-
-                io.println(player.getName() + " stole " + stolenCharacter);
+                new Thief(this).callCharacterCardAction(player);
                 break;
             case MAGICIAN:
-                io.println(player.getName() + " uses his power ...");
-                List<Player> players = new ArrayList<>(listOfPlayers);
-                players.remove(player);
-                Player chooseByMagician = player.magicianMove(players);
-
-                if(chooseByMagician!=null){
-                    giveDeckToMagician(player, chooseByMagician);
-                    io.println(player.getName() + " take the deck of " + chooseByMagician.getName());
-                    io.printDistrictCardsInHandOf(player);
-                }
-                else{
-                    changeCardMagician(player);
-                }
+                new Magician(this).callCharacterCardAction(player);
                 break;
-
             case WARLORD:
-                io.println(player.getName() + " uses his power ...");
-                List<Player> listWarlordPlayers = new ArrayList<>(listOfPlayers);
-
-                listWarlordPlayers.remove(player);
-                listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers);
-                if((getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP))!= null)){
-                    if(canThisPlayerPlay(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)))){
-                        listWarlordPlayers.remove(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)));
-                    }
-                }
-                Player playerChooseByWarlord = player.warlordChoosePlayer(listWarlordPlayers);
-                warlordRemoveDistrictCardOfPlayer(player, playerChooseByWarlord);
+                new Warlord(this).callCharacterCardAction(player);
                 break;
             case ARCHITECT:
-                io.println(player.getName() + " uses his power ...");
-                io.println(player.getName() + " draws 2 more district cards...");
-                give2DistrictCardsToArchitect(player);
-                io.printDistrictCardsInHandOf(player);
-                io.println(player.getName() + " can build 2 more districts...");
-                io.println(player.getName() + " has " + player.getCoins() + " coins");
-                askToBuildDistrict(player);
-                askToBuildDistrict(player);
-                io.printDistrictCardsBuiltBy(player);
+                new Architect(this).callCharacterCardAction(player);
                 break;
             case MERCHANT:
-                io.println(player.getName() + " uses his power ...");
-                giveCoins(player, 1);
+                new Merchant(this).callCharacterCardAction(player);
                 break;
         }
     }
@@ -263,25 +167,11 @@ public class GameEngine {
         this.stolenCharacter = null;
     }
 
-    public void changeCardMagician(Player player) {
-        DistrictCard cardToChange = player.changeCardToOther();
-        if(cardToChange!=null){
-            io.println(player.getName() + " choose to change the card : " + cardToChange);
-            giveCard(player);
-        }
-    }
-
-    public void giveDeckToMagician(Player player, Player chooseByMagician) {
-        List<DistrictCard> temp = player.getDistrictCardsInHand();
-        player.setDistrictCardsInHand(chooseByMagician.getDistrictCardsInHand());
-        chooseByMagician.setDistrictCardsInHand(temp);
-    }
-
-
     public Player updatePlayersThatCantPlay(CharacterCard characterCard) {
         playerThatCantPlay = this.getPlayerWithCharacter(characterCard);
         return playerThatCantPlay;
     }
+
     //------------------------------------------------------------------------------
 
     public boolean hasThisPlayerPlaced8Cards(Player player) {
@@ -453,5 +343,53 @@ public class GameEngine {
 
     public void setDeckOfCards(DeckOfCards deckOfCards) {
         this.deckOfCards = deckOfCards;
+    }
+
+    public IO getIO() {
+        return io;
+    }
+
+    public int getNbPlayers() {
+        return nbPlayers;
+    }
+
+    public Player getKingByDefault() {
+        return kingByDefault;
+    }
+
+    public CharacterCard getCharacterKilled() {
+        return characterKilled;
+    }
+
+    public CharacterCard getStolenCharacter() {
+        return stolenCharacter;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void giveMoneyToThief(Player player, Player player2) {
+        new Thief(this).giveMoneyToThief(player, player2);
+    }
+
+    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player player1) {
+        new Warlord(this).warlordRemoveDistrictCardOfPlayer(warlord, player1);
+    }
+
+    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players) {
+        return new Warlord(this).canWarlordDestroyACardFromCharacter(warlord, players);
+    }
+
+    public void give2DistrictCardsToArchitect(Player player) {
+        new Architect(this).give2DistrictCardsToArchitect(player);
+    }
+
+    public void changeCardMagician(Player player) {
+        new Magician(this).changeCardMagician(player);
+    }
+
+    public void giveDeckToMagician(Player player, Player player2) {
+        new Magician(this).giveDeckToMagician(player, player2);
     }
 }
