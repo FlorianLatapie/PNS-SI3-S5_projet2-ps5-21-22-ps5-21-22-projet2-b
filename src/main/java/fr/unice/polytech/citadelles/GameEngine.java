@@ -187,9 +187,9 @@ public class GameEngine {
 
 
     public void callCharacterCardAction(Player player) {
-        io.println(player.getName() + " uses his power ...");
         switch (player.getCharacterCard().getCharacterName()) {
             case ASSASSIN:
+                io.println(player.getName() + " uses his power ...");
                 List<CharacterCard> killableCharacterCards = deckOfCards.getNewCharacterCards();
                 killableCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN)); // cannot suicide
                 characterKilled = player.killCharacterCard(killableCharacterCards);
@@ -199,6 +199,7 @@ public class GameEngine {
                 io.println(player.getName() + " killed " + characterKilled);
                 break;
             case THIEF:
+                io.println(player.getName() + " uses his power ...");
                 List<CharacterCard> ableToStealCharacterCards = deckOfCards.getNewCharacterCards();
                 ableToStealCharacterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
                 ableToStealCharacterCards.remove(new CharacterCard(CharacterName.THIEF));
@@ -210,6 +211,7 @@ public class GameEngine {
                 io.println(player.getName() + " stole " + stolenCharacter);
                 break;
             case MAGICIAN:
+                io.println(player.getName() + " uses his power ...");
                 List<Player> players = new ArrayList<>(listOfPlayers);
                 players.remove(player);
                 Player chooseByMagician = player.magicianMove(players);
@@ -225,6 +227,7 @@ public class GameEngine {
                 break;
 
             case WARLORD:
+                io.println(player.getName() + " uses his power ...");
                 List<Player> listWarlordPlayers = new ArrayList<>(listOfPlayers);
 
                 listWarlordPlayers.remove(player);
@@ -238,6 +241,7 @@ public class GameEngine {
                 warlordRemoveDistrictCardOfPlayer(player, playerChooseByWarlord);
                 break;
             case ARCHITECT:
+                io.println(player.getName() + " uses his power ...");
                 io.println(player.getName() + " draws 2 more district cards...");
                 give2DistrictCardsToArchitect(player);
                 io.printDistrictCardsInHandOf(player);
@@ -248,11 +252,9 @@ public class GameEngine {
                 io.printDistrictCardsBuiltBy(player);
                 break;
             case MERCHANT:
+                io.println(player.getName() + " uses his power ...");
                 giveCoins(player, 1);
                 break;
-
-            default:
-                io.println(player.getName() + " is " + player.getCharacterCard().getCharacterName() + " which his power is not yet implemented !");
         }
     }
 

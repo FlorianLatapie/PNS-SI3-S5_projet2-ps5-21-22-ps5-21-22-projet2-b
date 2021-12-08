@@ -509,11 +509,6 @@ class GameEngineTest {
         when(mockPlayer3.changeCardToOther()).thenReturn(new DistrictCard(Color.GREY,DistrictName.NONE, 1));
         when(mockPlayer3.getName()).thenReturn("Mock_Player_3");
 
-
-        Player player4 = new Player("player4", new ArrayList<>(), 100, mockRandom);
-        player4.setCharacterCard(new CharacterCard(CharacterName.KING));
-        Player player5 = new Player("player5", new ArrayList<>(), 100, mockRandom);
-        player5.setCharacterCard(new CharacterCard(CharacterName.BISHOP));
         Player player6 = new Player("player6", new ArrayList<>(), 100, mockRandom);
         player6.setCharacterCard(new CharacterCard(CharacterName.MERCHANT));
 
@@ -531,7 +526,7 @@ class GameEngineTest {
         Player player8 = new Player("player8", new ArrayList<>(), 100, mockRandom);
         player8.setCharacterCard(new CharacterCard(CharacterName.WARLORD));
 
-        GameEngine ge = new GameEngine(mockRandom, player, player2, mockPlayer3, player4, player5, player6, mockPlayer7, player8);
+        GameEngine ge = new GameEngine(mockRandom, player, player2, mockPlayer3, player6, mockPlayer7, player8);
 
         ge.callCharacterCardAction(player);
         assertEquals("player uses his power ..." + System.lineSeparator() +
@@ -554,16 +549,6 @@ class GameEngineTest {
                 "Mock_Player_3 choose to change the card : NONE(1 coin, GREY)" + System.lineSeparator() +
             "Mock_Player_3 choose to draw a card" + System.lineSeparator() +
             "Mock_Player_3 draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
-        outContent.reset();
-
-        ge.callCharacterCardAction(player4);
-        assertEquals("player4 uses his power ..." + System.lineSeparator() +
-                "player4 is KING which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
-        outContent.reset();
-
-        ge.callCharacterCardAction(player5);
-        assertEquals("player5 uses his power ..." + System.lineSeparator() +
-                "player5 is BISHOP which his power is not yet implemented !" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player6);
