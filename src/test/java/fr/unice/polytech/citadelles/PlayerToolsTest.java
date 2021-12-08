@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PlayerToolsTest {
     static List<DistrictCard> districtCards;
@@ -96,5 +97,10 @@ class PlayerToolsTest {
 
         assertEquals(districtCardsSortedExpected, playerTools.getDistrictCardsInHandSorted());
         assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), playerTools.getCheapestCardInHand());
+
+        Player player2 = new Player("a");
+        PlayerTools playerTools2 = new PlayerTools(player2);
+
+        assertNull(playerTools2.getCheapestCardInHand());
     }
 }

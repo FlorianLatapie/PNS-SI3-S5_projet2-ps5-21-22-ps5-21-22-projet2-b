@@ -11,9 +11,10 @@ import java.util.List;
 public class PlayerTools {
     private Player player;
 
-    private PlayerTools(){}
+    private PlayerTools() {
+    }
 
-    public PlayerTools(Player player){
+    public PlayerTools(Player player) {
         this.player = player;
     }
 
@@ -51,13 +52,15 @@ public class PlayerTools {
     }
 
     public List<DistrictCard> getDistrictCardsInHandSorted() {
+        if (player.getDistrictCardsInHand().isEmpty()) return new ArrayList<>();
         return player.getDistrictCardsInHand()
                 .stream()
                 .sorted(Comparator.comparing(DistrictCard::getPriceToBuild))
                 .toList();
     }
 
-    public DistrictCard getCheapestCardInHand(){
+    public DistrictCard getCheapestCardInHand() {
+        if (getDistrictCardsInHandSorted().isEmpty()) return null;
         return getDistrictCardsInHandSorted().get(0);
     }
 }
