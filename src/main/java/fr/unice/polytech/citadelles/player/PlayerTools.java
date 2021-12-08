@@ -11,6 +11,8 @@ import java.util.List;
 public class PlayerTools {
     private Player player;
 
+    private PlayerTools(){}
+
     public PlayerTools(Player player){
         this.player = player;
     }

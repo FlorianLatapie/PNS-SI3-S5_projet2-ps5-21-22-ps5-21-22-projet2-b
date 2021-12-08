@@ -228,8 +228,12 @@ public class GameEngine {
                 List<Player> listWarlordPlayers = new ArrayList<>(listOfPlayers);
 
                 listWarlordPlayers.remove(player);
-                listWarlordPlayers.remove(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)));
-                listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers); //a voir
+                listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers);
+                if((getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP))!= null)){
+                    if(canThisPlayerPlay(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)))){
+                        listWarlordPlayers.remove(getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP)));
+                    }
+                }
                 Player playerChooseByWarlord = player.warlordChoosePlayer(listWarlordPlayers);
                 warlordRemoveDistrictCardOfPlayer(player, playerChooseByWarlord);
                 break;
