@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.card.uniqueDistricts.Laboratory;
 import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -120,6 +121,7 @@ public class GameEngine {
                     }
 
                     callCharacterCardAction(player);
+                    useUniqueDistrict(player);
 
                     hasThisPlayerPlaced8Cards(player);
                 } else {
@@ -172,6 +174,23 @@ public class GameEngine {
         return playerThatCantPlay;
     }
 
+    //------------------------------------------------------------------------------
+
+
+    //--------------------------------- UNIQUE DISTRICTS ---------------------------
+    public void useUniqueDistrict(Player player){
+        List<DistrictCard> districtsOfPlayer = player.getDistrictCardsBuilt();
+        for(DistrictCard districtCard : districtsOfPlayer){
+            switch (districtCard.getDistrictName()){
+                case LABORATORY :
+                    new Laboratory(this).useUniqueDistrictPower(player);
+                    break;
+
+                default:
+                    continue;
+            }
+        }
+    }
     //------------------------------------------------------------------------------
 
     public boolean hasThisPlayerPlaced8Cards(Player player) {

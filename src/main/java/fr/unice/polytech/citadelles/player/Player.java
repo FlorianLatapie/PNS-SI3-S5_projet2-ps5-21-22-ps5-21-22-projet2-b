@@ -2,6 +2,8 @@ package fr.unice.polytech.citadelles.player;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
@@ -15,6 +17,7 @@ public class Player {
     private Random random;
     private CharacterCard characterCard;
     private Strategy strategy;
+    private PlayerTools playerTools = new PlayerTools(this);
 
     public Player(String name) {
         this(name, new ArrayList<>(), 2, new Random());
@@ -94,6 +97,10 @@ public class Player {
 
     public boolean chooseCoinsOverDrawingACard() {
         return strategy.getCoinsOverDrawingACard();
+    }
+
+    public DistrictCard chooseCardToDestroy(){
+        return playerTools.getCheapestDistrictCard();
     }
 
     //--------------------------- CharacterCard powers / actions  ---------------------------

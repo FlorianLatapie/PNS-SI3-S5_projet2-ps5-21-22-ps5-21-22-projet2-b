@@ -725,6 +725,39 @@ class GameEngineTest {
         assertEquals(deck, player2.getDistrictCardsInHand());
     }
 
+
+    @Test
+    void useUniqueDistrictTest(){
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt())).thenReturn(0);
+
+        //PLAYER 1
+        Player player = new Player("player", new ArrayList<>(), 100, mockRandom);
+        player.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5)));
+
+        //PLAYER 2
+        List<DistrictCard> player2DistrictCardsInHand = new ArrayList<>();
+        player2DistrictCardsInHand.add(new DistrictCard(Color.RED, DistrictName.NONE, 1));
+        Player player2 = new Player("player", player2DistrictCardsInHand, 100, mockRandom);
+        player2.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5)));
+
+        GameEngine ge = new GameEngine(mockRandom, player, player2);
+
+        ge.useUniqueDistrict(player);
+        assertEquals("player uses his Laboratory district  ..." + System.lineSeparator() +
+                "playerdoesn't have any card in hand to destroy." + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.useUniqueDistrict(player2);
+        assertEquals("player uses his Laboratory district  ..." + System.lineSeparator() +
+        "player has chosen to destroy : NONE" + System.lineSeparator() +
+        "player receives 1 coin" + System.lineSeparator() +
+        "player has 101 coins" + System.lineSeparator() +
+        "player receives 1 extra coin." + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+    }
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);
