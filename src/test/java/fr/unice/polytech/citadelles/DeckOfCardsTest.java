@@ -30,18 +30,17 @@ class DeckOfCardsTest {
     @Test
     void getRandomDistrictCardTest2() {
         doc = new DeckOfCards(new Random());
-        for (int i = 0; i < 54; i++) {
+        for (int i = 0; i < 65; i++) {
             doc.getRandomDistrictCard();
         }
-        /*Exception exception = assertThrows(Exception.class, () -> doc.getRandomDistrictCard());
-        assertEquals("districtCards is empty !", exception.getMessage());*/
+
         assertEquals(null, doc.getRandomDistrictCard());
     }
 
     @Test
     void getDistrictCardsTest() {
         doc = new DeckOfCards();
-        assertEquals(54, doc.getDistrictCards().size());
+        assertEquals(65, doc.getDistrictCards().size());
     }
 
     @Test

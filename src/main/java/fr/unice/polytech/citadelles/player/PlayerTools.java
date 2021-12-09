@@ -20,8 +20,8 @@ public class PlayerTools {
 
     public Color mostCommonColorInBuiltDistricts() {
         List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
-        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0;
-        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
+        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0, purpleCount = 0;
+        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount, purpleCount));
         List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
         colorsToSearch.remove(Color.GREY);
 

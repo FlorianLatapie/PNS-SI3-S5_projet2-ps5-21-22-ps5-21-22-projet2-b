@@ -79,6 +79,20 @@ public class DeckOfCards {
         for (int i = 0; i < 2; i++) { //Fortress
             districtCards.add(new DistrictCard(Color.RED, DistrictName.FORTRESS, 5));
         }
+
+        //Creation of unique districts cards
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.HAUNTEDQUARTER, 2));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.KEEP, 3));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.KEEP, 3));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.SMITHY, 5));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.OBSERVATORY, 5));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.GRAVEYARD, 5));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.LIBRARY, 5));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.SCHOOLOFMAGIC, 6));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.UNIVERSITY, 6));
+        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.DRAGONGATE, 6));
+
         return districtCards;
     }
 

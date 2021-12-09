@@ -1,5 +1,5 @@
 package fr.unice.polytech.citadelles.enums;
 
 public enum Color {
-    RED, GREEN, BLUE, YELLOW, GREY
+    RED, GREEN, BLUE, YELLOW, GREY, PURPULE
 }
