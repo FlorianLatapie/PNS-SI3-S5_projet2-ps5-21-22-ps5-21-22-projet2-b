@@ -3,10 +3,12 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.card.uniqueDistricts.HauntedQuarter;
 import fr.unice.polytech.citadelles.card.uniqueDistricts.Laboratory;
 import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 
@@ -23,6 +25,7 @@ public class GameEngine {
     private IO io;
 
     private int nbPlayers;
+    private int round;
 
     private List<Player> listOfPlayers;
     private List<Player> playersWhoBuilt8Cards;
@@ -35,6 +38,8 @@ public class GameEngine {
 
     private CharacterCard characterKilled;
     private CharacterCard stolenCharacter;
+
+    private HauntedQuarter hauntedQuarter;
 
     private Random random;
 
@@ -66,6 +71,7 @@ public class GameEngine {
         kingOfTheLastRound = listOfPlayers.get(0);
         kingByDefault = listOfPlayers.get(0);
         nbPlayers = listOfPlayers.size();
+        round = 0;
     }
 
     private void initPlayers() {
@@ -84,7 +90,7 @@ public class GameEngine {
     }
 
     public void launchGame() {
-        int round = 1;
+        round = 1;
 
         io.printSeparator("The game starts !");
 
@@ -131,6 +137,8 @@ public class GameEngine {
             }
             round++;
         }
+        io.printSeparator("Unique cards powers");
+        if(hauntedQuarter!=null) hauntedQuarter.useUniqueDistrictPower();
         io.printSeparator("The game is over !");
         getWinner();
     }
@@ -185,7 +193,6 @@ public class GameEngine {
                 case LABORATORY :
                     new Laboratory(this).useUniqueDistrictPower(player);
                     break;
-
                 default:
                     continue;
             }
@@ -219,6 +226,9 @@ public class GameEngine {
         DistrictCard districtCard = player.chooseToBuildDistrict();
         boolean choice = districtCard != null;
         if (choice) {
+            if(districtCard.getDistrictName().equals(DistrictName.HAUNTEDQUARTER)){
+                hauntedQuarter = new HauntedQuarter(this, round, districtCard, player);
+            }
             io.println(player.getName() + " has chosen to build a district : " + districtCard);
             io.printDistrictCardsInHandOf(player);
         }
@@ -410,5 +420,9 @@ public class GameEngine {
 
     public void giveDeckToMagician(Player player, Player player2) {
         new Magician(this).giveDeckToMagician(player, player2);
+    }
+
+    public int getRound() {
+        return round;
     }
 }

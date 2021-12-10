@@ -1,6 +1,5 @@
 package fr.unice.polytech.citadelles;
 
-import com.sun.source.tree.LiteralTree;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
@@ -733,13 +732,13 @@ class GameEngineTest {
 
         //PLAYER 1
         Player player = new Player("player", new ArrayList<>(), 100, mockRandom);
-        player.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5)));
+        player.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5)));
 
         //PLAYER 2
         List<DistrictCard> player2DistrictCardsInHand = new ArrayList<>();
         player2DistrictCardsInHand.add(new DistrictCard(Color.RED, DistrictName.NONE, 1));
         Player player2 = new Player("player", player2DistrictCardsInHand, 100, mockRandom);
-        player2.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5)));
+        player2.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5)));
 
         GameEngine ge = new GameEngine(mockRandom, player, player2);
 

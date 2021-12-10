@@ -7,9 +7,7 @@ import fr.unice.polytech.citadelles.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -187,5 +185,24 @@ class PlayerTest {
         assertEquals(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2), warlord.warlordChooseDistrictToDestroy(player));
         warlord.removeCoins(2);
         assertNull(warlord.warlordChooseDistrictToDestroy(player));
+    }
+
+    @Test
+    void numberOfDistrictCardsBuiltByColor(){
+        List<DistrictCard> dc = new ArrayList<>();
+        dc.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2));
+
+        Player player = new Player("Player 1",dc);
+        player.buildDistrictCardsInHand(dc.get(0));
+
+        Map<Color, Integer> expected = new HashMap<>();
+        expected.put(Color.GREY, 0);
+        expected.put(Color.BLUE, 1);
+        expected.put(Color.RED, 0);
+        expected.put(Color.GREEN, 0);
+        expected.put(Color.YELLOW, 0);
+        expected.put(Color.PURPLE, 0);
+
+        assertEquals(expected, player.numberOfDistrictCardsBuiltByColor());
     }
 }

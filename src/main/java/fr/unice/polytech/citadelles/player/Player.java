@@ -213,4 +213,18 @@ public class Player {
     public void removeDistrictCardBuilt(DistrictCard districtCardToRemove){
         districtCardsBuilt.remove(districtCardToRemove);
     }
+
+    public Map<Color,Integer> numberOfDistrictCardsBuiltByColor() {
+        Map<Color,Integer> mapColorNumber = new HashMap<>();
+        for(Color color : Color.values()){
+            int nb = 0;
+            for(DistrictCard card : districtCardsBuilt){
+                if(card.getColor() == color){
+                    nb++;
+                }
+            }
+            mapColorNumber.put(color,nb);
+        }
+        return mapColorNumber;
+    }
 }

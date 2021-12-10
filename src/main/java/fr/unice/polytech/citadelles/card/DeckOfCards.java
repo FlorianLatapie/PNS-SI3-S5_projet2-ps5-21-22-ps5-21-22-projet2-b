@@ -6,7 +6,6 @@ import fr.unice.polytech.citadelles.enums.DistrictName;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class DeckOfCards {
@@ -81,17 +80,17 @@ public class DeckOfCards {
         }
 
         //Creation of unique districts cards
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.HAUNTEDQUARTER, 2));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.KEEP, 3));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.KEEP, 3));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.SMITHY, 5));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.OBSERVATORY, 5));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.GRAVEYARD, 5));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.LIBRARY, 5));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.SCHOOLOFMAGIC, 6));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.UNIVERSITY, 6));
-        districtCards.add(new DistrictCard(Color.PURPULE, DistrictName.DRAGONGATE, 6));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.HAUNTEDQUARTER, 2));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.KEEP, 3));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.KEEP, 3));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.SMITHY, 5));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.GRAVEYARD, 5));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.SCHOOLOFMAGIC, 6));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6));
 
         return districtCards;
     }
