@@ -19,6 +19,12 @@ public class RandomStrategy extends Strategy {
     }
 
     @Override
+    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
+        int choice = random.nextInt(0, districtCards.size()-1);
+        return districtCards.get(choice);
+    }
+
+    @Override
     public boolean getTaxesAtBeginningOfTurn() {
         return random.nextBoolean();
     }

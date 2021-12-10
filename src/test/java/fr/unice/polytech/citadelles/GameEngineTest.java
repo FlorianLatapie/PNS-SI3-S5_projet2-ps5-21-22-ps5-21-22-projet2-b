@@ -137,7 +137,6 @@ class GameEngineTest {
         when(mockPlayer.chooseCoinsOverDrawingACard()).thenReturn(true, false);
 
         // add a "when()" when choice between the 2 options is implemented
-
         GameEngine ge = new GameEngine();
 
         ge.askToChooseCoinsOverDrawingACard(mockPlayer);
@@ -146,8 +145,42 @@ class GameEngineTest {
 
         outContent.reset();
         ge.askToChooseCoinsOverDrawingACard(mockPlayer);
-        assertTrue(outContent.toString().startsWith("mockPlayerName choose to draw a card" + System.lineSeparator() +
-                "mockPlayerName draws: "));
+
+        assertTrue(outContent.toString().startsWith(
+                "mockPlayerName choose to draw a card" + System.lineSeparator()));
+    }
+
+    @Test
+    void pickCard2CardTest(){
+        List<DistrictCard> fakeCards = new ArrayList<>();
+        fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.NONE, 1));
+        fakeCards.add(new DistrictCard(Color.RED, DistrictName.NONE, 2));
+
+        DeckOfCards mockDec = mock(DeckOfCards.class);
+        when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1));
+
+        Player mockPlayer = mock(Player.class);
+        when(mockPlayer.chooseBestDistrictCard(fakeCards)).thenReturn(new DistrictCard(Color.BLUE, DistrictName.NONE, 1));
+
+        GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
+
+        assertEquals(new DistrictCard(Color.BLUE, DistrictName.NONE, 1), ge.pickCard(mockPlayer));
+    }
+
+    @Test
+    void pickCard1CardTest(){
+        List<DistrictCard> fakeCards = new ArrayList<>();
+        fakeCards.add(new DistrictCard(Color.RED, DistrictName.NONE, 2));
+
+        DeckOfCards mockDec = mock(DeckOfCards.class);
+        when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0));
+
+        Player mockPlayer = mock(Player.class);
+        when(mockPlayer.chooseBestDistrictCard(any())).thenReturn(fakeCards.get(0));
+
+        GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
+
+        assertEquals(fakeCards.get(0), ge.pickCard(mockPlayer));
     }
 
     @Test

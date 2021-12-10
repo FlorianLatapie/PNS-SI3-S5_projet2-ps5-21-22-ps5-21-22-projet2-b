@@ -24,6 +24,8 @@ public abstract class Strategy {
         this.random = player.getRandom();
     }
 
+    public abstract DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards);
+
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return killableCharacterCards.get(random.nextInt(0, killableCharacterCards.size()));
     }

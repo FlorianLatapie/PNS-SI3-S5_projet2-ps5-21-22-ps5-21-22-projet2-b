@@ -74,6 +74,20 @@ public class GameEngine {
         round = 0;
     }
 
+    public GameEngine(Random random, DeckOfCards deckOfCards, Player... players) {
+        this.random = random;
+        io = new IO();
+        playersWhoBuilt8Cards = new ArrayList<>();
+
+        this.deckOfCards = deckOfCards;
+
+        listOfPlayers = new ArrayList<>(List.of(players));
+        kingOfTheLastRound = listOfPlayers.get(0);
+        kingByDefault = listOfPlayers.get(0);
+        nbPlayers = listOfPlayers.size();
+    }
+
+
     private void initPlayers() {
         for (int i = 0; i < nbPlayers; i++) {
             List<DistrictCard> districtCards = new ArrayList<>();
@@ -278,11 +292,41 @@ public class GameEngine {
         player.receiveCard(card);
     }
 
+    public DistrictCard pickCard(Player player) {
+        DistrictCard card1 = deckOfCards.getRandomDistrictCard();
+        DistrictCard card2 = deckOfCards.getRandomDistrictCard();
+
+        List<DistrictCard> pickedCards = new ArrayList<>();
+
+        if(card1 != null){
+            pickedCards.add(card1);
+        }
+        if(card2 != null){
+            pickedCards.add(card2);
+        }
+
+        DistrictCard choosenCard = player.chooseBestDistrictCard(pickedCards);
+
+        if (card1.equals(choosenCard)){
+            deckOfCards.putDistrictCardInDeck(card2);
+        }
+        if (card2.equals(choosenCard)) {
+            deckOfCards.putDistrictCardInDeck(card1);
+        }
+
+        io.println(player.getName() + " choose to draw a card");
+        io.println(player.getName() + " draws: " + card1 + " and " + card2);
+        io.println(player.getName() + " picks: " + choosenCard);
+        player.receiveCard(choosenCard);
+
+        return choosenCard;
+    }
+
     public void askToChooseCoinsOverDrawingACard(Player player) {
         if (player.chooseCoinsOverDrawingACard() || deckOfCards.getDistrictCards().isEmpty()) {
             giveCoins(player);
         } else {
-            giveCard(player);
+            pickCard(player);
         }
     }
 

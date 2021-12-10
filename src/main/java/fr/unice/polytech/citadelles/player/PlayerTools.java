@@ -51,6 +51,12 @@ public class PlayerTools {
                 .orElse(null);
     }
 
+    public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCards){
+        return districtCards.stream()
+                .min(Comparator.comparing(DistrictCard::getPriceToBuild))
+                .orElse(null);
+    }
+
     public List<DistrictCard> getDistrictCardsInHandSorted() {
         if (player.getDistrictCardsInHand().isEmpty()) return new ArrayList<>();
         return player.getDistrictCardsInHand()
@@ -63,4 +69,5 @@ public class PlayerTools {
         if (getDistrictCardsInHandSorted().isEmpty()) return null;
         return getDistrictCardsInHandSorted().get(0);
     }
+
 }

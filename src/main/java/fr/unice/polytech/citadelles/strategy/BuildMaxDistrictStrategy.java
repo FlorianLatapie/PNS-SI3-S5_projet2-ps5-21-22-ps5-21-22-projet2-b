@@ -43,6 +43,11 @@ public class BuildMaxDistrictStrategy extends Strategy {
     }
 
     @Override
+    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards){
+        return playerTools.getCheapestDistrictCard(districtCards);
+    }
+
+    @Override
     public boolean getTaxesAtBeginningOfTurn() {
         return true;
     }

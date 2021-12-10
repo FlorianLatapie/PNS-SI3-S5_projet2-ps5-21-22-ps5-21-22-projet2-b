@@ -38,6 +38,14 @@ class PlayerToolsTest {
     }
 
     @Test
+    void getCheapestDistrictCardTest2() {
+        Player player = new Player("player", districtCards, 2, new Random(), new BuildMaxDistrictStrategy());
+        DistrictCard districtCard = new PlayerTools(player).getCheapestDistrictCard(districtCards);
+        //Gets the first cheapest card
+        assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());
+    }
+
+    @Test
     void mostCommonColorInBuiltDistrictsTest() {
         Player player = new Player("player");
         PlayerTools playerTools = new PlayerTools(player);

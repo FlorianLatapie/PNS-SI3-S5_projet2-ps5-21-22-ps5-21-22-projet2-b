@@ -117,6 +117,10 @@ public class DeckOfCards {
         return card;
     }
 
+    public boolean putDistrictCardInDeck(DistrictCard districtCard){
+        return districtCards.add(districtCard);
+    }
+
     public List<CharacterCard> getNewCharacterCards() {
         return createCharacterCards();
     }

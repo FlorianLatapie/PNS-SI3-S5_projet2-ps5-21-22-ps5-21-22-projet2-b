@@ -103,6 +103,10 @@ public class Player {
         return playerTools.getCheapestDistrictCard();
     }
 
+    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards){
+        return strategy.chooseBestDistrictCard(districtCards);
+    }
+
     //--------------------------- CharacterCard powers / actions  ---------------------------
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return strategy.killCharacterCard(killableCharacterCards);

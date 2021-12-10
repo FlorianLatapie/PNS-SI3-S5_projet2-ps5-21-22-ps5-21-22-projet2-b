@@ -8,6 +8,7 @@ import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +19,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class BuildMaxDistrictStrategyTest {
     static List<DistrictCard> districtCards;
@@ -128,6 +128,17 @@ class BuildMaxDistrictStrategyTest {
         List<DistrictCard> emptyList = new ArrayList<>();
         Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
         assertFalse(districtStrategy.getCoinsOverDrawingACard());
+    }
+
+    @Test
+    void chooseBestDistrictCardTest(){
+        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        List <DistrictCard> districtCards = new ArrayList<>();
+        districtCards.add(new DistrictCard(Color.GREY, DistrictName.MONASTERY, 4));
+        districtCards.add(new DistrictCard(Color.RED, DistrictName.TAVERN, 1));
+
+        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
+        assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseBestDistrictCard(districtCards));
     }
 
     @Test

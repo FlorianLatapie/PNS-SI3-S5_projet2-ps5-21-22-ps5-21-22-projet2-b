@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -51,5 +52,13 @@ class DeckOfCardsTest {
         cards.remove(0);
         assertEquals(7, cards.size());
         assertEquals(8, doc.getNewCharacterCards().size());
+    }
+
+    @Test
+    void putDistrictCardInDeck(){
+        DeckOfCards doc = new DeckOfCards();
+        DistrictCard cardToAdd = new DistrictCard(Color.RED, DistrictName.NONE, 1);
+        doc.putDistrictCardInDeck(cardToAdd);
+        assertEquals(66, doc.getDistrictCards().size());
     }
 }

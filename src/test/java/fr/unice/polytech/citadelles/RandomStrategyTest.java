@@ -63,6 +63,16 @@ class RandomStrategyTest {
     }
 
     @Test
+    void chooseBestDistrictCardTest(){
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
+
+        RandomStrategy spy = spy(new RandomStrategy());
+        Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
+        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), player.chooseBestDistrictCard(districtCards));
+    }
+
+    @Test
     void getTaxesAtBeginningOfTurnTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
