@@ -782,30 +782,29 @@ class GameEngineTest {
         when(mockRandom.nextInt(anyInt())).thenReturn(0);
 
         //PLAYER 1
-        Player player = new Player("player", new ArrayList<>(), 100, mockRandom);
+        Player player = new Player("player_with_lab_1", new ArrayList<>(), 100, mockRandom);
         player.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5)));
 
         //PLAYER 2
         List<DistrictCard> player2DistrictCardsInHand = new ArrayList<>();
         player2DistrictCardsInHand.add(new DistrictCard(Color.RED, DistrictName.NONE, 1));
-        Player player2 = new Player("player", player2DistrictCardsInHand, 100, mockRandom);
+        Player player2 = new Player("player_with_lab_2", player2DistrictCardsInHand, 100, mockRandom);
         player2.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5)));
 
         GameEngine ge = new GameEngine(mockRandom, player, player2);
 
         ge.useUniqueDistrict(player);
-        assertEquals("player uses his Laboratory district  ..." + System.lineSeparator() +
-                "playerdoesn't have any card in hand to destroy." + System.lineSeparator(), outContent.toString());
+        assertEquals("player_with_lab_1 uses his Laboratory district  ..." + System.lineSeparator() +
+                "player_with_lab_1 doesn't have any card in hand to discard." + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.useUniqueDistrict(player2);
-        assertEquals("player uses his Laboratory district  ..." + System.lineSeparator() +
-                "player has chosen to destroy : NONE" + System.lineSeparator() +
-                "player receives 1 coin" + System.lineSeparator() +
-                "player has 101 coins" + System.lineSeparator() +
-                "player receives 1 extra coin." + System.lineSeparator(), outContent.toString());
+        assertEquals("player_with_lab_2 uses his Laboratory district  ..." + System.lineSeparator() +
+                "player_with_lab_2 has chosen to destroy : NONE" + System.lineSeparator() +
+                "player_with_lab_2 receives 1 coin" + System.lineSeparator() +
+                "player_with_lab_2 has 101 coins" + System.lineSeparator() +
+                "player_with_lab_2 receives 1 extra coin." + System.lineSeparator(), outContent.toString());
         outContent.reset();
-
     }
 
     @AfterAll

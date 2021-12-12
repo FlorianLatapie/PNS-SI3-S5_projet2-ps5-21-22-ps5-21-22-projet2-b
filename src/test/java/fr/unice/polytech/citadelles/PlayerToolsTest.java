@@ -35,6 +35,11 @@ class PlayerToolsTest {
         DistrictCard districtCard = new PlayerTools(player).getCheapestDistrictCard();
         //Gets the first cheapest card
         assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());
+
+        Player player2 = new Player("player", new ArrayList<>(), 2, new Random(), new BuildMaxDistrictStrategy());
+        DistrictCard districtCard2 = new PlayerTools(player2).getCheapestDistrictCard();
+
+        assertNull(districtCard2);
     }
 
     @Test

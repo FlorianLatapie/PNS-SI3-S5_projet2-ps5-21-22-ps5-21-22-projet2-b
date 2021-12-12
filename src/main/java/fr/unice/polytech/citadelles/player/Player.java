@@ -2,15 +2,19 @@ package fr.unice.polytech.citadelles.player;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.enums.Color;
+import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class Player {
     private List<DistrictCard> districtCardsInHand;
     private List<DistrictCard> districtCardsBuilt;
+    private List<DistrictCard> destroyedDistricts;
     private int coins;
     private String name;
     private Random random;
@@ -39,8 +43,11 @@ public class Player {
         this.name = name;
         this.coins = coins;
         this.random = random;
+
         districtCardsInHand = new ArrayList<>(districtCards);
         districtCardsBuilt = new ArrayList<>();
+        destroyedDistricts = new ArrayList<>();
+
         this.strategy = strategy;
         strategy.init(this);
     }
@@ -62,8 +69,12 @@ public class Player {
     }
 
     //---------------------------  Cards ... ---------------------------
-    public void receiveCard(DistrictCard districtCard) {
-        districtCardsInHand.add(districtCard);
+    public boolean receiveCard(DistrictCard districtCard) {
+        if (districtCard == null) {
+            return false;
+        } else {
+            return districtCardsInHand.add(districtCard);
+        }
     }
 
     public void buildDistrictCardsInHand(DistrictCard cardToBuild) {
@@ -99,7 +110,7 @@ public class Player {
         return strategy.getCoinsOverDrawingACard();
     }
 
-    public DistrictCard chooseCardToDestroy() {
+    public DistrictCard chooseCardToDiscard() {
         return playerTools.getCheapestDistrictCard();
     }
 
@@ -132,7 +143,32 @@ public class Player {
     }
 
     public boolean drawADistrictCard(DistrictCard card) {
-        return districtCardsInHand.add(card);
+        return receiveCard(card);
+    }
+
+    public DistrictCard chooseToRepairDistrict() {
+        if (characterCard == null){
+            throw new RuntimeException(name + " has no character card, therefore he cannot repair a district");
+        }
+
+        if (!characterCard.equals(new CharacterCard(CharacterName.WARLORD))) {
+            DistrictCard districtCardToRepair = strategy.repairDistrict(destroyedDistricts);
+
+            if (districtCardToRepair == null) {
+                return null;
+            }
+
+            if (coins > 0) {
+                districtCardsBuilt.add(districtCardToRepair);
+                destroyedDistricts.remove(districtCardToRepair);
+                removeCoins(1);
+                return districtCardToRepair;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     //--------------------------- Points ... ---------------------------
@@ -190,17 +226,25 @@ public class Player {
         this.characterCard = characterCard;
     }
 
+    public List<DistrictCard> getDestroyedDistricts() {
+        return destroyedDistricts;
+    }
+
+    public void setDestroyedDistricts(List<DistrictCard> destroyedDistricts) {
+        this.destroyedDistricts = destroyedDistricts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Player)) return false;
         Player player = (Player) o;
-        return getCoins() == player.getCoins() && Objects.equals(getDistrictCardsInHand(), player.getDistrictCardsInHand()) && Objects.equals(getDistrictCardsBuilt(), player.getDistrictCardsBuilt()) && Objects.equals(getName(), player.getName()) && Objects.equals(getCharacterCard(), player.getCharacterCard());
+        return getCoins() == player.getCoins() && bonusPoints == player.bonusPoints && Objects.equals(getDistrictCardsInHand(), player.getDistrictCardsInHand()) && Objects.equals(getDistrictCardsBuilt(), player.getDistrictCardsBuilt()) && Objects.equals(destroyedDistricts, player.destroyedDistricts) && Objects.equals(getName(), player.getName()) && Objects.equals(getRandom(), player.getRandom()) && Objects.equals(getCharacterCard(), player.getCharacterCard());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDistrictCardsInHand(), getDistrictCardsBuilt(), getCoins(), getName(), getCharacterCard());
+        return Objects.hash(getDistrictCardsInHand(), getDistrictCardsBuilt(), getDestroyedDistricts(), getCoins(), getName(), getRandom(), getCharacterCard(), playerTools, bonusPoints);
     }
 
     @Override
@@ -208,9 +252,12 @@ public class Player {
         return "Player " + name + "{" + System.lineSeparator() +
                 "districtCardsInHand=" + districtCardsInHand + "," + System.lineSeparator() +
                 "districtCardsBuilt=" + districtCardsBuilt + "," + System.lineSeparator() +
+                "destroyedDistricts=" + destroyedDistricts + "," + System.lineSeparator() +
                 "coins=" + coins + "," + System.lineSeparator() +
                 "random=" + random + "," + System.lineSeparator() +
-                "characterCard=" + characterCard + System.lineSeparator() +
+                "characterCard=" + characterCard + "," + System.lineSeparator() +
+                "strategy=" + strategy.getClass().getSimpleName() + "," + System.lineSeparator() +
+                "bonusPoints=" + bonusPoints + System.lineSeparator() +
                 '}';
     }
 
@@ -224,5 +271,6 @@ public class Player {
 
     public void removeDistrictCardBuilt(DistrictCard districtCardToRemove) {
         districtCardsBuilt.remove(districtCardToRemove);
+        destroyedDistricts.add(districtCardToRemove);
     }
 }

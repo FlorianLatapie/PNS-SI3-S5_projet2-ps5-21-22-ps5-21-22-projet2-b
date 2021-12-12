@@ -37,7 +37,7 @@ class LaboratoryTest {
         player.buildDistrictCardsInHand(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
         assertEquals(5, player.getCoins());
 
-        assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseCardToDestroy());
+        assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseCardToDiscard());
 
         new Laboratory(gameEngine).useUniqueDistrict(player);
         assertEquals(6, player.getCoins());
@@ -55,7 +55,7 @@ class LaboratoryTest {
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         Laboratory lab = new Laboratory(gameEngine);
-        Boolean isDestroyed = lab.destroyCard(player, player.getDistrictCardsInHand(), player.chooseCardToDestroy());
+        Boolean isDestroyed = lab.discardCard(player, player.getDistrictCardsInHand(), player.chooseCardToDiscard());
 
         assertEquals(true, isDestroyed);
     }

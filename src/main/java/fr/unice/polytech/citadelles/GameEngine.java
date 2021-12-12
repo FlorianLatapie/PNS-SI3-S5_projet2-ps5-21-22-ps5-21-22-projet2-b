@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.card.unique_districts.Graveyard;
 import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.character.*;
@@ -156,7 +157,7 @@ public class GameEngine {
             round++;
         }
         io.printSeparator("Unique cards powers");
-        if(hauntedQuarter!=null) hauntedQuarter.useUniqueDistrictPower();
+        if (hauntedQuarter != null) hauntedQuarter.useUniqueDistrictPower();
         io.printSeparator("The game is over !");
         getWinner();
     }
@@ -201,16 +202,31 @@ public class GameEngine {
     }
 
     //--------------------------------- UNIQUE DISTRICTS ---------------------------
-    public void useUniqueDistrict(Player player){
+    public void useUniqueDistrict(Player player) {
         List<DistrictCard> districtsOfPlayer = player.getDistrictCardsBuilt();
-        for(DistrictCard districtCard : districtsOfPlayer){
-            switch (districtCard.getDistrictName()){
-                case LABORATORY :
-                    new Laboratory(this).useUniqueDistrictPower(player);
+
+        // searching for purple district cards
+        boolean hasLaboratory = false, hasGraveyard = false;
+        for (DistrictCard districtCard : districtsOfPlayer) {
+            switch (districtCard.getDistrictName()) {
+                case LABORATORY:
+                    hasLaboratory = true;
+                    break;
+                case GRAVEYARD:
+                    hasGraveyard = true;
                     break;
             }
         }
+
+        if (hasLaboratory) {
+            new Laboratory(this).useUniqueDistrictPower(player);
+        }
+        if (hasGraveyard) {
+            new Graveyard(this).useUniqueDistrictPower(player);
+        }
     }
+
+
     //------------------------------------------------------------------------------
 
     public boolean hasThisPlayerBuiltd8Cards(Player player) {
@@ -239,7 +255,7 @@ public class GameEngine {
         DistrictCard districtCard = player.chooseToBuildDistrict();
         boolean choice = districtCard != null;
         if (choice) {
-            if(districtCard.getDistrictName().equals(DistrictName.HAUNTEDQUARTER)){
+            if (districtCard.getDistrictName().equals(DistrictName.HAUNTEDQUARTER)) {
                 hauntedQuarter = new HauntedQuarter(this, round, districtCard, player);
             }
             io.println(player.getName() + " has chosen to build a district : " + districtCard);
@@ -274,7 +290,7 @@ public class GameEngine {
     }
 
     public int giveCoins(Player player, int nbCoinsToAdd) {
-        if (nbCoinsToAdd == 1){
+        if (nbCoinsToAdd == 1) {
             io.println(player.getName() + " receives " + nbCoinsToAdd + " coin");
         } else {
             io.println(player.getName() + " receives " + nbCoinsToAdd + " coins");
@@ -297,16 +313,16 @@ public class GameEngine {
 
         List<DistrictCard> pickedCards = new ArrayList<>();
 
-        if(card1 != null){
+        if (card1 != null) {
             pickedCards.add(card1);
         }
-        if(card2 != null){
+        if (card2 != null) {
             pickedCards.add(card2);
         }
 
         DistrictCard choosenCard = player.chooseBestDistrictCard(pickedCards);
 
-        if (card1.equals(choosenCard)){
+        if (card1.equals(choosenCard)) {
             deckOfCards.putDistrictCardInDeck(card2);
         }
         if (card2.equals(choosenCard)) {
@@ -353,12 +369,12 @@ public class GameEngine {
     public List<Player> getWinner() { // Player needs to implement Comparable<Player> to be cleaner
         io.println("Computing bonus points ...");
         for (int i = 0; i < playersWhoBuilt8Cards.size(); i++) {
-            if (i == 0){
+            if (i == 0) {
                 playersWhoBuilt8Cards.get(i).addPoints(4);
-                io.println( playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to build 8 cards");
+                io.println(playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to build 8 cards");
             } else {
                 playersWhoBuilt8Cards.get(i).addPoints(2);
-                io.println(playersWhoBuilt8Cards.get(i).getName() +" receives 2 bonus points because he also built 8 cards");
+                io.println(playersWhoBuilt8Cards.get(i).getName() + " receives 2 bonus points because he also built 8 cards");
             }
         }
 

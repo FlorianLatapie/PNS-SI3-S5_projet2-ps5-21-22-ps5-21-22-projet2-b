@@ -1,10 +1,13 @@
 package fr.unice.polytech.citadelles;
 
+import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
+import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +15,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,14 +38,14 @@ class PlayerTest {
 
     @Test
     void equalsTest() {
-        assertEquals(p, new Player(player1, districtCards, Integer.MAX_VALUE, new Random()));
+        assertEquals(p, new Player(player1, districtCards, Integer.MAX_VALUE, rand));
         assertNotEquals(p, 1); // wrong order of arguments to test the .equals method of p and not the other object
         assertEquals(p.getDistrictCardsInHand(), new Player(player1, districtCards).getDistrictCardsInHand());
     }
 
     @Test
     void hashCodeTest() {
-        assertEquals(p.hashCode(), new Player(player1, districtCards, Integer.MAX_VALUE, new Random()).hashCode());
+        assertNotNull( new Player(player1, districtCards, Integer.MAX_VALUE, new Random()).hashCode());
     }
 
 
@@ -162,9 +166,12 @@ class PlayerTest {
         assertEquals("Player Player_1{" + System.lineSeparator() +
                 "districtCardsInHand=[NONE(1 coin, GREY), NONE(2 coins, GREY), NONE(3 coins, GREY), NONE(4 coins, GREY)]," + System.lineSeparator() +
                 "districtCardsBuilt=[]," + System.lineSeparator() +
+                "destroyedDistricts=[]," + System.lineSeparator() +
                 "coins=2147483647," + System.lineSeparator() +
                 "random=" + rand.toString() + "," + System.lineSeparator() +
-                "characterCard=null" + System.lineSeparator() +
+                "characterCard=null," + System.lineSeparator() +
+                "strategy=RandomStrategy," + System.lineSeparator() +
+                "bonusPoints=0" + System.lineSeparator() +
                 "}", p.toString());
     }
 
@@ -206,5 +213,49 @@ class PlayerTest {
         expected.put(Color.PURPLE, 0);
 
         assertEquals(expected, playerTools.numberOfDistrictCardsBuiltByColor());
+    }
+
+    @Test
+    void addPointsTest(){
+        Player p = new Player("a");
+        assertEquals(0 , p.getNbOfPoints());
+        p.addPoints(4);
+        assertEquals(4 , p.getNbOfPoints());
+    }
+
+    @Test
+    void chooseToRepairDistrictTest(){
+        RandomStrategy mockStrat = mock(RandomStrategy.class);
+        DistrictCard destroyedDistrict = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
+        when(mockStrat.repairDistrict(anyList())).thenReturn(null, destroyedDistrict);
+        Player p = new Player("a", new ArrayList<>(), 2, new Random(), mockStrat);
+        p.setDestroyedDistricts(new ArrayList<>(List.of(destroyedDistrict)));
+        p.setCharacterCard(new CharacterCard(CharacterName.THIEF));
+
+        assertNull(p.chooseToRepairDistrict());
+
+        assertEquals(destroyedDistrict, p.chooseToRepairDistrict());
+        assertTrue(p.getDestroyedDistricts().isEmpty());
+        assertEquals(List.of(destroyedDistrict),p.getDistrictCardsBuilt());
+
+        p.removeCoins(1);
+
+        assertNull(p.chooseToRepairDistrict());
+    }
+
+    @Test
+    void chooseToRepairDistrictTest2(){
+        RandomStrategy mockStrat = mock(RandomStrategy.class);
+        DistrictCard destroyedDistrict = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
+        when(mockStrat.repairDistrict(anyList())).thenReturn(null, destroyedDistrict);
+        Player p = new Player("Player", new ArrayList<>(), 2, new Random(), mockStrat);
+        p.setDestroyedDistricts(new ArrayList<>(List.of(destroyedDistrict)));
+
+        Exception exception = assertThrows(Exception.class, () -> p.chooseToRepairDistrict());
+        assertEquals("Player has no character card, therefore he cannot repair a district", exception.getMessage());
+
+        p.setCharacterCard(new CharacterCard(CharacterName.WARLORD));
+
+        assertNull(p.chooseToRepairDistrict());
     }
 }

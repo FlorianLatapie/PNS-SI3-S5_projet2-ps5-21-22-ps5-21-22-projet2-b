@@ -220,5 +220,15 @@ class RandomStrategyTest {
 
         assertEquals(null,player.changeCardToOther());
     }
+
+    @Test
+    void repairDistrictTest(){
+        Player p = new Player("player", new ArrayList<>(), 2, new Random(), new RandomStrategy());
+        p.setCharacterCard(new CharacterCard(CharacterName.THIEF));
+        assertNull(p.chooseToRepairDistrict());
+        DistrictCard districtCard = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
+        p.setDestroyedDistricts(new ArrayList<>(List.of(districtCard)));
+        assertEquals(districtCard, p.chooseToRepairDistrict());
+    }
 }
 

@@ -7,6 +7,7 @@ import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,11 @@ class HauntedQuarterTest {
         districtCards.add(new DistrictCard(Color.BLUE, DistrictName.JAIL, 1));
     }
 
+    @AfterAll
+    static void restoreStreams() {
+        System.setOut(originalOut);
+    }
+
     @Test
     void useUniqueDistrictPowerTest(){
         GameEngine ge = new GameEngine();
@@ -56,7 +62,8 @@ class HauntedQuarterTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
-        List<DistrictCard> deck = List.of(new DistrictCard(Color.BLUE, DistrictName.NONE, 2),
+        List<DistrictCard> deck = List.of(
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 2),
                 new DistrictCard(Color.RED, DistrictName.NONE, 2),
                 new DistrictCard(Color.GREEN, DistrictName.NONE, 2),
                 new DistrictCard(Color.YELLOW, DistrictName.NONE, 2));

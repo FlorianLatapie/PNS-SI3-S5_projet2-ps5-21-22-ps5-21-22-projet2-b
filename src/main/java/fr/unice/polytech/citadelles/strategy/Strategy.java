@@ -70,4 +70,12 @@ public abstract class Strategy {
         player.setDistrictCardsInHand(cards);
         return res;
     }
+
+    public DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts) {
+        if (player.getDestroyedDistricts().isEmpty()) {
+            return null;
+        } else {
+            return destroyedDistricts.get(random.nextInt(0, destroyedDistricts.size()));
+        }
+    }
 }
