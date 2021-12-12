@@ -2,7 +2,7 @@ package fr.unice.polytech.citadelles.uniqueDistrictsTest;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.uniqueDistricts.Laboratory;
+import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LaboratoryTest {
+class LaboratoryTest {
     static List<DistrictCard> districtCards;
 
     @BeforeAll
@@ -49,7 +49,7 @@ public class LaboratoryTest {
     }
 
     @Test
-    public void destroyCardTest(){
+    void destroyCardTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
         GameEngine gameEngine = new GameEngine(new Random(), player);

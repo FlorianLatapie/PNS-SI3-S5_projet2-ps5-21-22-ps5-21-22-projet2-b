@@ -3,8 +3,8 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.uniqueDistricts.HauntedQuarter;
-import fr.unice.polytech.citadelles.card.uniqueDistricts.Laboratory;
+import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
+import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -147,7 +147,7 @@ public class GameEngine {
                     callCharacterCardAction(player);
                     useUniqueDistrict(player);
 
-                    hasThisPlayerPlaced8Cards(player);
+                    hasThisPlayerBuiltd8Cards(player);
                 } else {
                     io.println(player.getName() + " was killed by the ASSASSIN, therefore he cannot play this round");
                 }
@@ -213,13 +213,13 @@ public class GameEngine {
     }
     //------------------------------------------------------------------------------
 
-    public boolean hasThisPlayerPlaced8Cards(Player player) {
-        boolean hasPlaced8 = player.getDistrictCardsBuilt().size() >= 8;
-        if (hasPlaced8) {
+    public boolean hasThisPlayerBuiltd8Cards(Player player) {
+        boolean hasBuilt8 = player.getDistrictCardsBuilt().size() >= 8;
+        if (hasBuilt8) {
             playersWhoBuilt8Cards.add(player);
-            io.println(player.getName() + " has placed 8 cards!");
+            io.println(player.getName() + " built 8 cards!");
         }
-        return hasPlaced8;
+        return hasBuilt8;
     }
 
     public List<Player> askPlayersRoleAndSortThemByRole(List<CharacterCard> characterCardDeckOfTheRound) {
@@ -355,10 +355,10 @@ public class GameEngine {
         for (int i = 0; i < playersWhoBuilt8Cards.size(); i++) {
             if (i == 0){
                 playersWhoBuilt8Cards.get(i).addPoints(4);
-                io.println( playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to place 8 cards");
+                io.println( playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to build 8 cards");
             } else {
                 playersWhoBuilt8Cards.get(i).addPoints(2);
-                io.println(playersWhoBuilt8Cards.get(i).getName() +" receives 2 bonus points because he has placed 8 cards too");
+                io.println(playersWhoBuilt8Cards.get(i).getName() +" receives 2 bonus points because he also built 8 cards");
             }
         }
 

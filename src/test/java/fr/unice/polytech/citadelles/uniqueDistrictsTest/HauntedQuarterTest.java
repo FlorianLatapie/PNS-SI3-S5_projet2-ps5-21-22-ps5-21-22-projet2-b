@@ -3,12 +3,10 @@ package fr.unice.polytech.citadelles.uniqueDistrictsTest;
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.IO;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.uniqueDistricts.HauntedQuarter;
-import fr.unice.polytech.citadelles.card.uniqueDistricts.Laboratory;
+import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HauntedQuarterTest {
+class HauntedQuarterTest {
     static List<DistrictCard> districtCards;
     static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;

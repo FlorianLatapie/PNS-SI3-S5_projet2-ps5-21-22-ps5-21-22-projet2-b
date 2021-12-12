@@ -29,9 +29,9 @@ public abstract class PowerEngine extends GameEngine {
 
     Random random;
 
-    private PowerEngine(){};
+    private PowerEngine(){}
 
-    public PowerEngine(GameEngine gameEngine){
+    protected PowerEngine(GameEngine gameEngine){
         this.gameEngine = gameEngine;
         io = gameEngine.getIO();
 
@@ -52,5 +52,6 @@ public abstract class PowerEngine extends GameEngine {
         random = gameEngine.getRandom();
     }
 
+    @Override
     public abstract void callCharacterCardAction(Player player);
 }

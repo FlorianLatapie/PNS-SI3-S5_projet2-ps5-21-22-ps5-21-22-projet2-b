@@ -3,10 +3,7 @@ package fr.unice.polytech.citadelles.player;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class PlayerTools {
     private Player player;
@@ -65,5 +62,19 @@ public class PlayerTools {
     public DistrictCard getCheapestCardInHand() {
         if (getDistrictCardsInHandSorted().isEmpty()) return null;
         return getDistrictCardsInHandSorted().get(0);
+    }
+
+    public Map<Color, Integer> numberOfDistrictCardsBuiltByColor() {
+        Map<Color, Integer> mapColorNumber = new HashMap<>();
+        for (Color color : Color.values()) {
+            int nb = 0;
+            for (DistrictCard card : player.getDistrictCardsBuilt()) {
+                if (card.getColor() == color) {
+                    nb++;
+                }
+            }
+            mapColorNumber.put(color, nb);
+        }
+        return mapColorNumber;
     }
 }

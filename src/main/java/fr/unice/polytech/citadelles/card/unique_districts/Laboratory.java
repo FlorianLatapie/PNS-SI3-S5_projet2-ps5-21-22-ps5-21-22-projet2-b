@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.card.uniqueDistricts;
+package fr.unice.polytech.citadelles.card.unique_districts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
@@ -23,7 +23,7 @@ public class Laboratory extends UniqueDistrictsEngine{
         if(cardToDestroy != null){
             io.println(player.getName() + " has chosen to destroy : " + cardToDestroy.getDistrictName());
             //destroy it
-            Boolean cardDestroyed = destroyCard(player, cardsInHand, cardToDestroy);
+            boolean cardDestroyed = destroyCard(player, cardsInHand, cardToDestroy);
             //reward player with a coin
             if(cardDestroyed){
                 gameEngine.giveCoins(player, 1);

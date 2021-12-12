@@ -1,9 +1,10 @@
-package fr.unice.polytech.citadelles.card.uniqueDistricts;
+package fr.unice.polytech.citadelles.card.unique_districts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.player.PlayerTools;
 
 import java.util.List;
 import java.util.Map;
@@ -13,19 +14,21 @@ public class HauntedQuarter extends UniqueDistrictsEngine{
     private final int roundOfConstruction;
     private final DistrictCard hauntedQuarter;
     private final Player player;
+    private final PlayerTools playerTools;
 
     public HauntedQuarter(GameEngine gameEngine, int round, DistrictCard card, Player player){
         super(gameEngine);
         roundOfConstruction = round;
         hauntedQuarter = card;
         this.player = player;
+        this.playerTools = new PlayerTools(player);
     }
 
     public void useUniqueDistrictPower() {
         if(roundOfConstruction!=gameEngine.getRound()-1){
             io.println(player.getName() + " uses his Haunted Quarter card power ...");
 
-            Map<Color,Integer> mapColorNumber = player.numberOfDistrictCardsBuiltByColor();
+            Map<Color,Integer> mapColorNumber = playerTools.numberOfDistrictCardsBuiltByColor();
             mapColorNumber.remove(Color.GREY);
             mapColorNumber.remove(Color.PURPLE);
 

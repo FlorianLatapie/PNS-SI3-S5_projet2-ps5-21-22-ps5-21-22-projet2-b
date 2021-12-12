@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.card.uniqueDistricts;
+package fr.unice.polytech.citadelles.card.unique_districts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.IO;
@@ -32,7 +32,7 @@ public abstract class UniqueDistrictsEngine extends GameEngine {
 
     private UniqueDistrictsEngine(){};
 
-    public UniqueDistrictsEngine(GameEngine gameEngine){
+    protected UniqueDistrictsEngine(GameEngine gameEngine){
         this.gameEngine = gameEngine;
         io = gameEngine.getIO();
 

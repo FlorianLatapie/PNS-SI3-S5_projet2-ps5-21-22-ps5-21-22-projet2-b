@@ -21,6 +21,7 @@ public class Architect extends PowerEngine {
         io.printDistrictCardsBuiltBy(player);
     }
 
+    @Override
     public void give2DistrictCardsToArchitect(Player player){
         DistrictCard c1 = deckOfCards.getRandomDistrictCard();
         if(c1 != null){

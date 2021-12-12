@@ -34,8 +34,9 @@ public class Warlord extends PowerEngine {
         warlordRemoveDistrictCardOfPlayer(player, playerChosenByWarlord);
     }
 
+    @Override
     public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players){
-        Boolean canDestroy = false;
+        boolean canDestroy = false;
         List<Player> playerThatHasDestructibleDistricts = new ArrayList<>();
         for(Player player : players){
             canDestroy = false;
@@ -48,15 +49,17 @@ public class Warlord extends PowerEngine {
         }
         return playerThatHasDestructibleDistricts;
     }
+
+    @Override
     public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChooseByWarlord){
         if(playerChooseByWarlord != null){
             DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChooseByWarlord);
             warlord.removeCoins(districtCardChooseByWarLord.getPriceToBuild()-1);
             playerChooseByWarlord.removeDistrictCardBuilt(districtCardChooseByWarLord);
-            System.out.println(warlord.getName() + " destroys "+ districtCardChooseByWarLord.getDistrictName()+ " of "+playerChooseByWarlord.getName()+". It costs him: "+ (districtCardChooseByWarLord.getPriceToBuild()-1)+ " gold");
+            io.println(warlord.getName() + " destroys "+ districtCardChooseByWarLord.getDistrictName()+ " of "+playerChooseByWarlord.getName()+". It costs him: "+ (districtCardChooseByWarLord.getPriceToBuild()-1)+ " gold");
         }
         else {
-            System.out.println("Warlord don't use his power");
+            io.println("Warlord don't use his power");
         }
     }
 }

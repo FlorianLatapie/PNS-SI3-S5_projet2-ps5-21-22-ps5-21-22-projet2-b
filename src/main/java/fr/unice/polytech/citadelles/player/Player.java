@@ -3,7 +3,6 @@ package fr.unice.polytech.citadelles.player;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
-import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
@@ -100,11 +99,11 @@ public class Player {
         return strategy.getCoinsOverDrawingACard();
     }
 
-    public DistrictCard chooseCardToDestroy(){
+    public DistrictCard chooseCardToDestroy() {
         return playerTools.getCheapestDistrictCard();
     }
 
-    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards){
+    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
         return strategy.chooseBestDistrictCard(districtCards);
     }
 
@@ -121,16 +120,18 @@ public class Player {
         return strategy.magicianMove(players);
     }
 
-    public Player warlordChoosePlayer(List<Player> players) {return strategy.getSometimesRandomPlayer(players);}
-
-    public DistrictCard warlordChooseDistrictToDestroy(Player player){
-        List<DistrictCard> districtCardsOfPlayerThatCanBeDestroy = new ArrayList<>(player.districtCardsBuilt);
-        districtCardsOfPlayerThatCanBeDestroy = districtCardsOfPlayerThatCanBeDestroy.stream().filter(c -> c.getPriceToBuild()-1<= coins).toList();
-        DistrictCard districtCardChoose = strategy.warlordChooseDistrictToDestroy(districtCardsOfPlayerThatCanBeDestroy);
-        return  districtCardChoose;
+    public Player warlordChoosePlayer(List<Player> players) {
+        return strategy.getSometimesRandomPlayer(players);
     }
-    
-    public boolean drawADistrictCard(DistrictCard card){
+
+    public DistrictCard warlordChooseDistrictToDestroy(Player player) {
+        List<DistrictCard> districtCardsOfPlayerThatCanBeDestroy = new ArrayList<>(player.districtCardsBuilt);
+        districtCardsOfPlayerThatCanBeDestroy = districtCardsOfPlayerThatCanBeDestroy.stream().filter(c -> c.getPriceToBuild() - 1 <= coins).toList();
+        DistrictCard districtCardChoose = strategy.warlordChooseDistrictToDestroy(districtCardsOfPlayerThatCanBeDestroy);
+        return districtCardChoose;
+    }
+
+    public boolean drawADistrictCard(DistrictCard card) {
         return districtCardsInHand.add(card);
     }
 
@@ -221,22 +222,7 @@ public class Player {
         return strategy.changeCardToOther();
     }
 
-    public void removeDistrictCardBuilt(DistrictCard districtCardToRemove){
+    public void removeDistrictCardBuilt(DistrictCard districtCardToRemove) {
         districtCardsBuilt.remove(districtCardToRemove);
     }
-
-    public Map<Color,Integer> numberOfDistrictCardsBuiltByColor() {
-        Map<Color,Integer> mapColorNumber = new HashMap<>();
-        for(Color color : Color.values()){
-            int nb = 0;
-            for(DistrictCard card : districtCardsBuilt){
-                if(card.getColor() == color){
-                    nb++;
-                }
-            }
-            mapColorNumber.put(color,nb);
-        }
-        return mapColorNumber;
-    }
-
 }

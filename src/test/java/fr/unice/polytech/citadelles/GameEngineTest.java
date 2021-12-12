@@ -329,8 +329,8 @@ class GameEngineTest {
 
         assertEquals(List.of(player4, player2, player3, player1), ge.getWinner());
         assertEquals("Computing bonus points ..." + System.lineSeparator()
-                + "1 receives 4 bonus points because he is the first to place 8 cards" + System.lineSeparator()
-                + "2 receives 2 bonus points because he has placed 8 cards too" + System.lineSeparator()
+                + "1 receives 4 bonus points because he is the first to build 8 cards" + System.lineSeparator()
+                + "2 receives 2 bonus points because he also built 8 cards" + System.lineSeparator()
                 + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
                 + System.lineSeparator() + System.lineSeparator()
                 + "4 with 1000 points" + System.lineSeparator() +
@@ -480,17 +480,17 @@ class GameEngineTest {
 
         GameEngine ge = new GameEngine(new Random(), mockPlayer1, mockPlayer2, mockPlayer3);
 
-        assertTrue(ge.hasThisPlayerPlaced8Cards(mockPlayer1));
+        assertTrue(ge.hasThisPlayerBuiltd8Cards(mockPlayer1));
         assertEquals(List.of(mockPlayer1), ge.getPlayersWhoBuilt8Cards());
-        assertEquals("mockPlayer1 has placed 8 cards!" + System.lineSeparator(), outContent.toString());
+        assertEquals("mockPlayer1 built 8 cards!" + System.lineSeparator(), outContent.toString());
         outContent.reset();
-        assertFalse(ge.hasThisPlayerPlaced8Cards(mockPlayer2));
+        assertFalse(ge.hasThisPlayerBuiltd8Cards(mockPlayer2));
         assertEquals(List.of(mockPlayer1), ge.getPlayersWhoBuilt8Cards());
         assertEquals("", outContent.toString());
         outContent.reset();
-        assertTrue(ge.hasThisPlayerPlaced8Cards(mockPlayer3));
+        assertTrue(ge.hasThisPlayerBuiltd8Cards(mockPlayer3));
         assertEquals(List.of(mockPlayer1, mockPlayer3), ge.getPlayersWhoBuilt8Cards());
-        assertEquals("mockPlayer3 has placed 8 cards!" + System.lineSeparator(), outContent.toString());
+        assertEquals("mockPlayer3 built 8 cards!" + System.lineSeparator(), outContent.toString());
         outContent.reset();
     }
 

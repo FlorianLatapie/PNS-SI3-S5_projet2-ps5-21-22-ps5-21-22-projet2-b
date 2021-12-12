@@ -35,7 +35,7 @@ public abstract class Strategy {
     }
 
     public Player getSometimesRandomPlayer(List<Player> players) {
-        if (random.nextBoolean() && players.size() > 0) {
+        if (random.nextBoolean() && !players.isEmpty()) {
             return players.get(random.nextInt(0, players.size()));
         } else {
             return null;
@@ -51,7 +51,7 @@ public abstract class Strategy {
     }
 
     public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy) {
-        if (districtCardsThatCanBeDestroy.size() > 0) {
+        if (!districtCardsThatCanBeDestroy.isEmpty()) {
             return districtCardsThatCanBeDestroy.get(random.nextInt(0, districtCardsThatCanBeDestroy.size()));
         }
         return null;
@@ -60,7 +60,7 @@ public abstract class Strategy {
     public DistrictCard changeCardToOther() {
         List<DistrictCard> cards = player.getDistrictCardsInHand();
         DistrictCard res;
-        if (cards.size() > 0) {
+        if (!cards.isEmpty()) {
             res = cards.get(random.nextInt(0, cards.size()));
             cards.remove(res);
         } else {

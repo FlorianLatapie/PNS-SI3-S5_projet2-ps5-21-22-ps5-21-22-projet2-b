@@ -4,6 +4,7 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.player.PlayerTools;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -194,6 +195,7 @@ class PlayerTest {
 
         Player player = new Player("Player 1",dc);
         player.buildDistrictCardsInHand(dc.get(0));
+        PlayerTools playerTools = new PlayerTools(player);
 
         Map<Color, Integer> expected = new HashMap<>();
         expected.put(Color.GREY, 0);
@@ -203,6 +205,6 @@ class PlayerTest {
         expected.put(Color.YELLOW, 0);
         expected.put(Color.PURPLE, 0);
 
-        assertEquals(expected, player.numberOfDistrictCardsBuiltByColor());
+        assertEquals(expected, playerTools.numberOfDistrictCardsBuiltByColor());
     }
 }

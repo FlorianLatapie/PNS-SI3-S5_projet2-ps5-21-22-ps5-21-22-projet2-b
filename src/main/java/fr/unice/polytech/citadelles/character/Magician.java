@@ -29,12 +29,14 @@ public class Magician extends PowerEngine {
         }
     }
 
+    @Override
     public void giveDeckToMagician(Player player, Player chooseByMagician) {
         List<DistrictCard> temp = player.getDistrictCardsInHand();
         player.setDistrictCardsInHand(chooseByMagician.getDistrictCardsInHand());
         chooseByMagician.setDistrictCardsInHand(temp);
     }
 
+    @Override
     public void changeCardMagician(Player player) {
         DistrictCard cardToChange = player.changeCardToOther();
         if(cardToChange!=null){
