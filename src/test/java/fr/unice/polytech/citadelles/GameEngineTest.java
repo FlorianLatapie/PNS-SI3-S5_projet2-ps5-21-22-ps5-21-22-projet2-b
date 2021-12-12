@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -151,7 +152,7 @@ class GameEngineTest {
     }
 
     @Test
-    void pickCard2CardTest(){
+    void pickCard2CardTest() {
         List<DistrictCard> fakeCards = new ArrayList<>();
         fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.NONE, 1));
         fakeCards.add(new DistrictCard(Color.RED, DistrictName.NONE, 2));
@@ -168,7 +169,7 @@ class GameEngineTest {
     }
 
     @Test
-    void pickCard1CardTest(){
+    void pickCard1CardTest() {
         List<DistrictCard> fakeCards = new ArrayList<>();
         fakeCards.add(new DistrictCard(Color.RED, DistrictName.NONE, 2));
 
@@ -315,11 +316,28 @@ class GameEngineTest {
 
         GameEngine ge = new GameEngine(new Random(), player1, player2, player3, player4);
         assertEquals(List.of(player4, player2, player3, player1), ge.getWinner());
-        assertEquals("The winners podium !" + System.lineSeparator() +
-                "4 with 1000 points" + System.lineSeparator() +
+        assertEquals("Computing bonus points ..." + System.lineSeparator()
+                        + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
+                        + System.lineSeparator() + System.lineSeparator()
+                        + "4 with 1000 points" + System.lineSeparator() +
+                        "2 with 10 points" + System.lineSeparator() +
+                        "3 with 5 points" + System.lineSeparator() +
+                        "1 with 1 point" + System.lineSeparator(),
+                outContent.toString());
+        outContent.reset();
+        ge.setPlayersWhoBuilt8Cards(List.of(player1, player2));
+
+        assertEquals(List.of(player4, player2, player3, player1), ge.getWinner());
+        assertEquals("Computing bonus points ..." + System.lineSeparator()
+                + "1 receives 4 bonus points because he is the first to place 8 cards" + System.lineSeparator()
+                + "2 receives 2 bonus points because he has placed 8 cards too" + System.lineSeparator()
+                + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
+                + System.lineSeparator() + System.lineSeparator()
+                + "4 with 1000 points" + System.lineSeparator() +
                 "2 with 10 points" + System.lineSeparator() +
                 "3 with 5 points" + System.lineSeparator() +
-                "1 with 1 point" + System.lineSeparator(), outContent.toString());
+                "1 with 1 point" + System.lineSeparator(),
+                outContent.toString());
     }
 
     @Test
@@ -537,7 +555,7 @@ class GameEngineTest {
         Player mockPlayer3 = mock(Player.class);
         when(mockPlayer3.getCharacterCard()).thenReturn(new CharacterCard(CharacterName.MAGICIAN));
         when(mockPlayer3.magicianMove(any())).thenReturn(player2, null);
-        when(mockPlayer3.changeCardToOther()).thenReturn(new DistrictCard(Color.GREY,DistrictName.NONE, 1));
+        when(mockPlayer3.changeCardToOther()).thenReturn(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
         when(mockPlayer3.getName()).thenReturn("Mock_Player_3");
 
         Player player6 = new Player("player6", new ArrayList<>(), 100, mockRandom);
@@ -578,8 +596,8 @@ class GameEngineTest {
         ge.callCharacterCardAction(mockPlayer3);
         assertEquals("Mock_Player_3 uses his power ..." + System.lineSeparator() +
                 "Mock_Player_3 choose to change the card : NONE(1 coin, GREY)" + System.lineSeparator() +
-            "Mock_Player_3 choose to draw a card" + System.lineSeparator() +
-            "Mock_Player_3 draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
+                "Mock_Player_3 choose to draw a card" + System.lineSeparator() +
+                "Mock_Player_3 draws: TEMPLE(1 coin, BLUE)" + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         ge.callCharacterCardAction(player6);
@@ -759,7 +777,7 @@ class GameEngineTest {
 
 
     @Test
-    void useUniqueDistrictTest(){
+    void useUniqueDistrictTest() {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt())).thenReturn(0);
 
@@ -782,10 +800,10 @@ class GameEngineTest {
 
         ge.useUniqueDistrict(player2);
         assertEquals("player uses his Laboratory district  ..." + System.lineSeparator() +
-        "player has chosen to destroy : NONE" + System.lineSeparator() +
-        "player receives 1 coin" + System.lineSeparator() +
-        "player has 101 coins" + System.lineSeparator() +
-        "player receives 1 extra coin." + System.lineSeparator(), outContent.toString());
+                "player has chosen to destroy : NONE" + System.lineSeparator() +
+                "player receives 1 coin" + System.lineSeparator() +
+                "player has 101 coins" + System.lineSeparator() +
+                "player receives 1 extra coin." + System.lineSeparator(), outContent.toString());
         outContent.reset();
 
     }

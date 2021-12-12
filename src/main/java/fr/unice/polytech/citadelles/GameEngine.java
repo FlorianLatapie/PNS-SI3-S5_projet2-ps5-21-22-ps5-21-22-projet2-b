@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * "GameEngine" or "ge" also known as "MJ" or "Moteur de Jeu" in French
  */
 public class GameEngine {
+    // attributes
     private IO io;
 
     private int nbPlayers;
@@ -43,6 +44,7 @@ public class GameEngine {
 
     private Random random;
 
+    // constructors
 
     public GameEngine() {
         this(4, new Random());
@@ -102,6 +104,8 @@ public class GameEngine {
             }
         }
     }
+
+    // game
 
     public void launchGame() {
         round = 1;
@@ -196,9 +200,6 @@ public class GameEngine {
         return playerThatCantPlay;
     }
 
-    //------------------------------------------------------------------------------
-
-
     //--------------------------------- UNIQUE DISTRICTS ---------------------------
     public void useUniqueDistrict(Player player){
         List<DistrictCard> districtsOfPlayer = player.getDistrictCardsBuilt();
@@ -207,8 +208,6 @@ public class GameEngine {
                 case LABORATORY :
                     new Laboratory(this).useUniqueDistrictPower(player);
                     break;
-                default:
-                    continue;
             }
         }
     }
@@ -352,8 +351,20 @@ public class GameEngine {
     }
 
     public List<Player> getWinner() { // Player needs to implement Comparable<Player> to be cleaner
+        io.println("Computing bonus points ...");
+        for (int i = 0; i < playersWhoBuilt8Cards.size(); i++) {
+            if (i == 0){
+                playersWhoBuilt8Cards.get(i).addPoints(4);
+                io.println( playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to place 8 cards");
+            } else {
+                playersWhoBuilt8Cards.get(i).addPoints(2);
+                io.println(playersWhoBuilt8Cards.get(i).getName() +" receives 2 bonus points because he has placed 8 cards too");
+            }
+        }
+
         List<Player> playersSorted = new ArrayList<>(listOfPlayers);
         playersSorted.sort((player0, player1) -> player1.getNbOfPoints().compareTo(player0.getNbOfPoints()));
+
         io.printWinner(playersSorted);
         return playersSorted;
     }
@@ -368,8 +379,6 @@ public class GameEngine {
         return kingOfTheLastRound;
     }
 
-    // getters && setters
-
     public Player getPlayerWithCharacter(CharacterCard character) {
         List<Player> players = listOfPlayers.stream()
                 .filter(elem -> elem.getCharacterCard().equals(character))
@@ -381,6 +390,8 @@ public class GameEngine {
             return null;
         }
     }
+
+    // getters && setters
 
     public List<Player> getListOfPlayers() {
         return listOfPlayers;
@@ -442,6 +453,16 @@ public class GameEngine {
         return random;
     }
 
+    public int getRound() {
+        return round;
+    }
+
+    public void setPlayersWhoBuilt8Cards(List<Player> playersWhoBuilt8Cards) {
+        this.playersWhoBuilt8Cards = playersWhoBuilt8Cards;
+    }
+
+    // legacy methods
+
     public void giveMoneyToThief(Player player, Player player2) {
         new Thief(this).giveMoneyToThief(player, player2);
     }
@@ -464,9 +485,5 @@ public class GameEngine {
 
     public void giveDeckToMagician(Player player, Player player2) {
         new Magician(this).giveDeckToMagician(player, player2);
-    }
-
-    public int getRound() {
-        return round;
     }
 }

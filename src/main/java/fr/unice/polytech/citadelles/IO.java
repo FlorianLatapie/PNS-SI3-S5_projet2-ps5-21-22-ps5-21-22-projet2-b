@@ -38,7 +38,7 @@ public class IO {
 
 
     public void printWinner(List<Player> winners) {
-        this.println("The winners podium !");
+        this.printSeparator("The winners podium !");
         winners.forEach(winner -> {
                     if (winner.getNbOfPoints() == 1) {
                         this.println(winner.getName() + " with " + winner.getNbOfPoints() + " point");

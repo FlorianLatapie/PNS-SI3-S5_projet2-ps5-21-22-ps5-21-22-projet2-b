@@ -20,14 +20,11 @@ public class PlayerTools {
 
     public Color mostCommonColorInBuiltDistricts() {
         List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
-        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0, purpleCount = 0;
-        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount, purpleCount));
+        int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0;
+        List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
         List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
         colorsToSearch.remove(Color.GREY);
-
-        if (countOfEachColor.size() != colorsToSearch.size()) {
-            throw new RuntimeException("countOfEachColor and colorsToSearch sizes are not equal : " + countOfEachColor.size() + " vs " + colorsToSearch.size());
-        }
+        colorsToSearch.remove(Color.PURPLE);
 
         for (int i = 0; i < colorsToSearch.size(); i++) {
             for (DistrictCard districtCard : builtDistricts) {
@@ -51,7 +48,7 @@ public class PlayerTools {
                 .orElse(null);
     }
 
-    public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCards){
+    public DistrictCard getCheapestDistrictCard(List<DistrictCard> districtCards) {
         return districtCards.stream()
                 .min(Comparator.comparing(DistrictCard::getPriceToBuild))
                 .orElse(null);
@@ -69,5 +66,4 @@ public class PlayerTools {
         if (getDistrictCardsInHandSorted().isEmpty()) return null;
         return getDistrictCardsInHandSorted().get(0);
     }
-
 }

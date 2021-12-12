@@ -18,6 +18,7 @@ public class Player {
     private CharacterCard characterCard;
     private Strategy strategy;
     private PlayerTools playerTools = new PlayerTools(this);
+    private int bonusPoints = 0;
 
     public Player(String name) {
         this(name, new ArrayList<>(), 2, new Random());
@@ -133,14 +134,20 @@ public class Player {
         return districtCardsInHand.add(card);
     }
 
-    //---------------------------  Getter, Setters, Overrides ... ---------------------------
+    //--------------------------- Points ... ---------------------------
     public int getSumOfCardsBuilt() {
         return districtCardsBuilt.stream().mapToInt(DistrictCard::getPriceToBuild).sum();
     }
 
     public Integer getNbOfPoints() { // Integer instead of int in order to use the .compareTo() method used in GameEngine
-        return this.getSumOfCardsBuilt();
+        return this.getSumOfCardsBuilt() + this.bonusPoints;
     }
+
+    public void addPoints(int nbPointsToAdd) {
+        this.bonusPoints += nbPointsToAdd;
+    }
+
+    //---------------------------  Getter, Setters, Overrides ... ---------------------------
 
     public Random getRandom() {
         return random;
@@ -231,4 +238,5 @@ public class Player {
         }
         return mapColorNumber;
     }
+
 }

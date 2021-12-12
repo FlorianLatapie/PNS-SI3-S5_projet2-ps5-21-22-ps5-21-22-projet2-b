@@ -104,7 +104,13 @@ class IOTest {
         players.get(1).buildDistrictCardsInHand(districtCards.get(0));
 
         io.printWinner(players);
-        assertEquals("The winners podium !" + System.lineSeparator() + "Player_1 with 3 points" + System.lineSeparator() + "Player_2 with 1 point" + System.lineSeparator() + "Player_3 with 0 points" + System.lineSeparator() + "Player_4 with 0 points" + System.lineSeparator(), outContent.toString());
+        assertEquals("--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
+                        + System.lineSeparator() + System.lineSeparator()
+                        + "Player_1 with 3 points" + System.lineSeparator()
+                        + "Player_2 with 1 point" + System.lineSeparator()
+                        + "Player_3 with 0 points" + System.lineSeparator()
+                        + "Player_4 with 0 points" + System.lineSeparator(),
+                outContent.toString());
     }
 
     @AfterAll

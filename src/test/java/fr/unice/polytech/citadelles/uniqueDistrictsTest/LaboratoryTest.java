@@ -28,13 +28,13 @@ public class LaboratoryTest {
         districtCards.add(new DistrictCard(Color.BLUE, DistrictName.JAIL, 1));
     }
 
-    /*@Test
+    @Test
     void useUniqueDistrictPowerTest(){
         BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
-        player.buildDistrictCardsInHand(new DistrictCard(Color.PURPULE, DistrictName.LABORATORY, 5));
+        player.buildDistrictCardsInHand(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
         assertEquals(5, player.getCoins());
 
         assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseCardToDestroy());
@@ -58,5 +58,5 @@ public class LaboratoryTest {
         Boolean isDestroyed = lab.destroyCard(player, player.getDistrictCardsInHand(), player.chooseCardToDestroy());
 
         assertEquals(true, isDestroyed);
-    }*/
+    }
 }
