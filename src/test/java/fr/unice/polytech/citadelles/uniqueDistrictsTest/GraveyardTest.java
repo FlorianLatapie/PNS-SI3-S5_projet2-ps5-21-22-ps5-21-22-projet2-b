@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles.uniqueDistrictsTest;
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.card.unique_districts.Graveyard;
+import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
@@ -54,12 +55,13 @@ class GraveyardTest {
         Player mockPlayer = mock(Player.class);
         when(mockPlayer.getName()).thenReturn("mockPlayer");
         when(mockPlayer.chooseToRepairDistrict()).thenReturn(null, new DistrictCard(Color.GREY, DistrictName.NONE, 1));
-        when(mockPlayer.getDistrictCardsBuilt()).thenReturn(List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1)));
+        when(mockPlayer.getDistrictCardsBuilt()).thenReturn(List.of(new DistrictCard(Color.PURPLE, DistrictName.GRAVEYARD, 5)));
 
         GameEngine gameEngine = new GameEngine(new Random(), mockPlayer);
         Graveyard graveyard = new Graveyard(gameEngine);
 
-        graveyard.useUniqueDistrictPower(mockPlayer);
+        gameEngine.useUniqueDistrict(mockPlayer);
+        //graveyard.useUniqueDistrictPower(mockPlayer);
         assertEquals("mockPlayer uses his Graveyard district  ..." + System.lineSeparator() +
                 "mockPlayer cannot repair his districts []" + System.lineSeparator(), outContent.toString());
 
@@ -67,6 +69,8 @@ class GraveyardTest {
         graveyard.useUniqueDistrictPower(mockPlayer);
         assertEquals("mockPlayer uses his Graveyard district  ..." + System.lineSeparator() +
                 "mockPlayer repaired NONE(1 coin, GREY)" + System.lineSeparator() +
-                "mockPlayer has the following district cards on the table (1) : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
+                "mockPlayer has the following district cards on the table (1) : [GRAVEYARD(5 coins, PURPLE)]" + System.lineSeparator(), outContent.toString());
     }
+
+
 }

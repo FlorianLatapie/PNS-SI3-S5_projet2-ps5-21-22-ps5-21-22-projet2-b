@@ -262,7 +262,7 @@ public class GameEngine {
         DistrictCard districtCard = player.chooseToBuildDistrict();
         boolean choice = districtCard != null;
         if (choice) {
-            if (districtCard.getDistrictName().equals(DistrictName.HAUNTEDQUARTER)) {
+            if (districtCard.getDistrictName().equals(DistrictName.HAUNTED_QUARTER)) {
                 hauntedQuarter = new HauntedQuarter(this, round, districtCard, player);
             }
             io.println(player.getName() + " has chosen to build a district : " + districtCard);
@@ -373,7 +373,7 @@ public class GameEngine {
         }
     }
 
-    public List<Player> getWinner() { // Player needs to implement Comparable<Player> to be cleaner
+    public List<Player> getWinner() {
         io.println("Computing bonus points ...");
         for (int i = 0; i < playersWhoBuilt8Cards.size(); i++) {
             if (i == 0) {
@@ -383,6 +383,17 @@ public class GameEngine {
                 playersWhoBuilt8Cards.get(i).addPoints(2);
                 io.println(playersWhoBuilt8Cards.get(i).getName() + " receives 2 bonus points because he also built 8 cards");
             }
+        }
+
+        for (Player player : listOfPlayers) {
+            player.getDistrictCardsBuilt().forEach(districtCard -> {
+                        if (districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6))
+                        || districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6))){
+                            player.addPoints(2);
+                            io.println(player.getName() + " receives 2 bonus points because he built " + districtCard);
+                        }
+                    }
+            );
         }
 
         List<Player> playersSorted = new ArrayList<>(listOfPlayers);

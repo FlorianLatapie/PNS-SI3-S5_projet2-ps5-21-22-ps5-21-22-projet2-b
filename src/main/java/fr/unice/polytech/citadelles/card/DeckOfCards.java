@@ -80,7 +80,7 @@ public class DeckOfCards {
         }
 
         //Creation of unique districts cards
-        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.HAUNTEDQUARTER, 2));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.HAUNTED_QUARTER, 2));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.KEEP, 3));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.KEEP, 3));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
@@ -88,7 +88,7 @@ public class DeckOfCards {
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.GRAVEYARD, 5));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5));
-        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.SCHOOLOFMAGIC, 6));
+        districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6));
         districtCards.add(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6));
 

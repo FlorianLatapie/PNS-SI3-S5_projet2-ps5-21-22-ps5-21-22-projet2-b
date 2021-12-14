@@ -1,7 +1,6 @@
 package fr.unice.polytech.citadelles.card.unique_districts;
 
 import fr.unice.polytech.citadelles.GameEngine;
-import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
 

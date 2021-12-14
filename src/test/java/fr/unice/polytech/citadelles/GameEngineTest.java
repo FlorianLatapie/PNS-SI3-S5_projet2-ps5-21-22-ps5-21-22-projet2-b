@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -329,14 +328,36 @@ class GameEngineTest {
 
         assertEquals(List.of(player4, player2, player3, player1), ge.getWinner());
         assertEquals("Computing bonus points ..." + System.lineSeparator()
-                + "1 receives 4 bonus points because he is the first to build 8 cards" + System.lineSeparator()
-                + "2 receives 2 bonus points because he also built 8 cards" + System.lineSeparator()
-                + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
-                + System.lineSeparator() + System.lineSeparator()
-                + "4 with 1000 points" + System.lineSeparator() +
-                "2 with 10 points" + System.lineSeparator() +
-                "3 with 5 points" + System.lineSeparator() +
-                "1 with 1 point" + System.lineSeparator(),
+                        + "1 receives 4 bonus points because he is the first to build 8 cards" + System.lineSeparator()
+                        + "2 receives 2 bonus points because he also built 8 cards" + System.lineSeparator()
+                        + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
+                        + System.lineSeparator() + System.lineSeparator()
+                        + "4 with 1000 points" + System.lineSeparator() +
+                        "2 with 10 points" + System.lineSeparator() +
+                        "3 with 5 points" + System.lineSeparator() +
+                        "1 with 1 point" + System.lineSeparator(),
+                outContent.toString());
+    }
+
+    @Test
+    void getWinnerTest2() {
+        Player player1 = new Player("player");
+        DistrictCard schoolOfMagic = new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6);
+        DistrictCard dragonate = new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6);
+        player1.setDistrictCardsBuilt(List.of(schoolOfMagic, dragonate));
+
+        Player player2 = new Player("player2");
+
+        GameEngine ge = new GameEngine(new Random(), player1, player2);
+
+        ge.getWinner();
+        assertEquals("Computing bonus points ..." + System.lineSeparator()
+                        + "player receives 2 bonus points because he built SCHOOL_OF_MAGIC(6 coins, PURPLE)" + System.lineSeparator()
+                        + "player receives 2 bonus points because he built DRAGONGATE(6 coins, PURPLE)" + System.lineSeparator()
+                        + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
+                        + System.lineSeparator() + System.lineSeparator()
+                        + "player with 16 points" + System.lineSeparator()
+                        + "player2 with 0 points" + System.lineSeparator(),
                 outContent.toString());
     }
 

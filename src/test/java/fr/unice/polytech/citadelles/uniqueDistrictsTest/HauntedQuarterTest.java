@@ -51,12 +51,12 @@ class HauntedQuarterTest {
     void useUniqueDistrictPowerTest(){
         GameEngine ge = new GameEngine();
         Player player = new Player("Player");
-        HauntedQuarter hq = new HauntedQuarter(ge,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTEDQUARTER,2),player);
+        HauntedQuarter hq = new HauntedQuarter(ge,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTED_QUARTER,2),player);
 
         hq.useUniqueDistrictPower();
 
         assertEquals("Player uses his Haunted Quarter card power ..." + System.lineSeparator() +
-                "Player change the color of HAUNTEDQUARTER(2 coins, BLUE) to BLUE"+ System.lineSeparator(), outContent.toString());
+                "Player change the color of HAUNTED_QUARTER(2 coins, BLUE) to BLUE"+ System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         Random mockRandom = mock(Random.class);
@@ -70,23 +70,23 @@ class HauntedQuarterTest {
 
         player = new Player("Player",deck);
         ge = new GameEngine(mockRandom, player);
-        hq = new HauntedQuarter(ge,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTEDQUARTER,2),player);
+        hq = new HauntedQuarter(ge,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTED_QUARTER,2),player);
 
 
 
         hq.useUniqueDistrictPower();
         assertEquals("Player uses his Haunted Quarter card power ..." + System.lineSeparator() +
-                "Player change the color of HAUNTEDQUARTER(2 coins, BLUE) to BLUE"+ System.lineSeparator(), outContent.toString());
+                "Player change the color of HAUNTED_QUARTER(2 coins, BLUE) to BLUE"+ System.lineSeparator(), outContent.toString());
         outContent.reset();
 
         GameEngine mockGE = mock(GameEngine.class);
         when(mockGE.getIO()).thenReturn(new IO());
         when(mockGE.getRound()).thenReturn(9);
 
-        hq = new HauntedQuarter(mockGE,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTEDQUARTER,2),player);
+        hq = new HauntedQuarter(mockGE,8,new DistrictCard(Color.PURPLE,DistrictName.HAUNTED_QUARTER,2),player);
 
         hq.useUniqueDistrictPower();
-        assertEquals("Player, unfortunately for you, the power of the card HAUNTEDQUARTER(2 coins, PURPLE) can't be used if you built it in the last round !" + System.lineSeparator(), outContent.toString());
+        assertEquals("Player, unfortunately for you, the power of the card HAUNTED_QUARTER(2 coins, PURPLE) can't be used if you built it in the last round !" + System.lineSeparator(), outContent.toString());
     }
 
 }
