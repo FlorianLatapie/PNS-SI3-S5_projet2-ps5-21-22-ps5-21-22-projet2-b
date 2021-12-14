@@ -193,6 +193,12 @@ class PlayerTest {
         assertEquals(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 2), warlord.warlordChooseDistrictToDestroy(player));
         warlord.removeCoins(2);
         assertNull(warlord.warlordChooseDistrictToDestroy(player));
+        warlord.receiveCoins(10);
+        List<DistrictCard> dcc = new ArrayList<>();
+        dcc.add(new DistrictCard(Color.PURPLE, DistrictName.KEEP, 2));
+        Player player2 = new Player("player1",dcc);
+        assertNull(warlord.warlordChooseDistrictToDestroy(player2));
+
     }
 
     @Test

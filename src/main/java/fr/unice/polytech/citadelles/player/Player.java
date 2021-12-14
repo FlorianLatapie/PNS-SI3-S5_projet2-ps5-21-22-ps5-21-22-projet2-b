@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles.player;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 
@@ -137,7 +138,10 @@ public class Player {
 
     public DistrictCard warlordChooseDistrictToDestroy(Player player) {
         List<DistrictCard> districtCardsOfPlayerThatCanBeDestroy = new ArrayList<>(player.districtCardsBuilt);
-        districtCardsOfPlayerThatCanBeDestroy = districtCardsOfPlayerThatCanBeDestroy.stream().filter(c -> c.getPriceToBuild() - 1 <= coins).toList();
+        districtCardsOfPlayerThatCanBeDestroy = districtCardsOfPlayerThatCanBeDestroy.stream()
+                .filter(c -> c.getPriceToBuild() - 1 <= coins)
+                .filter(c -> c.getDistrictName()!= DistrictName.KEEP) //merveille donjon
+                .toList();
         DistrictCard districtCardChoose = strategy.warlordChooseDistrictToDestroy(districtCardsOfPlayerThatCanBeDestroy);
         return districtCardChoose;
     }
