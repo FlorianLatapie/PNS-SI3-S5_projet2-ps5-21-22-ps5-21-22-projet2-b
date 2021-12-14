@@ -78,4 +78,8 @@ public abstract class Strategy {
             return destroyedDistricts.get(random.nextInt(0, destroyedDistricts.size()));
         }
     }
+
+    public boolean chooseToExchangeCoinsForCards(){
+        return random.nextBoolean();
+    }
 }

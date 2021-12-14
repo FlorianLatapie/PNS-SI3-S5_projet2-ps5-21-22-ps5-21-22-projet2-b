@@ -18,6 +18,8 @@ public class RandomStrategy extends Strategy {
         return random.nextBoolean();
     }
 
+
+
     @Override
     public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
         int choice = random.nextInt(0, districtCards.size()-1);

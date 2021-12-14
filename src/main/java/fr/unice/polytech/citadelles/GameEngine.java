@@ -6,6 +6,7 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.card.unique_districts.Graveyard;
 import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
+import fr.unice.polytech.citadelles.card.unique_districts.Smithy;
 import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -206,7 +207,7 @@ public class GameEngine {
         List<DistrictCard> districtsOfPlayer = player.getDistrictCardsBuilt();
 
         // searching for purple district cards
-        boolean hasLaboratory = false, hasGraveyard = false;
+        boolean hasLaboratory = false, hasGraveyard = false, hasSmithy = false;
         for (DistrictCard districtCard : districtsOfPlayer) {
             switch (districtCard.getDistrictName()) {
                 case LABORATORY:
@@ -214,6 +215,9 @@ public class GameEngine {
                     break;
                 case GRAVEYARD:
                     hasGraveyard = true;
+                    break;
+                case SMITHY:
+                    hasSmithy = true;
                     break;
             }
         }
@@ -223,6 +227,9 @@ public class GameEngine {
         }
         if (hasGraveyard) {
             new Graveyard(this).useUniqueDistrictPower(player);
+        }
+        if (hasSmithy){
+            new Smithy(this).useUniqueDistrictPower(player);
         }
     }
 

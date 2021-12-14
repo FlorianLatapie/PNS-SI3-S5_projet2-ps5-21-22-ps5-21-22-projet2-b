@@ -119,6 +119,9 @@ public class Player {
         return strategy.chooseBestDistrictCard(districtCards);
     }
 
+    public boolean chooseToExchangeCoinsForCards(){
+        return strategy.chooseToExchangeCoinsForCards();
+    }
     //--------------------------- CharacterCard powers / actions  ---------------------------
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return strategy.killCharacterCard(killableCharacterCards);

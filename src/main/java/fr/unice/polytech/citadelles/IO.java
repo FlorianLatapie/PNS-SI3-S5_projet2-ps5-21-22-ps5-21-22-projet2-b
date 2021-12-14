@@ -36,7 +36,6 @@ public class IO {
         System.out.println(o);
     }
 
-
     public void printWinner(List<Player> winners) {
         this.printSeparator("The winners podium !");
         winners.forEach(winner -> {
