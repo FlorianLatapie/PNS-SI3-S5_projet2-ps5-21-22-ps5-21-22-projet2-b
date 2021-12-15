@@ -494,30 +494,4 @@ public class GameEngine {
     public void setPlayersWhoBuilt8Cards(List<Player> playersWhoBuilt8Cards) {
         this.playersWhoBuilt8Cards = playersWhoBuilt8Cards;
     }
-
-    // legacy methods
-
-    public void giveMoneyToThief(Player player, Player player2) {
-        new Thief(this).giveMoneyToThief(player, player2);
-    }
-
-    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player player1) {
-        new Warlord(this).warlordRemoveDistrictCardOfPlayer(warlord, player1);
-    }
-
-    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players) {
-        return new Warlord(this).canWarlordDestroyACardFromCharacter(warlord, players);
-    }
-
-    public void give2DistrictCardsToArchitect(Player player) {
-        new Architect(this).give2DistrictCardsToArchitect(player);
-    }
-
-    public void changeCardMagician(Player player) {
-        new Magician(this).changeCardMagician(player);
-    }
-
-    public void giveDeckToMagician(Player player, Player player2) {
-        new Magician(this).giveDeckToMagician(player, player2);
-    }
 }
