@@ -1,13 +1,10 @@
-package fr.unice.polytech.citadelles.uniqueDistrictsTest;
+package fr.unice.polytech.citadelles.uniqueDistricts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
-import fr.unice.polytech.citadelles.card.unique_districts.Smithy;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 import org.junit.jupiter.api.BeforeAll;

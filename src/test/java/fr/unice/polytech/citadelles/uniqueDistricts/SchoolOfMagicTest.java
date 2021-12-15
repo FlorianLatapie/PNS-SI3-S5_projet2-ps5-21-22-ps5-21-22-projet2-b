@@ -1,10 +1,8 @@
-package fr.unice.polytech.citadelles.uniqueDistrictsTest;
+package fr.unice.polytech.citadelles.uniqueDistricts;
 
 import fr.unice.polytech.citadelles.GameEngine;
-import fr.unice.polytech.citadelles.IO;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.card.unique_districts.SchoolOfMagic;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -18,10 +16,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

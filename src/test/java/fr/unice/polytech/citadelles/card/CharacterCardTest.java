@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.card;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;

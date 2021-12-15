@@ -1,9 +1,8 @@
-package fr.unice.polytech.citadelles.uniqueDistrictsTest;
+package fr.unice.polytech.citadelles.uniqueDistricts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.card.unique_districts.Graveyard;
-import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static fr.unice.polytech.citadelles.uniqueDistrictsTest.HauntedQuarterTest.outContent;
+import static fr.unice.polytech.citadelles.uniqueDistricts.HauntedQuarterTest.outContent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

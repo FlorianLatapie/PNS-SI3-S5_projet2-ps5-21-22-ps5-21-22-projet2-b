@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.uniqueDistrictsTest;
+package fr.unice.polytech.citadelles.uniqueDistricts;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.IO;
