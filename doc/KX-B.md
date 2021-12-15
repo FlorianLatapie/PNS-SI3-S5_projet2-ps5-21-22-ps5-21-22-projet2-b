@@ -27,7 +27,6 @@ Chaque commit de code dans la branche « main » doit pouvoir ajouter des foncti
 
 ### 5. Avancement sur les fonctionnalités (quelles slices sont faites ? lesquelles restent à faire ?)
 
-
 *Pour un tour de jeu :*
 
  - On peut avoir jusqu’à 7 joueurs
@@ -37,8 +36,8 @@ Chaque commit de code dans la branche « main » doit pouvoir ajouter des foncti
 
 *Pour un tour de joueur :*
 
- - Utiliser le pouvoir du personnage choisit
- - Utiliser le pouvoir du personnage choisit
+ - Utiliser le pouvoir du personnage choisi
+ - Utiliser le pouvoir du personnage choisi
  - Choisir entre pièces et des cartes
  - Construire un quartier (s’il possède suffisamment de pièces)
 Récolter des impôts si possibles.
@@ -70,6 +69,51 @@ Récolter des impôts si possibles.
 ### 7. Architecture du projet 
 
 ![alt text](./assets/uml.png "uml.png")
+
+Le main est le point d'entrée du programme, il lance un moteur de jeu (GameEngine) qui démarre une partie. 
+cette partie se déroule tout d'abord par une demande à chaque joueur de choisir son sa carte personnage. 
+
+#### GameEngine#LaunchGame()
+##### GameEngine#askPlayersRoleAndSortThemByRole(List<CharacterCard> characterCardDeckOfTheRound)
+Pour le premier tour, le 1er joueur choisit en premier, pour les suivant c'est le roi du round précédent qui choisit en premier s'il y en a eu un. s'il n'y en a pas eu, le 1er joueur est le premier qui choisit son role. 
+
+Les joueurs sont triés dans l'ordre de leurs roles (Assassin en 1er, Voleur en 2e ...) puis ils jouent les uns après les autres.
+
+#### GameEngine#LaunchGame() boucle for 
+Chaque joueur s'il peut jouer choisit entre une pièce ou piocher une carte.
+Ensuite on demande au joueur s'il veut d'abord construire puis recupérer les taxes ou l'inverse.
+Le joueur construit et reccupère ses taxes. 
+Puis le joueueur utilise son action de personnage (tuer, voler etc...)
+Enfin le tour du joueur se finit par l'utilisation de ses (eventuelles) cartes merveilles
+
+On vérifie si la partie est terminée : le joueur a 8 cartes construites. 
+
+#### GameEngine#getWinner()
+Le moteur de jeu vérifie pour chaque joueur s'il y a des points bonus à lui ajouter : 
+- Il a fini en 1er, ou fini au même tour que le premier
+- Cartes Merveilles qui ajoutent des points
+ 
+Les joueurs sont triés en fonction des points qu'ils ont et affiché du meilleur au moins bon. 
+
+fin de l'execution du programme 
+
+#### IO
+Est le seul point de sortie autorisé pour le programme, toutes les autres classes doivent l'appeler pour pouvoir afficher quoi que ce soit dans la console. 
+GameEngine, UniqueDistrictsEngine et PowerEngine sont les seules classes ayant le droit d'utiliser la classe IO, tout le reste du code envoie des objets et n'est donc pas verbeux et ne dois pas l'être. 
+
+#### Player
+Les joueurs sont appelés par le moteur de jeu pour faire des choix : 
+Chaque joueur est initialisé avec une stratégie qui permet de choisir la bonne a chaque appel. 
+
+une classe PlayerTools permet d'avoir des statistiques sur le joueur comme la couleur la plus commne dans une liste de ses cartes par exemple. 
+
+#### UniqueDistrictsEngine et PowerEngine
+Sont des classes abstraites qui permettent d'étendre le game engine dans ses fonctionnalités tout en limitant un maximum le nombre de lignes de code de ce dernier, ils font les actions spécifiques pour chaque personnage et chaque carte merveille. 
+
+#### DeckOfCards
+Est une classe qui contient et instancie toutes les cartes nécessaires pour le jeu. 
+Les cartes ont uniquement des champs de type énuméré pour éviter les effets de bord. 
+
 
 ## Auteurs
 
