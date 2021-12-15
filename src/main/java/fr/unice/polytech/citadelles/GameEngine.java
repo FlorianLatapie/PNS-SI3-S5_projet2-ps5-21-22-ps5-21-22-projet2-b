@@ -11,10 +11,7 @@ import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -359,14 +356,18 @@ public class GameEngine {
 
     public List<Player> getWinner() {
         io.println("Computing bonus points ...");
-        for (int i = 0; i < playersWhoBuilt8Cards.size(); i++) {
-            if (i == 0) {
-                playersWhoBuilt8Cards.get(i).addPoints(4);
-                io.println(playersWhoBuilt8Cards.get(i).getName() + " receives 4 bonus points because he is the first to build 8 cards");
+        for (Player winner : playersWhoBuilt8Cards) {
+            if (playersWhoBuilt8Cards.indexOf(winner)==0) {
+                winner.addPoints(4);
+                io.println(winner.getName() + " receives 4 bonus points because he is the first to build 8 cards");
             } else {
-                playersWhoBuilt8Cards.get(i).addPoints(2);
-                io.println(playersWhoBuilt8Cards.get(i).getName() + " receives 2 bonus points because he also built 8 cards");
+                winner.addPoints(2);
+                io.println(winner.getName() + " receives 2 bonus points because he also built 8 cards");
             }
+            if(checkIfPlayerFinished5Colors(winner)){
+                winner.addPoints(3);
+                io.println(winner.getName() + " receives 3 bonus points because he built 5 district cards with different colors");
+            };
         }
 
         for (Player player : listOfPlayers) {
@@ -407,6 +408,14 @@ public class GameEngine {
         } else {
             return null;
         }
+    }
+
+    public boolean checkIfPlayerFinished5Colors(Player player){
+        Set<Enum> colorSet = new HashSet<>();
+        if(player.getDistrictCardsBuilt().isEmpty()) return false;
+        player.getDistrictCardsBuilt().forEach(c -> colorSet.add(c.getColor()));
+        if(colorSet.size()==5) return true;
+        return false;
     }
 
     // getters && setters

@@ -713,6 +713,21 @@ class GameEngineTest {
         outContent.reset();
     }
 
+    @Test
+    void checkIfPlayerFinished5ColorsTest(){
+        Player player = new Player("player_with_lab_1", new ArrayList<>(), 100);
+        player.setDistrictCardsBuilt(new ArrayList<>(List.of(
+                new DistrictCard(Color.PURPLE, DistrictName.NONE, 1),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 1),
+                new DistrictCard(Color.RED, DistrictName.NONE, 1),
+                new DistrictCard(Color.YELLOW, DistrictName.NONE, 1),
+                new DistrictCard(Color.GREEN, DistrictName.NONE, 1))));
+        GameEngine ge = new GameEngine(new Random(), player);
+        assertTrue(ge.checkIfPlayerFinished5Colors(player));
+        player.getDistrictCardsBuilt().remove(1);
+        assertFalse(ge.checkIfPlayerFinished5Colors(player));
+    }
+
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);
