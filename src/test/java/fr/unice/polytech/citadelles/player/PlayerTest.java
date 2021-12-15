@@ -9,6 +9,7 @@ import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
+import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -129,6 +130,45 @@ class PlayerTest {
     }
 
     @Test
+    void pickCardObservatoryAndLibraryTest() {
+        DistrictCard library = new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5);
+        DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
+        Player player = new Player("Player", new ArrayList<>(), 100, rand, new BuildMaxDistrictStrategy());
+        player.setDistrictCardsBuilt(List.of(library, observatory));
+
+        List<DistrictCard> fakeCards = new ArrayList<>();
+        fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.CITADEL, 4));
+        fakeCards.add(new DistrictCard(Color.YELLOW, DistrictName.MANSION, 3));
+        fakeCards.add(new DistrictCard(Color.RED, DistrictName.JAIL, 2));
+
+        DeckOfCards mockDec = mock(DeckOfCards.class);
+        when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1), fakeCards.get(2));
+
+        player.pickCard(mockDec);
+        assertEquals(2, player.getDistrictCardsInHand().size());
+        assertEquals(List.of(fakeCards.get(2), fakeCards.get(1)), player.getDistrictCardsInHand());
+    }
+
+    @Test
+    void pickCardObservatoryTest() {
+        DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
+        Player player = new Player("Player", new ArrayList<>(), 100, rand, new BuildMaxDistrictStrategy());
+        player.setDistrictCardsBuilt(List.of(observatory));
+
+        List<DistrictCard> fakeCards = new ArrayList<>();
+        fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.CITADEL, 4));
+        fakeCards.add(new DistrictCard(Color.YELLOW, DistrictName.MANSION, 3));
+        fakeCards.add(new DistrictCard(Color.RED, DistrictName.JAIL, 2));
+
+        DeckOfCards mockDec = mock(DeckOfCards.class);
+        when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1), fakeCards.get(2));
+
+        player.pickCard(mockDec);
+        assertEquals(1, player.getDistrictCardsInHand().size());
+        assertEquals(List.of(fakeCards.get(2)), player.getDistrictCardsInHand());
+    }
+
+    @Test
     void pickCardLibraryTest() {
         List<DistrictCard> fakeCards = new ArrayList<>();
         fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.CITADEL, 4));
@@ -142,7 +182,6 @@ class PlayerTest {
         player.pickCard(mockDec);
         assertTrue(player.getDistrictCardsInHand().contains(fakeCards.get(0)));
         assertTrue(player.getDistrictCardsInHand().contains(fakeCards.get(1)));
-
     }
 
     @Test

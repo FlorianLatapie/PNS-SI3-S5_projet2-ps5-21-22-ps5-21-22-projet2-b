@@ -130,6 +130,9 @@ public class Player {
     }
 
     public List<DistrictCard> pickCard(DeckOfCards deckOfCards) {
+        DistrictCard library = new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5);
+        DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
+
         DistrictCard card1 = deckOfCards.getRandomDistrictCard();
         DistrictCard card2 = deckOfCards.getRandomDistrictCard();
 
@@ -143,25 +146,74 @@ public class Player {
         }
 
         List<DistrictCard> chosenCards = new ArrayList<>();
+
+        if(getDistrictCardsBuilt().contains(library) && getDistrictCardsBuilt().contains(observatory)) {
+            return pickCardObservatoryAndLibrary(deckOfCards, seenCards, chosenCards);
+        }
+
+        if(getDistrictCardsBuilt().contains(observatory)){
+            return pickCardObservatory(deckOfCards, seenCards, chosenCards);
+        }
+
+        if(getDistrictCardsBuilt().contains(library)) {
+            receiveCards(seenCards);
+            return seenCards;
+        }
+
         DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
         chosenCards.add(chosenCard);
 
-        if(getDistrictCardsBuilt().contains(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5))) {
-            receiveCards(seenCards);
-        } else {
-            if (card1.equals(chosenCard)) {
-                deckOfCards.putDistrictCardInDeck(card2);
-            }
-            if (card2.equals(chosenCard)) {
-                deckOfCards.putDistrictCardInDeck(card1);
-            }
-            receiveCard(chosenCard);
+        if (card1.equals(chosenCard)) {
+            deckOfCards.putDistrictCardInDeck(card2);
+        }
+        if (card2.equals(chosenCard)) {
+            deckOfCards.putDistrictCardInDeck(card1);
         }
 
+        receiveCard(chosenCard);
         return chosenCards;
     }
 
-    //--------------------------- CharacterCard powers / actions  ---------------------------
+    public List<DistrictCard> pickCardObservatoryAndLibrary(DeckOfCards deckOfCards, List<DistrictCard> seenCards, List<DistrictCard> chosenCards) {
+        DistrictCard card3 = deckOfCards.getRandomDistrictCard();
+        if (card3 != null) {
+            seenCards.add(card3);
+        }
+        DistrictCard chosenCard1 = chooseBestDistrictCard(seenCards);
+        seenCards.remove(chosenCard1);
+        DistrictCard chosenCard2 = chooseBestDistrictCard(seenCards);
+        seenCards.remove(chosenCard2);
+
+        chosenCards.add(chosenCard1);
+        chosenCards.add(chosenCard2);
+
+        for(DistrictCard card : seenCards){
+            if(!(chosenCards.contains(card))){
+                deckOfCards.putDistrictCardInDeck(card);
+            }
+        }
+
+        receiveCards(chosenCards);
+        return chosenCards;
+    }
+
+    public List<DistrictCard> pickCardObservatory(DeckOfCards deckOfCards, List<DistrictCard> seenCards, List<DistrictCard> chosenCards) {
+        DistrictCard card3 = deckOfCards.getRandomDistrictCard();
+        if (card3 != null) {
+            seenCards.add(card3);
+        }
+        DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
+        for(DistrictCard card : seenCards){
+            if(!(card.equals(chosenCard))){
+                deckOfCards.putDistrictCardInDeck(card);
+            }
+        }
+        receiveCard(chosenCard);
+        return chosenCards;
+    }
+
+
+        //--------------------------- CharacterCard powers / actions  ---------------------------
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return strategy.killCharacterCard(killableCharacterCards);
     }
