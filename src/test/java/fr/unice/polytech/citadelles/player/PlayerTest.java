@@ -136,15 +136,13 @@ class PlayerTest {
 
         DeckOfCards mockDec = mock(DeckOfCards.class);
         when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1));
+        Player player = new Player("Player");
+        player.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5)));
 
-        Player mockPlayer = mock(Player.class);
-        mockPlayer.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5)));
-        when(mockPlayer.pickCard(any())).thenReturn(fakeCards);
+        player.pickCard(mockDec);
+        assertTrue(player.getDistrictCardsInHand().contains(fakeCards.get(0)));
+        assertTrue(player.getDistrictCardsInHand().contains(fakeCards.get(1)));
 
-        GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
-
-        assertEquals(fakeCards, ge.pickCard(mockPlayer));
-        assertEquals(2, ge.pickCard(mockPlayer).size());
     }
 
     @Test

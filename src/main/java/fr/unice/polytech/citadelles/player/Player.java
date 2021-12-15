@@ -80,6 +80,10 @@ public class Player {
         }
     }
 
+    public void receiveCards(List<DistrictCard> districtCards){
+        districtCards.forEach(districtCard -> receiveCard(districtCard));
+    }
+
     public void buildDistrictCardsInHand(DistrictCard cardToBuild) {
         removeCoins(cardToBuild.getPriceToBuild());
         districtCardsInHand.remove(cardToBuild);
@@ -142,16 +146,18 @@ public class Player {
         DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
         chosenCards.add(chosenCard);
 
-        if(!getDistrictCardsBuilt().contains(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5))) {
+        if(getDistrictCardsBuilt().contains(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5))) {
+            receiveCards(seenCards);
+        } else {
             if (card1.equals(chosenCard)) {
                 deckOfCards.putDistrictCardInDeck(card2);
             }
             if (card2.equals(chosenCard)) {
                 deckOfCards.putDistrictCardInDeck(card1);
             }
+            receiveCard(chosenCard);
         }
 
-        receiveCard(chosenCard);
         return chosenCards;
     }
 
