@@ -1,6 +1,7 @@
 package fr.unice.polytech.citadelles;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -14,8 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -125,6 +125,25 @@ class PlayerTest {
         assertNull(playerWithNoCoins.chooseToBuildDistrict());
         assertTrue(playerWithNoCoins.getDistrictCardsBuilt().isEmpty());
         assertFalse(playerWithNoCoins.getDistrictCardsInHand().isEmpty());
+    }
+
+    @Test
+    void pickCardLibraryTest() {
+        List<DistrictCard> fakeCards = new ArrayList<>();
+        fakeCards.add(new DistrictCard(Color.BLUE, DistrictName.CITADEL, 4));
+        fakeCards.add(new DistrictCard(Color.YELLOW, DistrictName.MANSION, 3));
+
+        DeckOfCards mockDec = mock(DeckOfCards.class);
+        when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1));
+
+        Player mockPlayer = mock(Player.class);
+        mockPlayer.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5)));
+        when(mockPlayer.pickCard(any())).thenReturn(fakeCards);
+
+        GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
+
+        assertEquals(fakeCards, ge.pickCard(mockPlayer));
+        assertEquals(2, ge.pickCard(mockPlayer).size());
     }
 
     @Test

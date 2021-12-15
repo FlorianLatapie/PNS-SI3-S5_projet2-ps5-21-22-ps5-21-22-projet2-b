@@ -4,6 +4,7 @@ import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.strategy.RandomStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
@@ -141,12 +142,15 @@ public class Player {
         DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
         chosenCards.add(chosenCard);
 
-        if (card1.equals(chosenCard)) {
-            deckOfCards.putDistrictCardInDeck(card2);
+        if(!getDistrictCardsBuilt().contains(new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5))) {
+            if (card1.equals(chosenCard)) {
+                deckOfCards.putDistrictCardInDeck(card2);
+            }
+            if (card2.equals(chosenCard)) {
+                deckOfCards.putDistrictCardInDeck(card1);
+            }
         }
-        if (card2.equals(chosenCard)) {
-            deckOfCards.putDistrictCardInDeck(card1);
-        }
+
         receiveCard(chosenCard);
         return chosenCards;
     }

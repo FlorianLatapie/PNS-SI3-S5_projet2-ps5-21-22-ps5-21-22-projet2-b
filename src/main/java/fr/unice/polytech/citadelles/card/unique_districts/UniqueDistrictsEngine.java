@@ -33,6 +33,7 @@ public abstract class UniqueDistrictsEngine {
     private UniqueDistrictsEngine(){};
 
     protected UniqueDistrictsEngine(GameEngine gameEngine){
+
         this.gameEngine = gameEngine;
         io = gameEngine.getIO();
 
