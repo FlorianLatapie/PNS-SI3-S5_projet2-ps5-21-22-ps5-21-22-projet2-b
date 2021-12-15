@@ -16,12 +16,11 @@ public class Architect extends PowerEngine {
         io.printDistrictCardsInHandOf(player);
         io.println(player.getName() + " can build 2 more districts...");
         io.println(player.getName() + " has " + player.getCoins() + " coins");
-        askToBuildDistrict(player);
-        askToBuildDistrict(player);
+        gameEngine.askToBuildDistrict(player);
+        gameEngine.askToBuildDistrict(player);
         io.printDistrictCardsBuiltBy(player);
     }
 
-    @Override
     public void give2DistrictCardsToArchitect(Player player){
         DistrictCard c1 = deckOfCards.getRandomDistrictCard();
         if(c1 != null){

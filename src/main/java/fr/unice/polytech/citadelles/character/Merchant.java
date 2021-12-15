@@ -11,6 +11,6 @@ public class Merchant extends PowerEngine {
     @Override
     public void callCharacterCardAction(Player player) {
         io.println(player.getName() + " uses his power ...");
-        giveCoins(player, 1);
+        gameEngine.giveCoins(player, 1);
     }
 }

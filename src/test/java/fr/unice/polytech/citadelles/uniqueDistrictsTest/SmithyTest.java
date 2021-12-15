@@ -38,7 +38,7 @@ class SmithyTest {
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.PURPLE, DistrictName.SMITHY, 5));
-        new Smithy(gameEngine).useUniqueDistrict(player);
+        gameEngine.useUniqueDistrict(player);
         assertEquals(7, player.getCoins());
         assertEquals(7, player.getDistrictCardsInHand().size());
     }

@@ -9,7 +9,7 @@ import fr.unice.polytech.citadelles.player.Player;
 import java.util.List;
 import java.util.Random;
 
-public abstract class PowerEngine extends GameEngine {
+public abstract class PowerEngine {
     GameEngine gameEngine;
     IO io;
 
@@ -52,6 +52,6 @@ public abstract class PowerEngine extends GameEngine {
         random = gameEngine.getRandom();
     }
 
-    @Override
+
     public abstract void callCharacterCardAction(Player player);
 }

@@ -39,7 +39,7 @@ class LaboratoryTest {
 
         assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseCardToDiscard());
 
-        new Laboratory(gameEngine).useUniqueDistrict(player);
+        gameEngine.useUniqueDistrict(player);
         assertEquals(6, player.getCoins());
 
         List<DistrictCard> cardsInHandAfterPowerUsed = districtCards;

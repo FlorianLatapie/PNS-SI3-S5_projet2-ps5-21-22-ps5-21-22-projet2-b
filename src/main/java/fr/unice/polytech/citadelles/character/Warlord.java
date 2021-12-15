@@ -26,7 +26,7 @@ public class Warlord extends PowerEngine {
         listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers);
         Player playerWhoIsBishop = gameEngine.getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP));
         if((playerWhoIsBishop != null)){
-            if(canThisPlayerPlay(playerWhoIsBishop)){
+            if(gameEngine.canThisPlayerPlay(playerWhoIsBishop)){
                 listWarlordPlayers.remove(playerWhoIsBishop);
             }
         }
@@ -34,7 +34,6 @@ public class Warlord extends PowerEngine {
         warlordRemoveDistrictCardOfPlayer(player, playerChosenByWarlord);
     }
 
-    @Override
     public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players){
         boolean canDestroy = false;
         List<Player> playerThatHasDestructibleDistricts = new ArrayList<>();
@@ -50,7 +49,6 @@ public class Warlord extends PowerEngine {
         return playerThatHasDestructibleDistricts;
     }
 
-    @Override
     public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChooseByWarlord){
         if(playerChooseByWarlord != null){
             DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChooseByWarlord);

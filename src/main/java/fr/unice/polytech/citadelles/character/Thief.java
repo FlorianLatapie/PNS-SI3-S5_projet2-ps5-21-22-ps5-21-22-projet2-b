@@ -30,7 +30,6 @@ public class Thief extends PowerEngine {
         io.println(player.getName() + " stole " + stolenCharacter);
     }
 
-    @Override
     public void giveMoneyToThief(Player thief, Player player) {
         if (player != null) {
             thief.receiveCoins(player.getCoins());

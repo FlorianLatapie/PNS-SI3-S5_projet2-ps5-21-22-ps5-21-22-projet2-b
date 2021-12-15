@@ -9,7 +9,7 @@ import fr.unice.polytech.citadelles.player.Player;
 import java.util.List;
 import java.util.Random;
 
-public abstract class UniqueDistrictsEngine extends GameEngine {
+public abstract class UniqueDistrictsEngine {
 
     GameEngine gameEngine;
     IO io;
