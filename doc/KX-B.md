@@ -67,6 +67,10 @@ Récolter des impôts si possibles.
 - Faire des ramifications de stratégies, une partie pour le choix et l'utilisation des rôles, une partie pour la construction des quartiers, une partie pour la construction des merveilles
 - Stratégies prédéfinies, complètement déterministe
 
+### 7. Architecture du projet 
+
+![alt text](./assets/uml.png "uml.png")
+
 ## Auteurs
 
 - [@FlorianLatapie](https://github.com/FlorianLatapie)
