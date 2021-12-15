@@ -314,34 +314,15 @@ public class GameEngine {
         player.receiveCard(card);
     }
 
-    public DistrictCard pickCard(Player player) {
-        DistrictCard card1 = deckOfCards.getRandomDistrictCard();
-        DistrictCard card2 = deckOfCards.getRandomDistrictCard();
-
-        List<DistrictCard> pickedCards = new ArrayList<>();
-
-        if (card1 != null) {
-            pickedCards.add(card1);
-        }
-        if (card2 != null) {
-            pickedCards.add(card2);
-        }
-
-        DistrictCard choosenCard = player.chooseBestDistrictCard(pickedCards);
-
-        if (card1.equals(choosenCard)) {
-            deckOfCards.putDistrictCardInDeck(card2);
-        }
-        if (card2.equals(choosenCard)) {
-            deckOfCards.putDistrictCardInDeck(card1);
-        }
-
+    public List<DistrictCard> pickCard(Player player) {
+        List<DistrictCard> districtCardsPicked = player.pickCard(deckOfCards);
         io.println(player.getName() + " choose to draw a card");
-        io.println(player.getName() + " draws: " + card1 + " and " + card2);
-        io.println(player.getName() + " picks: " + choosenCard);
-        player.receiveCard(choosenCard);
 
-        return choosenCard;
+        districtCardsPicked.forEach(districtCard -> {
+            io.println(player.getName() + " picks: " + districtCard);
+        });
+
+        return districtCardsPicked;
     }
 
     public void askToChooseCoinsOverDrawingACard(Player player) {

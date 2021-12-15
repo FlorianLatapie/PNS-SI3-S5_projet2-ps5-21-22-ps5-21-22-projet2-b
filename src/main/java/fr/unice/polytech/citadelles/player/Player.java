@@ -1,6 +1,7 @@
 package fr.unice.polytech.citadelles.player;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.DistrictName;
@@ -122,6 +123,34 @@ public class Player {
     public boolean chooseToExchangeCoinsForCards(){
         return strategy.chooseToExchangeCoinsForCards();
     }
+
+    public List<DistrictCard> pickCard(DeckOfCards deckOfCards) {
+        DistrictCard card1 = deckOfCards.getRandomDistrictCard();
+        DistrictCard card2 = deckOfCards.getRandomDistrictCard();
+
+        List<DistrictCard> seenCards = new ArrayList<>();
+
+        if (card1 != null) {
+            seenCards.add(card1);
+        }
+        if (card2 != null) {
+            seenCards.add(card2);
+        }
+
+        List<DistrictCard> chosenCards = new ArrayList<>();
+        DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
+        chosenCards.add(chosenCard);
+
+        if (card1.equals(chosenCard)) {
+            deckOfCards.putDistrictCardInDeck(card2);
+        }
+        if (card2.equals(chosenCard)) {
+            deckOfCards.putDistrictCardInDeck(card1);
+        }
+        receiveCard(chosenCard);
+        return chosenCards;
+    }
+
     //--------------------------- CharacterCard powers / actions  ---------------------------
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
         return strategy.killCharacterCard(killableCharacterCards);

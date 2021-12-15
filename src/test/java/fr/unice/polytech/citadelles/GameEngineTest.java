@@ -159,11 +159,11 @@ class GameEngineTest {
         when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0), fakeCards.get(1));
 
         Player mockPlayer = mock(Player.class);
-        when(mockPlayer.chooseBestDistrictCard(fakeCards)).thenReturn(new DistrictCard(Color.BLUE, DistrictName.NONE, 1));
+        when(mockPlayer.pickCard(any())).thenReturn(List.of(new DistrictCard(Color.BLUE, DistrictName.NONE, 1)));
 
         GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
 
-        assertEquals(new DistrictCard(Color.BLUE, DistrictName.NONE, 1), ge.pickCard(mockPlayer));
+        assertEquals(List.of(new DistrictCard(Color.BLUE, DistrictName.NONE, 1)), ge.pickCard(mockPlayer));
     }
 
     @Test
@@ -175,11 +175,11 @@ class GameEngineTest {
         when(mockDec.getRandomDistrictCard()).thenReturn(fakeCards.get(0));
 
         Player mockPlayer = mock(Player.class);
-        when(mockPlayer.chooseBestDistrictCard(any())).thenReturn(fakeCards.get(0));
+        when(mockPlayer.pickCard(any())).thenReturn(fakeCards);
 
         GameEngine ge = new GameEngine(new Random(), mockDec, mockPlayer);
 
-        assertEquals(fakeCards.get(0), ge.pickCard(mockPlayer));
+        assertEquals(fakeCards, ge.pickCard(mockPlayer));
     }
 
     @Test
