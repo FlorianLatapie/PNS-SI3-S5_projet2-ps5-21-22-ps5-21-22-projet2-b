@@ -25,7 +25,7 @@ Nous rédigeons au début de la séance 1 ou 2 Milestone avec les issues corresp
 
 Chaque commit de code dans la branche « main » doit pouvoir ajouter des fonctionnalités tout en gardant le jeu jouable du début à la fin. Un « code coverage » de 100% du nouveau code ajouté est aussi requis. Seule la méthode launchgame() du GameEngine n’est pas testée car elle n’est pas testable unitairement. 
 
-### Avancement sur les fonctionnalités (quelles slices sont faites ? lesquelles restent à faire ?)
+### 5. Avancement sur les fonctionnalités (quelles slices sont faites ? lesquelles restent à faire ?)
 
 
 *Pour un tour de jeu :*
@@ -50,7 +50,7 @@ Récolter des impôts si possibles.
 - Le classement des joueurs est affiché par ordre décroissant.
  
  
-### Etat de la base de code : quelles parties sont bien faites ? Quelles parties sont à refactor et pourquoi ?
+### 6. Etat de la base de code : quelles parties sont bien faites ? Quelles parties sont à refactor et pourquoi ?
 
 **Les parties bien faites** : 
 
