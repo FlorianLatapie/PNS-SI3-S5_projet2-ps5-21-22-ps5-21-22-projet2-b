@@ -3,10 +3,7 @@ package fr.unice.polytech.citadelles;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.card.unique_districts.Graveyard;
-import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
-import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
-import fr.unice.polytech.citadelles.card.unique_districts.Smithy;
+import fr.unice.polytech.citadelles.card.unique_districts.*;
 import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
@@ -207,7 +204,7 @@ public class GameEngine {
         List<DistrictCard> districtsOfPlayer = player.getDistrictCardsBuilt();
 
         // searching for purple district cards
-        boolean hasLaboratory = false, hasGraveyard = false, hasSmithy = false;
+        boolean hasLaboratory = false, hasGraveyard = false, hasSmithy = false, hasSchoolOfMagic = false;
         for (DistrictCard districtCard : districtsOfPlayer) {
             switch (districtCard.getDistrictName()) {
                 case LABORATORY:
@@ -218,6 +215,9 @@ public class GameEngine {
                     break;
                 case SMITHY:
                     hasSmithy = true;
+                    break;
+                case SCHOOL_OF_MAGIC:
+                    hasSchoolOfMagic = true;
                     break;
             }
         }
@@ -230,6 +230,9 @@ public class GameEngine {
         }
         if (hasSmithy){
             new Smithy(this).useUniqueDistrictPower(player);
+        }
+        if (hasSchoolOfMagic){
+            new SchoolOfMagic(this).useUniqueDistrictPower(player);
         }
     }
 
@@ -368,7 +371,7 @@ public class GameEngine {
 
         for (Player player : listOfPlayers) {
             player.getDistrictCardsBuilt().forEach(districtCard -> {
-                        if (districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6))
+                        if (districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6))
                         || districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6))){
                             player.addPoints(2);
                             io.println(player.getName() + " receives 2 bonus points because he built " + districtCard);

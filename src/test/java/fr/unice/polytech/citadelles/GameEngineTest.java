@@ -113,6 +113,12 @@ class GameEngineTest {
         assertEquals("mockPlayerName has chosen to build a district : NONE(1 coin, GREY)" + System.lineSeparator() +
                 "mockPlayerName has the following district cards in hand          : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
         assertFalse(ge.askToBuildDistrict(mockPlayer));
+        outContent.reset();
+
+        when(mockPlayer.chooseToBuildDistrict()).thenReturn(new DistrictCard(Color.PURPLE, DistrictName.HAUNTED_QUARTER, 6));
+        ge.askToBuildDistrict(mockPlayer);
+        assertEquals("mockPlayerName has chosen to build a district : HAUNTED_QUARTER(6 coins, PURPLE)" + System.lineSeparator() +
+                "mockPlayerName has the following district cards in hand          : [NONE(1 coin, GREY)]" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
@@ -341,7 +347,7 @@ class GameEngineTest {
     @Test
     void getWinnerTest2() {
         Player player1 = new Player("player");
-        DistrictCard schoolOfMagic = new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6);
+        DistrictCard schoolOfMagic = new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6);
         DistrictCard dragonate = new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6);
         player1.setDistrictCardsBuilt(List.of(schoolOfMagic, dragonate));
 
@@ -351,7 +357,7 @@ class GameEngineTest {
 
         ge.getWinner();
         assertEquals("Computing bonus points ..." + System.lineSeparator()
-                        + "player receives 2 bonus points because he built SCHOOL_OF_MAGIC(6 coins, PURPLE)" + System.lineSeparator()
+                        + "player receives 2 bonus points because he built UNIVERSITY(6 coins, PURPLE)" + System.lineSeparator()
                         + "player receives 2 bonus points because he built DRAGONGATE(6 coins, PURPLE)" + System.lineSeparator()
                         + "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------"
                         + System.lineSeparator() + System.lineSeparator()
@@ -679,7 +685,13 @@ class GameEngineTest {
         Player player2 = new Player("player_with_lab_2", player2DistrictCardsInHand, 100, mockRandom);
         player2.setDistrictCardsBuilt(List.of(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5)));
 
-        GameEngine ge = new GameEngine(mockRandom, player, player2);
+        //PLAYER 3
+        Player mockPlayer3 = mock(Player.class);
+        when(mockPlayer3.getName()).thenReturn("Player 3");
+        when(mockPlayer3.getCharacterCard()).thenReturn(new CharacterCard(CharacterName.MERCHANT));
+        when(mockPlayer3.getDistrictCardsBuilt()).thenReturn(List.of(new DistrictCard(Color.PURPLE, DistrictName.SCHOOL_OF_MAGIC, 6)));
+
+        GameEngine ge = new GameEngine(mockRandom, player, player2, mockPlayer3);
 
         ge.useUniqueDistrict(player);
         assertEquals("player_with_lab_1 uses his Laboratory district  ..." + System.lineSeparator() +
@@ -692,6 +704,12 @@ class GameEngineTest {
                 "player_with_lab_2 receives 1 coin" + System.lineSeparator() +
                 "player_with_lab_2 has 101 coins" + System.lineSeparator() +
                 "player_with_lab_2 receives 1 extra coin." + System.lineSeparator(), outContent.toString());
+        outContent.reset();
+
+        ge.useUniqueDistrict(mockPlayer3);
+        assertEquals("Player 3 uses his School of Magic card power ..." + System.lineSeparator() +
+                "Player 3 change the color of the School of Magic to GREEN" + System.lineSeparator() +
+                "Player 3 receive 1 coin because he is MERCHANT" + System.lineSeparator(), outContent.toString());
         outContent.reset();
     }
 
