@@ -43,7 +43,7 @@ public class GameEngine {
     // constructors
 
     public GameEngine() {
-        this(4, new Random());
+        this(7, new Random());
     }
 
     public GameEngine(int nbPlayers, Random random) {

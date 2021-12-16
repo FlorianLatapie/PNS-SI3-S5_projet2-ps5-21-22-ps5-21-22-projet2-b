@@ -28,7 +28,8 @@ public class Smithy extends UniqueDistrictsEngine{
             DistrictCard cardToAdd = deckOfCards.getRandomDistrictCard();
             cardsToAdd.add(cardToAdd);
             player.removeCoins(1);
-            player.getDistrictCardsInHand().add(cardToAdd);
+            player.receiveCard(cardToAdd);
+            // player.getDistrictCardsInHand().add(cardToAdd);
         }
     }
 

@@ -109,7 +109,7 @@ public class DeckOfCards {
     }
 
     public DistrictCard getRandomDistrictCard() {
-        if (districtCards.isEmpty()){
+        if (districtCards.isEmpty()) {
             return null;
         }
         DistrictCard card = districtCards.get(random.nextInt(districtCards.size()));
@@ -117,8 +117,11 @@ public class DeckOfCards {
         return card;
     }
 
-    public boolean putDistrictCardInDeck(DistrictCard districtCard){
-        return districtCards.add(districtCard);
+    public boolean putDistrictCardInDeck(DistrictCard districtCard) {
+        if (districtCard != null) {
+            return districtCards.add(districtCard);
+        }
+        return false;
     }
 
     public List<CharacterCard> getNewCharacterCards() {

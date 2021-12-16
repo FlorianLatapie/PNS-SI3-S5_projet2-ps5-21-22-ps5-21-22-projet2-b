@@ -163,10 +163,10 @@ public class Player {
         DistrictCard chosenCard = chooseBestDistrictCard(seenCards);
         chosenCards.add(chosenCard);
 
-        if (card1.equals(chosenCard)) {
+        if (Objects.equals(card1, chosenCard)) {
             deckOfCards.putDistrictCardInDeck(card2);
         }
-        if (card2.equals(chosenCard)) {
+        if (Objects.equals(card2, chosenCard)) {
             deckOfCards.putDistrictCardInDeck(card1);
         }
 

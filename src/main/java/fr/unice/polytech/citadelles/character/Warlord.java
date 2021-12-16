@@ -25,8 +25,8 @@ public class Warlord extends PowerEngine {
         listWarlordPlayers.remove(player);
         listWarlordPlayers = canWarlordDestroyACardFromCharacter(player, listWarlordPlayers);
         Player playerWhoIsBishop = gameEngine.getPlayerWithCharacter(new CharacterCard(CharacterName.BISHOP));
-        if((playerWhoIsBishop != null)){
-            if(gameEngine.canThisPlayerPlay(playerWhoIsBishop)){
+        if ((playerWhoIsBishop != null)) {
+            if (gameEngine.canThisPlayerPlay(playerWhoIsBishop)) {
                 listWarlordPlayers.remove(playerWhoIsBishop);
             }
         }
@@ -34,29 +34,32 @@ public class Warlord extends PowerEngine {
         warlordRemoveDistrictCardOfPlayer(player, playerChosenByWarlord);
     }
 
-    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players){
+    public List<Player> canWarlordDestroyACardFromCharacter(Player warlord, List<Player> players) {
         boolean canDestroy = false;
         List<Player> playerThatHasDestructibleDistricts = new ArrayList<>();
-        for(Player player : players){
+        for (Player player : players) {
             canDestroy = false;
-            if(player.getDistrictCardsBuilt() != null){
-                for(DistrictCard card : player.getDistrictCardsBuilt()){
-                    if(card.getPriceToBuild()-1 <= warlord.getCoins()) canDestroy = true;
+            if (player.getDistrictCardsBuilt() != null) {
+                for (DistrictCard card : player.getDistrictCardsBuilt()) {
+                    if (card.getPriceToBuild() - 1 <= warlord.getCoins()) canDestroy = true;
                 }
-                if(canDestroy) playerThatHasDestructibleDistricts.add(player);
+                if (canDestroy) playerThatHasDestructibleDistricts.add(player);
             }
         }
         return playerThatHasDestructibleDistricts;
     }
 
-    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChooseByWarlord){
-        if(playerChooseByWarlord != null){
-            DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChooseByWarlord);
-            warlord.removeCoins(districtCardChooseByWarLord.getPriceToBuild()-1);
-            playerChooseByWarlord.removeDistrictCardBuilt(districtCardChooseByWarLord);
-            io.println(warlord.getName() + " destroys "+ districtCardChooseByWarLord.getDistrictName()+ " of "+playerChooseByWarlord.getName()+". It costs him: "+ (districtCardChooseByWarLord.getPriceToBuild()-1)+ " gold");
-        }
-        else {
+    public void warlordRemoveDistrictCardOfPlayer(Player warlord, Player playerChosenByWarlord) {
+        if (playerChosenByWarlord != null) {
+            DistrictCard districtCardChooseByWarLord = warlord.warlordChooseDistrictToDestroy(playerChosenByWarlord);
+            if (districtCardChooseByWarLord != null) {
+                warlord.removeCoins(districtCardChooseByWarLord.getPriceToBuild() - 1);
+                playerChosenByWarlord.removeDistrictCardBuilt(districtCardChooseByWarLord);
+                io.println(warlord.getName() + " destroys " + districtCardChooseByWarLord.getDistrictName() + " of " + playerChosenByWarlord.getName() + ". It costs him: " + (districtCardChooseByWarLord.getPriceToBuild() - 1) + " gold");
+            } else {
+                io.println(warlord.getName() + " cannot destroy a district from " + playerChosenByWarlord.getName() + "(" + playerChosenByWarlord.getDistrictCardsBuilt() + ")");
+            }
+        } else {
             io.println("Warlord don't use his power");
         }
     }
