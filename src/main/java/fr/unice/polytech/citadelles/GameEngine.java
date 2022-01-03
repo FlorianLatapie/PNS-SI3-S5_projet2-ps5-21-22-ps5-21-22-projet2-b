@@ -9,7 +9,10 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
+import fr.unice.polytech.citadelles.strategy.Strategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -92,7 +95,9 @@ public class GameEngine {
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 2, random, new BuildMaxDistrictStrategy());
+            Strategy buildMaxDistrictSrategy = new CompleteStrategy();
+            Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 2, random, buildMaxDistrictSrategy);
+            buildMaxDistrictSrategy.init(playerToAdd, random, new CharacterStrat(playerToAdd), new BuildMaxDistrictStrategy(playerToAdd,random));
             listOfPlayers.add(playerToAdd);
             if (i == 0) {
                 kingOfTheLastRound = playerToAdd;

@@ -3,9 +3,10 @@ package fr.unice.polytech.citadelles.player;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
-import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.player.PlayerTools;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
+import fr.unice.polytech.citadelles.strategy.Strategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -31,12 +32,15 @@ class PlayerToolsTest {
 
     @Test
     void getCheapestDistrictCardTest() {
-        Player player = new Player("player", districtCards, 2, new Random(), new BuildMaxDistrictStrategy());
+        Strategy buildMaxDistrictSrategy = new CompleteStrategy();
+        Player player = new Player("player", districtCards, 2, new Random(), buildMaxDistrictSrategy);
+        buildMaxDistrictSrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
         DistrictCard districtCard = new PlayerTools(player).getCheapestDistrictCard();
         //Gets the first cheapest card
         assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());
 
-        Player player2 = new Player("player", new ArrayList<>(), 2, new Random(), new BuildMaxDistrictStrategy());
+        Player player2 = new Player("player", new ArrayList<>(), 2, new Random(), buildMaxDistrictSrategy);
+        buildMaxDistrictSrategy.init(player2, player2.getRandom(), new CharacterStrat(player2), new BuildMaxDistrictStrategy(player2, player2.getRandom()));
         DistrictCard districtCard2 = new PlayerTools(player2).getCheapestDistrictCard();
 
         assertNull(districtCard2);
@@ -44,7 +48,9 @@ class PlayerToolsTest {
 
     @Test
     void getCheapestDistrictCardTest2() {
-        Player player = new Player("player", districtCards, 2, new Random(), new BuildMaxDistrictStrategy());
+        Strategy buildMaxDistrictSrategy = new CompleteStrategy();
+        Player player = new Player("player", districtCards, 2, new Random(), buildMaxDistrictSrategy);
+        buildMaxDistrictSrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
         DistrictCard districtCard = new PlayerTools(player).getCheapestDistrictCard(districtCards);
         //Gets the first cheapest card
         assertEquals(DistrictName.TAVERN, districtCard.getDistrictName());

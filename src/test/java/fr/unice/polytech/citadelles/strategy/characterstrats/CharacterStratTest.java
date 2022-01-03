@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.strategy;
+package fr.unice.polytech.citadelles.strategy.characterstrats;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
@@ -7,8 +7,8 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
-import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +19,10 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
-class RandomStrategyTest {
+public class CharacterStratTest {
     List<DistrictCard> districtCards;
 
     @BeforeEach
@@ -47,64 +48,6 @@ class RandomStrategyTest {
         assertEquals(new CharacterCard(CharacterName.ASSASSIN), player.getCharacterCard());
 
         verify(spy, times(1)).chooseCharacter(anyList());
-    }
-
-    @Test
-    void getCoinsOverDrawingACardTest() {
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextBoolean()).thenReturn(true, false);
-
-        CompleteStrategy spy = spy(new CompleteStrategy());
-        Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
-
-        assertTrue(player.chooseCoinsOverDrawingACard());
-        assertFalse(player.chooseCoinsOverDrawingACard());
-
-        verify(spy, times(2)).getCoinsOverDrawingACard();
-    }
-
-    @Test
-    void chooseBestDistrictCardTest(){
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
-
-        CompleteStrategy spy = spy(new CompleteStrategy());
-        Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
-        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), player.chooseBestDistrictCard(districtCards));
-    }
-
-    @Test
-    void getTaxesAtBeginningOfTurnTest() {
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextBoolean()).thenReturn(true, false);
-
-        CompleteStrategy spy = spy(new CompleteStrategy());
-        Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
-
-        assertTrue(player.chooseToGetTaxesAtBeginningOfTurn());
-        assertFalse(player.chooseToGetTaxesAtBeginningOfTurn());
-
-        verify(spy, times(2)).getTaxesAtBeginningOfTurn();
-    }
-
-    @Test
-    void chooseToBuildDistrictTest() {
-        Random mockRandom = mock(Random.class);
-        when(mockRandom.nextBoolean()).thenReturn(true, false);
-
-        List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
-
-        CompleteStrategy spy = spy(new CompleteStrategy());
-        Player player = new Player("Player 1", dc, 200, mockRandom, spy);
-
-        List<DistrictCard> expectedBuilt = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
-
-        assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), player.chooseToBuildDistrict());
-        assertEquals(expectedBuilt, player.getDistrictCardsBuilt());
-        assertTrue(player.getDistrictCardsInHand().isEmpty());
-        assertNull(player.chooseToBuildDistrict());
-
-        verify(spy, times(2)).buildDistrict();
     }
 
     @Test
@@ -232,4 +175,3 @@ class RandomStrategyTest {
         assertEquals(districtCard, p.chooseToRepairDistrict());
     }
 }
-

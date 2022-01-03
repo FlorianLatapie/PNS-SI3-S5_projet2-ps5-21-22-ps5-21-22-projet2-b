@@ -5,8 +5,10 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.RandomStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +32,9 @@ class SmithyTest {
 
     @Test
     void useUniqueDistrictPowerTest(){
-        Strategy randomStrategy = new RandomStrategy();
-        Player player = new Player("Player", districtCards, 10, new Random(), randomStrategy);
+        Strategy districtStrategy = new CompleteStrategy();
+        Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildStrat(player, player.getRandom()));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.PURPLE, DistrictName.SMITHY, 5));

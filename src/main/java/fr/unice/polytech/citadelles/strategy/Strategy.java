@@ -3,13 +3,15 @@ package fr.unice.polytech.citadelles.strategy;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 
 import java.util.List;
 import java.util.Random;
 
-public abstract class Strategy {
-    Player player;
-    Random random;
+public interface Strategy {
+
+    public void init(Player player, Random random, CharacterStrat characterStrat, BuildStrat buildStrat);
 
     public abstract CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
 
@@ -19,67 +21,21 @@ public abstract class Strategy {
 
     public abstract DistrictCard buildDistrict();
 
-    public void init(Player player) {
-        this.player = player;
-        this.random = player.getRandom();
-    }
-
     public abstract DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards);
 
-    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards) {
-        return killableCharacterCards.get(random.nextInt(0, killableCharacterCards.size()));
-    }
+    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards);
 
-    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards) {
-        return ableToStealCharacterCards.get(random.nextInt(0, ableToStealCharacterCards.size()));
-    }
+    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards);
 
-    public Player getSometimesRandomPlayer(List<Player> players) {
-        if (random.nextBoolean() && !players.isEmpty()) {
-            return players.get(random.nextInt(0, players.size()));
-        } else {
-            return null;
-        }
-    }
+    public Player getSometimesRandomPlayer(List<Player> players);
 
-    public Player magicianMove(List<Player> players) {
-        if (random.nextBoolean()) {
-            return players.get(random.nextInt(0, players.size()));
-        } else {
-            return null;
-        }
-    }
+    public Player magicianMove(List<Player> players);
 
-    public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy) {
-        if (!districtCardsThatCanBeDestroy.isEmpty()) {
-            return districtCardsThatCanBeDestroy.get(random.nextInt(0, districtCardsThatCanBeDestroy.size()));
-        }
-        return null;
-    }
+    public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy);
 
-    public DistrictCard changeCardToOther() {
-        List<DistrictCard> cards = player.getDistrictCardsInHand();
-        DistrictCard res;
-        if (!cards.isEmpty()) {
-            res = cards.get(random.nextInt(0, cards.size()));
-            cards.remove(res);
-        } else {
-            res = null;
-        }
+    public DistrictCard changeCardToOther();
 
-        player.setDistrictCardsInHand(cards);
-        return res;
-    }
+    public DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts);
 
-    public DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts) {
-        if (player.getDestroyedDistricts().isEmpty()) {
-            return null;
-        } else {
-            return destroyedDistricts.get(random.nextInt(0, destroyedDistricts.size()));
-        }
-    }
-
-    public boolean chooseToExchangeCoinsForCards(){
-        return random.nextBoolean();
-    }
+    public boolean chooseToExchangeCoinsForCards();
 }

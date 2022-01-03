@@ -1,37 +1,31 @@
-package fr.unice.polytech.citadelles.strategy;
+package fr.unice.polytech.citadelles.strategy.buildstrats;
 
-import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.player.Player;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
-public class RandomStrategy extends Strategy {
+public class BuildStrat {
+    Player player;
+    Random random;
 
-    @Override
-    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
-        return characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
+    public BuildStrat(Player player, Random random){
+        this.player = player;
+        this.random = random;
     }
 
-    @Override
     public boolean getCoinsOverDrawingACard() {
         return random.nextBoolean();
     }
 
-
-
-    @Override
-    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
-        int choice = random.nextInt(0, districtCards.size()-1);
-        return districtCards.get(choice);
-    }
-
-    @Override
     public boolean getTaxesAtBeginningOfTurn() {
         return random.nextBoolean();
     }
 
-    @Override
     public DistrictCard buildDistrict() {
         List<DistrictCard> districtCardsInHand = player.getDistrictCardsInHand();
 
@@ -53,11 +47,16 @@ public class RandomStrategy extends Strategy {
         return district;
     }
 
+    public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
+        int choice = random.nextInt(0, districtCards.size()-1);
+        return districtCards.get(choice);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RandomStrategy)) return false;
-        RandomStrategy that = (RandomStrategy) o;
+        if (!(o instanceof BuildStrat)) return false;
+        BuildStrat that = (BuildStrat) o;
         return Objects.equals(player, that.player) && Objects.equals(random, that.random);
     }
 

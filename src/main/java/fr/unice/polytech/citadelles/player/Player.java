@@ -6,8 +6,10 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
-import fr.unice.polytech.citadelles.strategy.RandomStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class Player {
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins, Random random) {
-        this(name, districtCards, coins, random, new RandomStrategy());
+        this(name, districtCards, coins, random, new CompleteStrategy());
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins, Random random, Strategy strategy) {
@@ -52,7 +54,7 @@ public class Player {
         destroyedDistricts = new ArrayList<>();
 
         this.strategy = strategy;
-        strategy.init(this);
+        strategy.init(this, random, new CharacterStrat(this), new BuildStrat(this, random));
     }
 
     //---------------------------  Coins ... ---------------------------

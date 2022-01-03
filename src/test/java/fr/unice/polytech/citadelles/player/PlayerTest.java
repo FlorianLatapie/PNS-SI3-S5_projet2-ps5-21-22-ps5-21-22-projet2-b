@@ -1,16 +1,15 @@
 package fr.unice.polytech.citadelles.player;
 
-import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
-import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.player.PlayerTools;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
-import fr.unice.polytech.citadelles.strategy.RandomStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
+import fr.unice.polytech.citadelles.strategy.Strategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -133,7 +132,9 @@ class PlayerTest {
     void pickCardObservatoryAndLibraryTest() {
         DistrictCard library = new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5);
         DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
-        Player player = new Player("Player", new ArrayList<>(), 100, rand, new BuildMaxDistrictStrategy());
+        Strategy buildMax = new CompleteStrategy();
+        Player player = new Player("Player", new ArrayList<>(), 100, rand, buildMax);
+        buildMax.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player,player.getRandom()));
         player.setDistrictCardsBuilt(List.of(library, observatory));
 
         List<DistrictCard> fakeCards = new ArrayList<>();
@@ -152,7 +153,9 @@ class PlayerTest {
     @Test
     void pickCardObservatoryTest() {
         DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
-        Player player = new Player("Player", new ArrayList<>(), 100, rand, new BuildMaxDistrictStrategy());
+        Strategy buildMax = new CompleteStrategy();
+        Player player = new Player("Player", new ArrayList<>(), 100, rand, buildMax);
+        buildMax.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player,player.getRandom()));
         player.setDistrictCardsBuilt(List.of(observatory));
 
         List<DistrictCard> fakeCards = new ArrayList<>();
@@ -227,7 +230,7 @@ class PlayerTest {
                 "coins=2147483647," + System.lineSeparator() +
                 "random=" + rand.toString() + "," + System.lineSeparator() +
                 "characterCard=null," + System.lineSeparator() +
-                "strategy=RandomStrategy," + System.lineSeparator() +
+                "strategy=CompleteStrategy," + System.lineSeparator() +
                 "bonusPoints=0" + System.lineSeparator() +
                 "}", p.toString());
     }
@@ -288,7 +291,7 @@ class PlayerTest {
 
     @Test
     void chooseToRepairDistrictTest(){
-        RandomStrategy mockStrat = mock(RandomStrategy.class);
+        CompleteStrategy mockStrat = mock(CompleteStrategy.class);
         DistrictCard destroyedDistrict = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
         when(mockStrat.repairDistrict(anyList())).thenReturn(null, destroyedDistrict);
         Player p = new Player("a", new ArrayList<>(), 2, new Random(), mockStrat);
@@ -308,7 +311,7 @@ class PlayerTest {
 
     @Test
     void chooseToRepairDistrictTest2(){
-        RandomStrategy mockStrat = mock(RandomStrategy.class);
+        CompleteStrategy mockStrat = mock(CompleteStrategy.class);
         DistrictCard destroyedDistrict = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
         when(mockStrat.repairDistrict(anyList())).thenReturn(null, destroyedDistrict);
         Player p = new Player("Player", new ArrayList<>(), 2, new Random(), mockStrat);

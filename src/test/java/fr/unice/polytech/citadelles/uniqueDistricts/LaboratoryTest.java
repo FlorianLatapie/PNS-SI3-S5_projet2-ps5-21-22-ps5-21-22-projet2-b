@@ -6,7 +6,9 @@ import fr.unice.polytech.citadelles.card.unique_districts.Laboratory;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +32,9 @@ class LaboratoryTest {
 
     @Test
     void useUniqueDistrictPowerTest(){
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         player.buildDistrictCardsInHand(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
@@ -50,8 +53,9 @@ class LaboratoryTest {
 
     @Test
     void destroyCardTest(){
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         Laboratory lab = new Laboratory(gameEngine);

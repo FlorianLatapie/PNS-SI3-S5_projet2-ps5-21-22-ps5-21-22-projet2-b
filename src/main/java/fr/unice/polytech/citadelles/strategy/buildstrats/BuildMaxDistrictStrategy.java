@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.strategy;
+package fr.unice.polytech.citadelles.strategy.buildstrats;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
@@ -6,30 +6,16 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 
 import java.util.*;
 
-public class BuildMaxDistrictStrategy extends Strategy {
+public class BuildMaxDistrictStrategy extends BuildStrat {
     private PlayerTools playerTools;
 
-    @Override
-    public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame) {
-        CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
-        List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
-
-        if (characterCardDeckOfTheGame.contains(favChar)) {
-            return favChar;
-        } else {
-            if (!builtDistricts.isEmpty()) {
-                Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
-                for (CharacterCard characterCard : characterCardDeckOfTheGame) {
-                    if (characterCard.getColor().equals(mostFrequentColor)) {
-                        return characterCard;
-                    }
-                }
-            }
-            return characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
-        }
+    public BuildMaxDistrictStrategy(Player player, Random random){
+        super(player, random);
+        this.playerTools = new PlayerTools(player);
     }
 
     @Override
@@ -82,12 +68,5 @@ public class BuildMaxDistrictStrategy extends Strategy {
     @Override
     public int hashCode() {
         return Objects.hash(player, random);
-    }
-
-    @Override
-    public void init(Player player){
-        this.player = player;
-        this.random = player.getRandom();
-        this.playerTools = new PlayerTools(player);
     }
 }

@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles.strategy;
+package fr.unice.polytech.citadelles.strategy.characterstrats;
 
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
@@ -7,21 +7,21 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
-import fr.unice.polytech.citadelles.strategy.RandomStrategy;
+import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-class BuildMaxDistrictStrategyTest {
+public class MerchantOrColorStratTest {
     static List<DistrictCard> districtCards;
     static List<DistrictCard> districtCardsV2;
 
@@ -43,8 +43,9 @@ class BuildMaxDistrictStrategyTest {
 
     @Test
     void chooseCharacterTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
+        CompleteStrategy buildMaxDistrictStrategy = new CompleteStrategy();
+        Player player = new Player("Player 1", districtCards, 2, new Random(), buildMaxDistrictStrategy);
+        buildMaxDistrictStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
@@ -55,8 +56,9 @@ class BuildMaxDistrictStrategyTest {
 
     @Test
     void chooseCharacterTestWithMostColorsInHand() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player 1", districtCards, 100, new Random(), districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);
@@ -73,13 +75,14 @@ class BuildMaxDistrictStrategyTest {
 
     @Test
     void chooseCharacterTestWithMostColorsInHand2() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy();
 
         // just to be sure that is NOT a random choice
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(-1);
 
         Player player = new Player("Player 1", districtCardsV2, 100, mockRandom, districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
 
         player.buildDistrictCardsInHand(districtCardsV2.get(1));
         player.buildDistrictCardsInHand(districtCardsV2.get(2));
@@ -99,8 +102,9 @@ class BuildMaxDistrictStrategyTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player 1", districtCards, 100, mockRandom, districtStrategy);
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);
@@ -117,72 +121,5 @@ class BuildMaxDistrictStrategyTest {
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.BISHOP));
 
         assertEquals(characterCardsOfTheRound.get(0), player.chooseCharacter(characterCardsOfTheRound));
-    }
-
-    @Test
-    void getCoinsOverDrawingACardTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
-        assertTrue(districtStrategy.getCoinsOverDrawingACard());
-
-        List<DistrictCard> emptyList = new ArrayList<>();
-        Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
-        assertFalse(districtStrategy.getCoinsOverDrawingACard());
-    }
-
-    @Test
-    void chooseBestDistrictCardTest(){
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        List <DistrictCard> districtCards = new ArrayList<>();
-        districtCards.add(new DistrictCard(Color.GREY, DistrictName.MONASTERY, 4));
-        districtCards.add(new DistrictCard(Color.RED, DistrictName.TAVERN, 1));
-
-        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseBestDistrictCard(districtCards));
-    }
-
-    @Test
-    void getTaxesAtBeginningOfTurnTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        //Always true (part of the strategy)
-        assertTrue(districtStrategy.getTaxesAtBeginningOfTurn());
-    }
-
-    @Test
-    void buildDistrict() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
-        //Not enough coins
-        assertNull(districtStrategy.buildDistrict());
-
-        List<DistrictCard> emptyList = new ArrayList<>();
-        Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
-        //Empty List
-        assertNull(districtStrategy.buildDistrict());
-
-        Player player3 = new Player("Player 3", districtCards, 1, new Random(), districtStrategy);
-        assertEquals(new DistrictCard(Color.GREEN, DistrictName.TAVERN, 1), districtStrategy.buildDistrict());
-    }
-
-    @Test
-    void hashCodeTest() {
-        Random random = new Random();
-        Player player = new Player("Player 1", districtCards, 200, random, new BuildMaxDistrictStrategy());
-        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
-    }
-
-    @Test
-    void equalsTest() {
-        BuildMaxDistrictStrategy districtStrategy = new BuildMaxDistrictStrategy();
-        Player player1 = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        districtStrategy.init(player1);
-
-        BuildMaxDistrictStrategy districtStrategy2 = new BuildMaxDistrictStrategy();
-        Player player2 = new Player("Player 2", districtCards, 3, new Random(), districtStrategy);
-        districtStrategy2.init(player2);
-
-        assertEquals(districtStrategy, districtStrategy2);
-        assertNotEquals(districtStrategy, 1); // wrong order of arguments to test the .equals method of districtStrategy and not the other object
     }
 }

@@ -7,7 +7,7 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +67,7 @@ class GameEngineTest {
             assertEquals(new CharacterCard(CharacterName.WARLORD), ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
 
             Exception exception = assertThrows(Exception.class, () -> ge.askToChooseCharacter(ge.getListOfPlayers().get(0), listChar));
-            assertEquals("Character card deck of the round is empty : the player can't choose a character card.", exception.getMessage());
+            assertEquals("characterCardDeckOfTheRound is empty: the player Player_1 cannot choose a character card.", exception.getMessage());
         }
     }
 
