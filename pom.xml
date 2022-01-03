@@ -41,7 +41,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>fr.unice.polytech.startingpoint.Main</mainClass> <!-- CHANGE ME -->
+          <mainClass>fr.unice.polytech.startingpoint.MainWithStatsOnly</mainClass>
 <!--          <arguments>
             <argument>argument1</argument>
           </arguments>

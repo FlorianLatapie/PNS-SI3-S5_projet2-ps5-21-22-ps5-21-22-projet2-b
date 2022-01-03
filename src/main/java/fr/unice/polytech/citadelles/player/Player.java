@@ -30,6 +30,10 @@ public class Player {
 
     public Player(String name) {
         this(name, new ArrayList<>(), 2, new Random());
+
+    }
+    public Player(String name, Strategy strategy) {
+        this(name, new ArrayList<>(), 0, new Random(), strategy);
     }
 
     public Player(String name, List<DistrictCard> districtCards) {

@@ -36,4 +36,9 @@ public class MerchantOrColorStrategy extends CharacterStrat{
             return characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));
         }
     }
+
+    @Override
+    public String toString() {
+        return "Merchant or most common color Strategy{" ;
+    }
 }

@@ -64,4 +64,9 @@ public class BuildStrat {
     public int hashCode() {
         return Objects.hash(player, random);
     }
+
+    @Override
+    public String toString() {
+        return "random Build Strategy";
+    }
 }

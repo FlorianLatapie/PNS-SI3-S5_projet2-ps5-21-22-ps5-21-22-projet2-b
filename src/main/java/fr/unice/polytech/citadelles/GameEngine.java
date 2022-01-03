@@ -44,12 +44,17 @@ public class GameEngine {
     private Random random;
 
     // constructors
-
+    @Deprecated
     public GameEngine() {
         this(7, new Random());
     }
 
+    @Deprecated
     public GameEngine(int nbPlayers, Random random) {
+        if (nbPlayers > 8 || nbPlayers < 3) {
+            throw new IllegalArgumentException("Illegal number of players :" + nbPlayers);
+        }
+
         this.random = random;
         this.nbPlayers = nbPlayers;
         listOfPlayers = new ArrayList<>();
@@ -62,22 +67,20 @@ public class GameEngine {
     }
 
     public GameEngine(Random random, Player... players) {
-        this.random = random;
-        io = new IO();
-        playersWhoBuilt8Cards = new ArrayList<>();
+        this(random, new DeckOfCards(random), new IO(), false, players);
+    }
 
-        deckOfCards = new DeckOfCards(random);
-
-        listOfPlayers = new ArrayList<>(List.of(players));
-        kingOfTheLastRound = listOfPlayers.get(0);
-        kingByDefault = listOfPlayers.get(0);
-        nbPlayers = listOfPlayers.size();
-        round = 0;
+    public GameEngine(Random random, boolean initPlayers, Player... players) {
+        this(random, new DeckOfCards(random), new IO(), initPlayers, players);
     }
 
     public GameEngine(Random random, DeckOfCards deckOfCards, Player... players) {
+        this(random, deckOfCards, new IO(), false, players);
+    }
+
+    public GameEngine(Random random, DeckOfCards deckOfCards, IO io, boolean initPlayers, Player... players) {
         this.random = random;
-        io = new IO();
+        this.io = io;
         playersWhoBuilt8Cards = new ArrayList<>();
 
         this.deckOfCards = deckOfCards;
@@ -86,6 +89,16 @@ public class GameEngine {
         kingOfTheLastRound = listOfPlayers.get(0);
         kingByDefault = listOfPlayers.get(0);
         nbPlayers = listOfPlayers.size();
+
+        if (initPlayers) {
+            for (Player p : players) {
+                List<DistrictCard> districtCards = new ArrayList<>();
+                for (int j = 0; j < 4; j++) {
+                    districtCards.add(deckOfCards.getRandomDistrictCard());
+                }
+                p.setDistrictCardsInHand(districtCards);
+            }
+        }
     }
 
 
@@ -97,7 +110,7 @@ public class GameEngine {
             }
             Strategy buildMaxDistrictSrategy = new CompleteStrategy();
             Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 2, random, buildMaxDistrictSrategy);
-            buildMaxDistrictSrategy.init(playerToAdd, random, new CharacterStrat(playerToAdd), new BuildMaxDistrictStrategy(playerToAdd,random));
+            buildMaxDistrictSrategy.init(playerToAdd, random, new CharacterStrat(playerToAdd), new BuildMaxDistrictStrategy(playerToAdd, random));
             listOfPlayers.add(playerToAdd);
             if (i == 0) {
                 kingOfTheLastRound = playerToAdd;
@@ -108,7 +121,7 @@ public class GameEngine {
 
     // game
 
-    public void launchGame() {
+    public List<Player> launchGame() {
         round = 1;
 
         io.printSeparator("The game starts !");
@@ -159,7 +172,7 @@ public class GameEngine {
         io.printSeparator("Unique cards powers");
         if (hauntedQuarter != null) hauntedQuarter.useUniqueDistrictPower();
         io.printSeparator("The game is over !");
-        getWinner();
+        return getWinner();
     }
 
     //--------------------------------- POWERS -------------------------------------
@@ -207,6 +220,8 @@ public class GameEngine {
 
         // searching for purple district cards
         boolean hasLaboratory = false, hasGraveyard = false, hasSmithy = false, hasSchoolOfMagic = false;
+        // this weird switch case is because "districtsOfPlayer" might be updated by using the cards below
+        // if its updated the for loop might break
         for (DistrictCard districtCard : districtsOfPlayer) {
             switch (districtCard.getDistrictName()) {
                 case LABORATORY:
@@ -230,10 +245,10 @@ public class GameEngine {
         if (hasGraveyard) {
             new Graveyard(this).useUniqueDistrictPower(player);
         }
-        if (hasSmithy){
+        if (hasSmithy) {
             new Smithy(this).useUniqueDistrictPower(player);
         }
-        if (hasSchoolOfMagic){
+        if (hasSchoolOfMagic) {
             new SchoolOfMagic(this).useUniqueDistrictPower(player);
         }
     }
@@ -362,23 +377,24 @@ public class GameEngine {
     public List<Player> getWinner() {
         io.println("Computing bonus points ...");
         for (Player winner : playersWhoBuilt8Cards) {
-            if (playersWhoBuilt8Cards.indexOf(winner)==0) {
+            if (playersWhoBuilt8Cards.indexOf(winner) == 0) {
                 winner.addPoints(4);
                 io.println(winner.getName() + " receives 4 bonus points because he is the first to build 8 cards");
             } else {
                 winner.addPoints(2);
                 io.println(winner.getName() + " receives 2 bonus points because he also built 8 cards");
             }
-            if(checkIfPlayerFinished5Colors(winner)){
+            if (checkIfPlayerFinished5Colors(winner)) {
                 winner.addPoints(3);
                 io.println(winner.getName() + " receives 3 bonus points because he built 5 district cards with different colors");
-            };
+            }
+            ;
         }
 
         for (Player player : listOfPlayers) {
             player.getDistrictCardsBuilt().forEach(districtCard -> {
                         if (districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6))
-                        || districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6))){
+                                || districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6))) {
                             player.addPoints(2);
                             io.println(player.getName() + " receives 2 bonus points because he built " + districtCard);
                         }
@@ -415,11 +431,11 @@ public class GameEngine {
         }
     }
 
-    public boolean checkIfPlayerFinished5Colors(Player player){
+    public boolean checkIfPlayerFinished5Colors(Player player) {
         Set<Enum> colorSet = new HashSet<>();
-        if(player.getDistrictCardsBuilt().isEmpty()) return false;
+        if (player.getDistrictCardsBuilt().isEmpty()) return false;
         player.getDistrictCardsBuilt().forEach(c -> colorSet.add(c.getColor()));
-        if(colorSet.size()==5) return true;
+        if (colorSet.size() == 5) return true;
         return false;
     }
 

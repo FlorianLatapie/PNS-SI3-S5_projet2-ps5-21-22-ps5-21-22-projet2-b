@@ -90,4 +90,9 @@ public class CharacterStrat {
     public int hashCode() {
         return Objects.hash(player, random);
     }
+
+    @Override
+    public String toString() {
+        return "random Character Strategy";
+    }
 }

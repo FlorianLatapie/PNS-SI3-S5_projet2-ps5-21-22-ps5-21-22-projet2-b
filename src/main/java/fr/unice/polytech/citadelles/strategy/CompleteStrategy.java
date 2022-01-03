@@ -107,4 +107,12 @@ public class CompleteStrategy implements Strategy {
     public int hashCode() {
         return Objects.hash(player, random);
     }
+
+    @Override
+    public String toString() {
+        return "CompleteStrategy{" +
+                "characterStrat=" + characterStrat +
+                ", buildStrat=" + buildStrat +
+                '}';
+    }
 }

@@ -69,4 +69,9 @@ public class BuildMaxDistrictStrategy extends BuildStrat {
     public int hashCode() {
         return Objects.hash(player, random);
     }
+
+    @Override
+    public String toString() {
+        return "Build Max District Strategy";
+    }
 }
