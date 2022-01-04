@@ -1,6 +1,8 @@
 package fr.unice.polytech.citadelles.strategy.characterstrats;
 
 import fr.unice.polytech.citadelles.GameEngine;
+import fr.unice.polytech.citadelles.card.CharacterCard;
+import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
 
@@ -25,5 +27,47 @@ public class SuperCharacterStrat extends CharacterStrat {
     public void init(Player player){
         super.init(player);
         this.playerTools = new PlayerTools(player);
+    }
+
+    @Override
+    public CharacterCard chooseCharacter(List<CharacterCard> characterCardList){
+         if(chooseKing(characterCardList)!=null){
+             return chooseKing(characterCardList);
+         }
+         else{
+             return super.chooseCharacter(characterCardList);
+         }
+    }
+
+    @Override
+    public CharacterCard chooseKing(List<CharacterCard> characterCardList) {
+        if(isAboutToWinWithKing() != null){
+            if(characterCardList.contains(new CharacterCard(CharacterName.KING))){
+                return new CharacterCard(CharacterName.KING);
+            }
+            else if(characterCardList.contains(new CharacterCard(CharacterName.ASSASSIN))){
+                return new CharacterCard(CharacterName.ASSASSIN);
+            }
+            else{
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public Player isAboutToWinWithKing() {
+         for(Player player : listOfPlayers){
+             if((player.getCoins()>=1 || player.getDistrictCardsInHand().size()>=1) && player.getDistrictCardsBuilt().size()==6){
+                 return player;
+             }
+         }
+         return null;
+    }
+
+    public void setListOfPlayers(List<Player> listOfPlayers) {
+        this.listOfPlayers = listOfPlayers;
     }
 }

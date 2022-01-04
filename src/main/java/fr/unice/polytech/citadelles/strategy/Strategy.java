@@ -37,4 +37,7 @@ public interface Strategy {
 
     DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts);
 
+    Player isAboutToWinWithKing();
+
+    CharacterCard chooseKing(List<CharacterCard> characterCardList);
 }

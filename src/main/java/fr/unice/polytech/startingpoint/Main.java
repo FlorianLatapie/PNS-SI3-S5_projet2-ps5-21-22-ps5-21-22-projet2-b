@@ -19,7 +19,7 @@ public class Main {
 
         Strategy buildMaxDistrictSrategyp3 = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player p3 = new Player("Player 3", buildMaxDistrictSrategyp3);
-        GameEngine ge = new GameEngine(new Random(), true, p1, p2, p3);
+        GameEngine ge = new GameEngine();
 
         ge.launchGame();
     }

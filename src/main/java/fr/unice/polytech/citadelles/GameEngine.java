@@ -14,6 +14,7 @@ import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
 import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
+import fr.unice.polytech.citadelles.strategy.characterstrats.SuperCharacterStrat;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -104,13 +105,13 @@ public class GameEngine {
     }
 
 
-    private void initPlayers() {
+    public void initPlayers() {
         for (int i = 0; i < nbPlayers; i++) {
             List<DistrictCard> districtCards = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
                 districtCards.add(deckOfCards.getRandomDistrictCard());
             }
-            Strategy buildMaxDistrictSrategy = new CompleteStrategy(new CharacterStrat(),new BuildMaxDistrictStrategy());
+            Strategy buildMaxDistrictSrategy = new CompleteStrategy(new SuperCharacterStrat(this),new BuildMaxDistrictStrategy());
             Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 2, random, buildMaxDistrictSrategy);
             listOfPlayers.add(playerToAdd);
             if (i == 0) {
