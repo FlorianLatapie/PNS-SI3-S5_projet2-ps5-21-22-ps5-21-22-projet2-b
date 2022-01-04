@@ -5,8 +5,13 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +20,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class WarlordTest {
+    static ByteArrayOutputStream outContent;
+    static final PrintStream originalOut = System.out;
+
+    @BeforeAll
+    static void beforeAllSetup() {
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterAll
+    static void restoreStreams() {
+        System.setOut(originalOut);
+    }
+
+    @BeforeEach
+    void setUp() {
+        outContent.reset();
+    }
+
     @Test
     void warlordRemoveDistrictCardOfPlayerTest() {
         Player warlord = new Player("Player_1", new ArrayList<>(), 100);
@@ -26,6 +50,7 @@ class WarlordTest {
         districtCardList.add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 1));
         new Warlord(ge).warlordRemoveDistrictCardOfPlayer(warlord, player1);
         assertNotEquals(districtCardList, player1.getDistrictCardsBuilt());
+        assertEquals("Player_1 destroys CHURCH of Player_2. It costs him: 0 gold" + System.lineSeparator(), outContent.toString());
     }
 
     @Test
