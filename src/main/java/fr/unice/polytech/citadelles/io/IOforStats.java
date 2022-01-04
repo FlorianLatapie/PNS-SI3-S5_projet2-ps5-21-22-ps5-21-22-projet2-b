@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.io;
 
 import fr.unice.polytech.citadelles.player.Player;
 
@@ -9,11 +9,13 @@ import java.util.*;
  */
 public class IOforStats extends IO {
     @Override
-    public void println(Object o) {
-        return;
+    public void println(Object o) {}
+
+    public void log(Object o){
+        System.out.println(o);
     }
 
-    public Map<Player, List<Integer>> printStats(List<Player> players, List<List<Player>> winnersOfEachGame, double numberOfGames) {
+    public Map<Player, List<Integer>> printStats(List<List<Player>> winnersOfEachGame, double numberOfGames, Player ... players) {
         winnersOfEachGame = new ArrayList(winnersOfEachGame);
         Map<Player, List<Integer>> statsForEachPlayer = new HashMap<>();
         // value at 0 : number of win
@@ -32,7 +34,7 @@ public class IOforStats extends IO {
         }
 
         for (Player p : players) {
-            System.out.println(p.getName() + " has won " +
+            log(p.getName() + " has won " +
                     statsForEachPlayer.get(p).get(0) + " games, " +
                     "average : " + statsForEachPlayer.get(p).get(1)/numberOfGames+ " points" +
                     " with strategy : " + p.getStrategy());

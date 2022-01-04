@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author Florian Latapie
  */
-public class MagicianTest {
+class MagicianTest {
     static List<DistrictCard> districtCards;
     static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;

@@ -1,4 +1,4 @@
-package fr.unice.polytech.citadelles;
+package fr.unice.polytech.citadelles.io;
 
 import fr.unice.polytech.citadelles.player.Player;
 

@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
-public class CharacterStratTest {
+class CharacterStratTest {
     List<DistrictCard> districtCards;
 
     @BeforeEach

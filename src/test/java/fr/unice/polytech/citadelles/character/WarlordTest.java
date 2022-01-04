@@ -14,7 +14,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class WarlordTest {
+class WarlordTest {
     @Test
     void warlordRemoveDistrictCardOfPlayerTest() {
         Player warlord = new Player("Player_1", new ArrayList<>(), 100);
