@@ -34,7 +34,7 @@ class SmithyTest {
     void useUniqueDistrictPowerTest(){
         Strategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildStrat(player, player.getRandom()));
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildStrat(player));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.PURPLE, DistrictName.SMITHY, 5));

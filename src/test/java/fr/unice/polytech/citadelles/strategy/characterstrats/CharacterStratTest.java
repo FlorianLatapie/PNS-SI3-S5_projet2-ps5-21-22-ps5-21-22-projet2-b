@@ -123,10 +123,10 @@ public class CharacterStratTest {
         when(mockPlayer.getRandom()).thenReturn(r);
 
         CompleteStrategy randomStrategy = new CompleteStrategy();
-        randomStrategy.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer, r));
+        randomStrategy.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
 
         CompleteStrategy randomStrategy2 = new CompleteStrategy();
-        randomStrategy2.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer, r));
+        randomStrategy2.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
 
         assertEquals(randomStrategy, randomStrategy2);
         assertNotEquals(randomStrategy, 1); // wrong order of arguments to test the .equals method of p and not the other object

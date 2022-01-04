@@ -45,7 +45,7 @@ public class MerchantOrColorStratTest {
     void chooseCharacterTest() {
         CompleteStrategy buildMaxDistrictStrategy = new CompleteStrategy();
         Player player = new Player("Player 1", districtCards, 2, new Random(), buildMaxDistrictStrategy);
-        buildMaxDistrictStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
+        buildMaxDistrictStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
@@ -58,7 +58,7 @@ public class MerchantOrColorStratTest {
     void chooseCharacterTestWithMostColorsInHand() {
         CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player 1", districtCards, 100, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
+        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);
@@ -82,7 +82,7 @@ public class MerchantOrColorStratTest {
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(-1);
 
         Player player = new Player("Player 1", districtCardsV2, 100, mockRandom, districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
+        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
 
         player.buildDistrictCardsInHand(districtCardsV2.get(1));
         player.buildDistrictCardsInHand(districtCardsV2.get(2));
@@ -104,7 +104,7 @@ public class MerchantOrColorStratTest {
 
         CompleteStrategy districtStrategy = new CompleteStrategy();
         Player player = new Player("Player 1", districtCards, 100, mockRandom, districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player, player.getRandom()));
+        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);

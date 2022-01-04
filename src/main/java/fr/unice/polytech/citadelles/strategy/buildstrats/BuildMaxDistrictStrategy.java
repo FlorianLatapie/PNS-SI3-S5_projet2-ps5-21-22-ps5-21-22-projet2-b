@@ -13,8 +13,9 @@ import java.util.*;
 public class BuildMaxDistrictStrategy extends BuildStrat {
     private PlayerTools playerTools;
 
-    public BuildMaxDistrictStrategy(Player player, Random random){
-        super(player, random);
+    public BuildMaxDistrictStrategy(Player player){
+
+        super(player);
         this.playerTools = new PlayerTools(player);
     }
 

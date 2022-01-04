@@ -28,16 +28,16 @@ public class MainWithStatsOnly {
 
             Strategy buildMaxDistrictSrategy = new CompleteStrategy();
             p1 = new Player("Player 1", buildMaxDistrictSrategy);
-            buildMaxDistrictSrategy.init(p1, random, new CharacterStrat(p1), new BuildMaxDistrictStrategy(p1, random));
+            buildMaxDistrictSrategy.init(p1, random, new CharacterStrat(p1), new BuildMaxDistrictStrategy(p1));
 
 
             Strategy buildMaxDistrictSrategyp2 = new CompleteStrategy();
             p2 = new Player("Player 2", buildMaxDistrictSrategyp2);
-            buildMaxDistrictSrategyp2.init(p2, random, new CharacterStrat(p2), new BuildMaxDistrictStrategy(p2, random));
+            buildMaxDistrictSrategyp2.init(p2, random, new CharacterStrat(p2), new BuildMaxDistrictStrategy(p2));
 
             Strategy buildMaxDistrictSrategyp3 = new CompleteStrategy();
             p3 = new Player("Player 3", buildMaxDistrictSrategyp3);
-            buildMaxDistrictSrategyp3.init(p3, random, new CharacterStrat(p3), new BuildMaxDistrictStrategy(p3, random));
+            buildMaxDistrictSrategyp3.init(p3, random, new CharacterStrat(p3), new BuildMaxDistrictStrategy(p3));
 
             GameEngine ge = new GameEngine(random, new DeckOfCards(random), io, true, p1, p2, p3);
             winnersOfEachGame.add(ge.launchGame());

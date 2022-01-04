@@ -13,9 +13,9 @@ public class BuildStrat {
     Player player;
     Random random;
 
-    public BuildStrat(Player player, Random random){
+    public BuildStrat(Player player){
         this.player = player;
-        this.random = random;
+        this.random = player.getRandom();
     }
 
     public boolean getCoinsOverDrawingACard() {

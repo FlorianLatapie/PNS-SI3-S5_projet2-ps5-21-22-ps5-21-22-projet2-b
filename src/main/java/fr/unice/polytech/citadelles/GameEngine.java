@@ -110,7 +110,7 @@ public class GameEngine {
             }
             Strategy buildMaxDistrictSrategy = new CompleteStrategy();
             Player playerToAdd = new Player("Player_" + (i + 1), districtCards, 2, random, buildMaxDistrictSrategy);
-            buildMaxDistrictSrategy.init(playerToAdd, random, new CharacterStrat(playerToAdd), new BuildMaxDistrictStrategy(playerToAdd, random));
+            buildMaxDistrictSrategy.init(playerToAdd, random, new CharacterStrat(playerToAdd), new BuildMaxDistrictStrategy(playerToAdd));
             listOfPlayers.add(playerToAdd);
             if (i == 0) {
                 kingOfTheLastRound = playerToAdd;

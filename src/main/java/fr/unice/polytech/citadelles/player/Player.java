@@ -58,7 +58,7 @@ public class Player {
         destroyedDistricts = new ArrayList<>();
 
         this.strategy = strategy;
-        strategy.init(this, random, new CharacterStrat(this), new BuildStrat(this, random));
+        strategy.init(this, random, new CharacterStrat(this), new BuildStrat(this));
     }
 
     //---------------------------  Coins ... ---------------------------
