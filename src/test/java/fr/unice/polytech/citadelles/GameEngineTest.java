@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.sql.PseudoColumnUsage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +38,20 @@ class GameEngineTest {
     @BeforeEach
     void setUp() {
         outContent.reset();
+    }
+
+    @Test
+    void constructorTest(){
+        Exception exception = assertThrows(Exception.class, () -> new GameEngine(-1, new Random()));
+        assertEquals("Illegal number of players : -1", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> new GameEngine(10, new Random()));
+        assertEquals("Illegal number of players : 10", exception.getMessage());
+
+        Player player1 = new Player("P1");
+        GameEngine ge = new GameEngine(new Random(), true, player1) ;
+
+        assertEquals(4, player1.getDistrictCardsInHand().size());
     }
 
     @Test
@@ -364,6 +379,31 @@ class GameEngineTest {
                         + "player with 16 points" + System.lineSeparator()
                         + "player2 with 0 points" + System.lineSeparator(),
                 outContent.toString());
+    }
+
+    @Test
+    void getWinnerTest3() {
+        Player player1 = new Player("player");
+        player1.setDistrictCardsBuilt(new ArrayList<>(List.of(
+                new DistrictCard(Color.PURPLE, DistrictName.NONE, 1),
+                new DistrictCard(Color.BLUE, DistrictName.NONE, 1),
+                new DistrictCard(Color.RED, DistrictName.NONE, 1),
+                new DistrictCard(Color.YELLOW, DistrictName.NONE, 1),
+                new DistrictCard(Color.GREEN, DistrictName.NONE, 1))));
+
+        Player player2 = new Player("player2");
+
+        GameEngine ge = new GameEngine(new Random(), player1, player2);
+
+        ge.getWinner();
+        assertEquals("Computing bonus points ..." + System.lineSeparator() +
+                "player receives 3 bonus points because he built 5 district cards with different colors" + System.lineSeparator() +
+                "--------------------------------------------------------------------- The winners podium ! ---------------------------------------------------------------------" + System.lineSeparator() +
+                System.lineSeparator() +
+                "player with 8 points" + System.lineSeparator() +
+                "player2 with 0 points" + System.lineSeparator()
+                ,
+        outContent.toString());
     }
 
     @Test

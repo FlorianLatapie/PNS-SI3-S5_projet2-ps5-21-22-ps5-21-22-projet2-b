@@ -1,7 +1,7 @@
 package fr.unice.polytech.citadelles.card.unique_districts;
 
 import fr.unice.polytech.citadelles.GameEngine;
-import fr.unice.polytech.citadelles.IO;
+import fr.unice.polytech.citadelles.io.IO;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.player.Player;
@@ -30,7 +30,7 @@ public abstract class UniqueDistrictsEngine {
 
     Random random;
 
-    private UniqueDistrictsEngine(){};
+    private UniqueDistrictsEngine(){}
 
     protected UniqueDistrictsEngine(GameEngine gameEngine){
 

@@ -8,6 +8,7 @@ import fr.unice.polytech.citadelles.character.*;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
+import fr.unice.polytech.citadelles.io.IO;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
@@ -54,7 +55,7 @@ public class GameEngine {
     @Deprecated
     public GameEngine(int nbPlayers, Random random) {
         if (nbPlayers > 8 || nbPlayers < 3) {
-            throw new IllegalArgumentException("Illegal number of players :" + nbPlayers);
+            throw new IllegalArgumentException("Illegal number of players : " + nbPlayers);
         }
 
         this.random = random;
@@ -381,18 +382,19 @@ public class GameEngine {
             if (playersWhoBuilt8Cards.indexOf(winner) == 0) {
                 winner.addPoints(4);
                 io.println(winner.getName() + " receives 4 bonus points because he is the first to build 8 cards");
-            } else {
+            } else{
                 winner.addPoints(2);
                 io.println(winner.getName() + " receives 2 bonus points because he also built 8 cards");
             }
-            if (checkIfPlayerFinished5Colors(winner)) {
-                winner.addPoints(3);
-                io.println(winner.getName() + " receives 3 bonus points because he built 5 district cards with different colors");
-            }
-            ;
         }
 
+
         for (Player player : listOfPlayers) {
+            if (checkIfPlayerFinished5Colors(player)) {
+                player.addPoints(3);
+                io.println(player.getName() + " receives 3 bonus points because he built 5 district cards with different colors");
+            }
+
             player.getDistrictCardsBuilt().forEach(districtCard -> {
                         if (districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.UNIVERSITY, 6))
                                 || districtCard.equals(new DistrictCard(Color.PURPLE, DistrictName.DRAGONGATE, 6))) {

@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MerchantOrColorStratTest {
+class MerchantOrColorStratTest {
     static List<DistrictCard> districtCards;
     static List<DistrictCard> districtCardsV2;
 
@@ -121,7 +121,7 @@ public class MerchantOrColorStratTest {
     }
 
     @Test
-    void equalsTest(){
+    void equalsTest() {
         MerchantOrColorStrategy strat1 = new MerchantOrColorStrategy();
         MerchantOrColorStrategy strat2 = new MerchantOrColorStrategy();
 
@@ -129,10 +129,10 @@ public class MerchantOrColorStratTest {
     }
 
     @Test
-    void toStringTest(){
+    void toStringTest() {
         MerchantOrColorStrategy strat = new MerchantOrColorStrategy();
 
-        assertEquals("Merchant or most common color Strategy",strat.toString());
+        assertEquals("Merchant or most common color Strategy", strat.toString());
     }
 
     @Test

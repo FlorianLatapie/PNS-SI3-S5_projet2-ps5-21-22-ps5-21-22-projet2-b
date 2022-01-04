@@ -46,7 +46,7 @@ class PlayerTest {
 
     @Test
     void hashCodeTest() {
-        assertNotNull( new Player(player1, districtCards, Integer.MAX_VALUE, new Random()).hashCode());
+        assertNotNull(new Player(player1, districtCards, Integer.MAX_VALUE, new Random()).hashCode());
     }
 
 

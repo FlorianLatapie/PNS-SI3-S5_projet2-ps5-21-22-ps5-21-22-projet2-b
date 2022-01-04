@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class BuildStratTest {
+class BuildStratTest {
     List<DistrictCard> districtCards;
 
     @BeforeEach

@@ -12,8 +12,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CompleteStrategy implements Strategy {
-    public Player player;
-    public Random random;
+    Player player;
+    Random random;
     CharacterStrat characterStrat;
     BuildStrat buildStrat;
 
