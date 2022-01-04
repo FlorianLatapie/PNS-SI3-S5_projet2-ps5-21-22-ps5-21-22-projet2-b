@@ -1,13 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <groupId>B</groupId> <!-- CHANGE ME -->
     <artifactId>Citadelles_Groupe_B</artifactId> <!-- CHANGE ME -->
     <version>0.0</version> <!-- CHANGE ME -->
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- CHANGE ME IF NEEDED, other : ISO-8859-1 -->
+        <project.build.sourceEncoding>UTF-8
+        </project.build.sourceEncoding> <!-- CHANGE ME IF NEEDED, other : ISO-8859-1 -->
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -15,56 +16,68 @@
         <mockito.version>3.12.4</mockito.version>
     </properties>
 
-  <build>
-    <plugins>
-        <!-- JUnit 5 requires Surefire version 2.22.2 / compiler 3.8.1 -->
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version>
-        </plugin>
+    <build>
+        <plugins>
+            <!-- JUnit 5 requires Surefire version 2.22.2 / compiler 3.8.1 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
-      </plugin>
-       
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>java</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <mainClass>fr.unice.polytech.startingpoint.MainWithStatsOnly</mainClass>
-<!--          <arguments>
-            <argument>argument1</argument>
-          </arguments>
-          <systemProperties>
-            <systemProperty>
-              <key>myproperty</key>
-              <value>myvalue</value>
-            </systemProperty>
-          </systemProperties>
--->
-        </configuration>
-      </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>17</source>
-                <target>17</target>
-            </configuration>
-        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
 
-    </plugins>
-  </build>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>first</id>
+                        <configuration>
+                            <mainClass>fr.unice.polytech.startingpoint.Main</mainClass>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>second</id>
+                        <configuration>
+                            <mainClass>fr.unice.polytech.startingpoint.MainWithStatsOnly</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>fr.unice.polytech.startingpoint.MainWithStatsOnly</mainClass>
+                    <!--          <arguments>
+                                <argument>argument1</argument>
+                              </arguments>
+                              <systemProperties>
+                                <systemProperty>
+                                  <key>myproperty</key>
+                                  <value>myvalue</value>
+                                </systemProperty>
+                              </systemProperties>
+                    -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>

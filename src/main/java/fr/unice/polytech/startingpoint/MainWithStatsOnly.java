@@ -1,8 +1,7 @@
 package fr.unice.polytech.startingpoint;
 
 import fr.unice.polytech.citadelles.GameEngine;
-import fr.unice.polytech.citadelles.IO;
-import fr.unice.polytech.citadelles.IOforStats;
+import fr.unice.polytech.citadelles.io.IOforStats;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
@@ -41,6 +40,6 @@ public class MainWithStatsOnly {
             io.println("this game is the " + i + "th");
         }
 
-        io.printStats(List.of(p1, p2, p3), winnersOfEachGame, numberOfGames);
+        io.printStats(winnersOfEachGame, numberOfGames, p1, p2, p3);
     }
 }

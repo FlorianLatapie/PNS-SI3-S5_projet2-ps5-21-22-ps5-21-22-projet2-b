@@ -1,7 +1,7 @@
 package fr.unice.polytech.citadelles.uniqueDistricts;
 
 import fr.unice.polytech.citadelles.GameEngine;
-import fr.unice.polytech.citadelles.IO;
+import fr.unice.polytech.citadelles.io.IO;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.card.unique_districts.HauntedQuarter;
 import fr.unice.polytech.citadelles.enums.Color;
