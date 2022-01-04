@@ -30,7 +30,7 @@ public abstract class UniqueDistrictsEngine {
 
     Random random;
 
-    private UniqueDistrictsEngine(){};
+    private UniqueDistrictsEngine(){}
 
     protected UniqueDistrictsEngine(GameEngine gameEngine){
 

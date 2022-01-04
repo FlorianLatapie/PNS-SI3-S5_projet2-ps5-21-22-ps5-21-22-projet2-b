@@ -9,9 +9,7 @@ import java.util.*;
  */
 public class IOforStats extends IO {
     @Override
-    public void println(Object o) {
-        return;
-    }
+    public void println(Object o) {}
 
     public void log(Object o){
         System.out.println(o);

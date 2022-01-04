@@ -9,7 +9,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ThiefTest {
+class ThiefTest {
     @Test
     void giveMoneyToThiefTest() {
         Player player = new Player("player");

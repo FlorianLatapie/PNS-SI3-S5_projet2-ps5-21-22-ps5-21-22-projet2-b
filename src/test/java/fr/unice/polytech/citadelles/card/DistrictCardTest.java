@@ -1,6 +1,5 @@
 package fr.unice.polytech.citadelles.card;
 
-import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
 import org.junit.jupiter.api.BeforeEach;

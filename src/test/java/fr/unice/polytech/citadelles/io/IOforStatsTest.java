@@ -73,17 +73,7 @@ class IOforStatsTest {
         p = new Player("p");
         p.addPoints(5);
         winnersForEachGame.add(List.of(p2, p));
-
-        for (int i = 0; i < winnersForEachGame.size(); i++) {
-            System.err.println("game #" + i);
-            List<Player> winnersOfThisGame = winnersForEachGame.get(i);
-            for (int j = 0; j < winnersOfThisGame.size(); j++) {
-                Player pj = winnersOfThisGame.get(j);
-                System.err.println(pj.getName() + " " + pj.getNbOfPoints());
-            }
-
-        }
-
+        
         iOforStats.printStats(winnersForEachGame, winnersForEachGame.size(), p, p2);
 
         assertEquals("p has won 1 games, average : 5.0 points with strategy : CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}" + System.lineSeparator() +

@@ -18,7 +18,6 @@ public class MainWithStatsOnly {
         double numberOfGames = 1000;
         Random random = new Random();
         IOforStats io = new IOforStats();
-        //IO io = new IO();
         List<List<Player>> winnersOfEachGame = new ArrayList<>();
         Player p1 = null, p2 = null, p3 = null;
 

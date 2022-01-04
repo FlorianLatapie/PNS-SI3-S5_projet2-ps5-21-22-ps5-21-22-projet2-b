@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author Florian Latapie
  */
-public class ArchitectTest {
+class ArchitectTest {
     static List<DistrictCard> districtCards;
     static ByteArrayOutputStream outContent;
     static final PrintStream originalOut = System.out;
