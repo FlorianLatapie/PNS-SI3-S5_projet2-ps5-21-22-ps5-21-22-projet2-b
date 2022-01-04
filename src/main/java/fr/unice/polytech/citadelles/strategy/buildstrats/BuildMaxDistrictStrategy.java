@@ -13,10 +13,13 @@ import java.util.*;
 public class BuildMaxDistrictStrategy extends BuildStrat {
     private PlayerTools playerTools;
 
-    public BuildMaxDistrictStrategy(Player player){
-
-        super(player);
+    public BuildMaxDistrictStrategy(){
         this.playerTools = new PlayerTools(player);
+    }
+
+    public void init(Player player){
+        super.init(player);
+        playerTools = new PlayerTools(player);
     }
 
     @Override
@@ -62,13 +65,12 @@ public class BuildMaxDistrictStrategy extends BuildStrat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BuildMaxDistrictStrategy)) return false;
-        BuildMaxDistrictStrategy that = (BuildMaxDistrictStrategy) o;
-        return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, random);
+        return 2;
     }
 
     @Override

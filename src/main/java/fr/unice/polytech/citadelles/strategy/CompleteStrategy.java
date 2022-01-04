@@ -16,16 +16,17 @@ public class CompleteStrategy implements Strategy {
     CharacterStrat characterStrat;
     BuildStrat buildStrat;
 
-    public CompleteStrategy(){
-
+    public CompleteStrategy(CharacterStrat characterStrat, BuildStrat buildStrat){
+        this.characterStrat = characterStrat;
+        this.buildStrat = buildStrat;
     }
 
     @Override
-    public void init(Player player, Random random, CharacterStrat characterStrat, BuildStrat buildStrat){
+    public void init(Player player){
         this.player = player;
-        this.random = random;
-        this.characterStrat = characterStrat;
-        this.buildStrat = buildStrat;
+        this.random = player.getRandom();
+        characterStrat.init(player);
+        buildStrat.init(player);
     }
 
 
@@ -90,22 +91,18 @@ public class CompleteStrategy implements Strategy {
         return characterStrat.repairDistrict(destroyedDistricts);
     }
 
-    @Override
-    public boolean chooseToExchangeCoinsForCards() {
-        return characterStrat.chooseToExchangeCoinsForCards();
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CompleteStrategy)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         CompleteStrategy that = (CompleteStrategy) o;
-        return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+        return characterStrat.equals(that.characterStrat) && buildStrat.equals(that.buildStrat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, random);
+        return Objects.hash(characterStrat, buildStrat);
     }
 
     @Override

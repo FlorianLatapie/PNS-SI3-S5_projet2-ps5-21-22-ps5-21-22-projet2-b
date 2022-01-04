@@ -9,11 +9,13 @@ import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,9 +45,8 @@ public class MerchantOrColorStratTest {
 
     @Test
     void chooseCharacterTest() {
-        CompleteStrategy buildMaxDistrictStrategy = new CompleteStrategy();
+        CompleteStrategy buildMaxDistrictStrategy = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player 1", districtCards, 2, new Random(), buildMaxDistrictStrategy);
-        buildMaxDistrictStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
 
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
@@ -56,9 +57,8 @@ public class MerchantOrColorStratTest {
 
     @Test
     void chooseCharacterTestWithMostColorsInHand() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player 1", districtCards, 100, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);
@@ -75,15 +75,13 @@ public class MerchantOrColorStratTest {
 
     @Test
     void chooseCharacterTestWithMostColorsInHand2() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
 
         // just to be sure that is NOT a random choice
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(-1);
 
         Player player = new Player("Player 1", districtCardsV2, 100, mockRandom, districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new MerchantOrColorStrategy(player), new BuildMaxDistrictStrategy(player));
-
         player.buildDistrictCardsInHand(districtCardsV2.get(1));
         player.buildDistrictCardsInHand(districtCardsV2.get(2));
         player.buildDistrictCardsInHand(districtCardsV2.get(3));
@@ -102,9 +100,8 @@ public class MerchantOrColorStratTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player 1", districtCards, 100, mockRandom, districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
 
         for (DistrictCard card : districtCards) {
             player.buildDistrictCardsInHand(card);
@@ -121,5 +118,27 @@ public class MerchantOrColorStratTest {
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.BISHOP));
 
         assertEquals(characterCardsOfTheRound.get(0), player.chooseCharacter(characterCardsOfTheRound));
+    }
+
+    @Test
+    void equalsTest(){
+        MerchantOrColorStrategy strat1 = new MerchantOrColorStrategy();
+        MerchantOrColorStrategy strat2 = new MerchantOrColorStrategy();
+
+        assertEquals(strat1, strat2);
+    }
+
+    @Test
+    void toStringTest(){
+        MerchantOrColorStrategy strat = new MerchantOrColorStrategy();
+
+        assertEquals("Merchant or most common color Strategy",strat.toString());
+    }
+
+    @Test
+    void hashCodeTest() {
+        Random random = new Random();
+        Player player = new Player("Player 1", districtCards, 200, random, new CompleteStrategy(new MerchantOrColorStrategy(), new BuildStrat()));
+        assertEquals(Objects.hash(new MerchantOrColorStrategy().hashCode(), new BuildStrat().hashCode()), player.getStrategy().hashCode());
     }
 }

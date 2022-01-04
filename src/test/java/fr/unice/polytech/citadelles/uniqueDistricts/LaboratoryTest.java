@@ -32,9 +32,8 @@ class LaboratoryTest {
 
     @Test
     void useUniqueDistrictPowerTest(){
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         player.buildDistrictCardsInHand(new DistrictCard(Color.PURPLE, DistrictName.LABORATORY, 5));
@@ -53,9 +52,8 @@ class LaboratoryTest {
 
     @Test
     void destroyCardTest(){
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player", districtCards, 10, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         GameEngine gameEngine = new GameEngine(new Random(), player);
 
         Laboratory lab = new Laboratory(gameEngine);

@@ -45,7 +45,7 @@ public class Player {
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins, Random random) {
-        this(name, districtCards, coins, random, new CompleteStrategy());
+        this(name, districtCards, coins, random, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
     }
 
     public Player(String name, List<DistrictCard> districtCards, int coins, Random random, Strategy strategy) {
@@ -58,7 +58,7 @@ public class Player {
         destroyedDistricts = new ArrayList<>();
 
         this.strategy = strategy;
-        strategy.init(this, random, new CharacterStrat(this), new BuildStrat(this));
+        strategy.init(this);
     }
 
     //---------------------------  Coins ... ---------------------------
@@ -131,9 +131,6 @@ public class Player {
         return strategy.chooseBestDistrictCard(districtCards);
     }
 
-    public boolean chooseToExchangeCoinsForCards(){
-        return strategy.chooseToExchangeCoinsForCards();
-    }
 
     public List<DistrictCard> pickCard(DeckOfCards deckOfCards) {
         DistrictCard library = new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5);

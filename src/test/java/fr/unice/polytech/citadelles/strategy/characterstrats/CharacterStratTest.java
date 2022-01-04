@@ -39,7 +39,7 @@ public class CharacterStratTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
-        CompleteStrategy spy = spy(new CompleteStrategy());
+        CompleteStrategy spy = spy(new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
 
         DeckOfCards doc = new DeckOfCards();
@@ -57,7 +57,7 @@ public class CharacterStratTest {
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy());
+        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
 
         List<CharacterCard> characterCards = new DeckOfCards().getNewCharacterCards();
         characterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
@@ -78,7 +78,7 @@ public class CharacterStratTest {
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy());
+        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
 
         List<CharacterCard> characterCards = new DeckOfCards().getNewCharacterCards();
         characterCards.remove(new CharacterCard(CharacterName.ASSASSIN));
@@ -100,8 +100,8 @@ public class CharacterStratTest {
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy());
-        Player player2 = new Player("Player 2", dc, 200, mockRandom, new CompleteStrategy());
+        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
+        Player player2 = new Player("Player 2", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
 
         List<Player> players = List.of(player,player2);
 
@@ -112,8 +112,8 @@ public class CharacterStratTest {
     @Test
     void hashCodeTest() {
         Random random = new Random();
-        Player player = new Player("Player 1", districtCards, 200, random, new CompleteStrategy());
-        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
+        Player player = new Player("Player 1", districtCards, 200, random, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
+        assertEquals(Objects.hash(new CharacterStrat().hashCode(), new BuildStrat().hashCode()), player.getStrategy().hashCode());
     }
 
     @Test
@@ -122,11 +122,9 @@ public class CharacterStratTest {
         Random r = new Random();
         when(mockPlayer.getRandom()).thenReturn(r);
 
-        CompleteStrategy randomStrategy = new CompleteStrategy();
-        randomStrategy.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
+        CompleteStrategy randomStrategy = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
 
-        CompleteStrategy randomStrategy2 = new CompleteStrategy();
-        randomStrategy2.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
+        CompleteStrategy randomStrategy2 = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
 
         assertEquals(randomStrategy, randomStrategy2);
         assertNotEquals(randomStrategy, 1); // wrong order of arguments to test the .equals method of p and not the other object
@@ -140,8 +138,8 @@ public class CharacterStratTest {
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy());
-        Player player2 = new Player("Player 2", dc, 200, mockRandom, new CompleteStrategy());
+        Player player = new Player("Player 1", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
+        Player player2 = new Player("Player 2", dc, 200, mockRandom, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
 
         List<Player> players = List.of(player,player2);
 
@@ -167,11 +165,27 @@ public class CharacterStratTest {
 
     @Test
     void repairDistrictTest(){
-        Player p = new Player("player", new ArrayList<>(), 2, new Random(), new CompleteStrategy());
+        Player p = new Player("player", new ArrayList<>(), 2, new Random(), new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         p.setCharacterCard(new CharacterCard(CharacterName.THIEF));
         assertNull(p.chooseToRepairDistrict());
         DistrictCard districtCard = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
         p.setDestroyedDistricts(new ArrayList<>(List.of(districtCard)));
         assertEquals(districtCard, p.chooseToRepairDistrict());
+    }
+
+    @Test
+    void chooseToExchangeCoinsForCardsTest(){
+        Player p = new Player("player", new ArrayList<>(), 2, new Random(), new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
+        p.setCharacterCard(new CharacterCard(CharacterName.THIEF));
+        assertNull(p.chooseToRepairDistrict());
+        DistrictCard districtCard = new DistrictCard(Color.GREY, DistrictName.NONE, 1);
+        p.setDestroyedDistricts(new ArrayList<>(List.of(districtCard)));
+        assertEquals(districtCard, p.chooseToRepairDistrict());
+    }
+
+    @Test
+    void toStringTest(){
+        CharacterStrat strat = new CharacterStrat();
+        assertEquals("random Character Strategy", strat.toString());
     }
 }

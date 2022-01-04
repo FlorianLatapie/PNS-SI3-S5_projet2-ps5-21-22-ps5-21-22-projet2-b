@@ -11,7 +11,7 @@ import java.util.Random;
 
 public interface Strategy {
 
-    public void init(Player player, Random random, CharacterStrat characterStrat, BuildStrat buildStrat);
+    public void init(Player player);
 
     public abstract CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
 
@@ -37,5 +37,4 @@ public interface Strategy {
 
     public DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts);
 
-    public boolean chooseToExchangeCoinsForCards();
 }

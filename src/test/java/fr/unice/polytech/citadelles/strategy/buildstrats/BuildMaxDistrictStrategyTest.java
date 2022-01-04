@@ -44,77 +44,73 @@ class BuildMaxDistrictStrategyTest {
 
     @Test
     void getCoinsOverDrawingACardTest() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
-        districtStrategy.init(player1, player1.getRandom(), new CharacterStrat(player1), new BuildMaxDistrictStrategy(player1));
         assertTrue(districtStrategy.getCoinsOverDrawingACard());
 
         List<DistrictCard> emptyList = new ArrayList<>();
         Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
-        districtStrategy.init(player2, player2.getRandom(), new CharacterStrat(player2), new BuildMaxDistrictStrategy(player2));
         assertFalse(districtStrategy.getCoinsOverDrawingACard());
     }
 
     @Test
     void chooseBestDistrictCardTest(){
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         List <DistrictCard> districtCards = new ArrayList<>();
         districtCards.add(new DistrictCard(Color.GREY, DistrictName.MONASTERY, 4));
         districtCards.add(new DistrictCard(Color.RED, DistrictName.TAVERN, 1));
 
         Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         assertEquals(new DistrictCard(Color.RED, DistrictName.TAVERN, 1), player.chooseBestDistrictCard(districtCards));
     }
 
     @Test
     void getTaxesAtBeginningOfTurnTest() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         //Always true (part of the strategy)
         assertTrue(districtStrategy.getTaxesAtBeginningOfTurn());
     }
 
     @Test
     void buildDistrict() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player1 = new Player("Player 1", districtCards, 0, new Random(), districtStrategy);
-        districtStrategy.init(player1, player1.getRandom(), new CharacterStrat(player1), new BuildMaxDistrictStrategy(player1));
         //Not enough coins
         assertNull(districtStrategy.buildDistrict());
 
         List<DistrictCard> emptyList = new ArrayList<>();
         Player player2 = new Player("Player 2", emptyList, 0, new Random(), districtStrategy);
-        districtStrategy.init(player2, player2.getRandom(), new CharacterStrat(player2), new BuildMaxDistrictStrategy(player2));
         //Empty List
         assertNull(districtStrategy.buildDistrict());
 
         Player player3 = new Player("Player 3", districtCards, 1, new Random(), districtStrategy);
-        districtStrategy.init(player3, player3.getRandom(), new CharacterStrat(player3), new BuildMaxDistrictStrategy(player3));
         assertEquals(new DistrictCard(Color.GREEN, DistrictName.TAVERN, 1), districtStrategy.buildDistrict());
     }
 
     @Test
     void hashCodeTest() {
         Random random = new Random();
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player 1", districtCards, 200, random, districtStrategy);
-        districtStrategy.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
-        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
+        assertEquals(Objects.hash(new CharacterStrat().hashCode(), new BuildMaxDistrictStrategy().hashCode()), player.getStrategy().hashCode());
     }
 
     @Test
     void equalsTest() {
-        CompleteStrategy districtStrategy = new CompleteStrategy();
+        CompleteStrategy districtStrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player1 = new Player("Player 1", districtCards, 2, new Random(), districtStrategy);
-        districtStrategy.init(player1, player1.getRandom(), new CharacterStrat(player1), new BuildMaxDistrictStrategy(player1));
 
-        CompleteStrategy districtStrategy2 = new CompleteStrategy();
+        CompleteStrategy districtStrategy2 = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player2 = new Player("Player 2", districtCards, 3, new Random(), districtStrategy);
-        districtStrategy2.init(player2, player2.getRandom(), new CharacterStrat(player2), new BuildMaxDistrictStrategy(player2));
 
         assertEquals(districtStrategy, districtStrategy2);
         assertNotEquals(districtStrategy, 1); // wrong order of arguments to test the .equals method of districtStrategy and not the other object
+    }
+
+    @Test
+    void toStringTest(){
+        BuildMaxDistrictStrategy strat = new BuildMaxDistrictStrategy();
+        assertEquals("Build Max District Strategy", strat.toString());
     }
 }

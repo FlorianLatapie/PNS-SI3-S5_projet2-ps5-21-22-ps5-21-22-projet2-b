@@ -37,7 +37,7 @@ public class BuildStratTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
-        CompleteStrategy spy = spy(new CompleteStrategy());
+        CompleteStrategy spy = spy(new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
 
         assertTrue(player.chooseCoinsOverDrawingACard());
@@ -51,7 +51,7 @@ public class BuildStratTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(0);
 
-        CompleteStrategy spy = spy(new CompleteStrategy());
+        CompleteStrategy spy = spy(new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
         assertEquals(new DistrictCard(Color.GREY, DistrictName.NONE, 1), player.chooseBestDistrictCard(districtCards));
     }
@@ -61,7 +61,7 @@ public class BuildStratTest {
         Random mockRandom = mock(Random.class);
         when(mockRandom.nextBoolean()).thenReturn(true, false);
 
-        CompleteStrategy spy = spy(new CompleteStrategy());
+        CompleteStrategy spy = spy(new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         Player player = new Player("Player 1", districtCards, 2, mockRandom, spy);
 
         assertTrue(player.chooseToGetTaxesAtBeginningOfTurn());
@@ -77,7 +77,7 @@ public class BuildStratTest {
 
         List<DistrictCard> dc = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
 
-        CompleteStrategy spy = spy(new CompleteStrategy());
+        CompleteStrategy spy = spy(new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
         Player player = new Player("Player 1", dc, 200, mockRandom, spy);
 
         List<DistrictCard> expectedBuilt = List.of(new DistrictCard(Color.GREY, DistrictName.NONE, 1));
@@ -93,8 +93,8 @@ public class BuildStratTest {
     @Test
     void hashCodeTest() {
         Random random = new Random();
-        Player player = new Player("Player 1", districtCards, 200, random, new CompleteStrategy());
-        assertEquals(Objects.hash(player, random), player.getStrategy().hashCode());
+        Player player = new Player("Player 1", districtCards, 200, random, new CompleteStrategy(new CharacterStrat(), new BuildStrat()));
+        assertEquals(Objects.hash(new CharacterStrat().hashCode(), new BuildStrat().hashCode()), player.getStrategy().hashCode());
     }
 
     @Test
@@ -103,13 +103,19 @@ public class BuildStratTest {
         Random r = new Random();
         when(mockPlayer.getRandom()).thenReturn(r);
 
-        CompleteStrategy randomStrategy = new CompleteStrategy();
-        randomStrategy.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
+        CompleteStrategy randomStrategy = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
+        randomStrategy.init(mockPlayer);
 
-        CompleteStrategy randomStrategy2 = new CompleteStrategy();
-        randomStrategy2.init(mockPlayer, r, new CharacterStrat(mockPlayer), new BuildStrat(mockPlayer));
+        CompleteStrategy randomStrategy2 = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
+        randomStrategy2.init(mockPlayer);
 
         assertEquals(randomStrategy, randomStrategy2);
         assertNotEquals(randomStrategy, 1); // wrong order of arguments to test the .equals method of p and not the other object
+    }
+
+    @Test
+    void toStringTest(){
+        BuildStrat strat = new BuildStrat();
+        assertEquals("random Build Strategy",strat.toString());
     }
 }

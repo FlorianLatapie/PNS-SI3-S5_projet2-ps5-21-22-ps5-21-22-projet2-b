@@ -8,12 +8,16 @@ import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MerchantOrColorStrategy extends CharacterStrat{
     PlayerTools playerTools;
 
-    public MerchantOrColorStrategy(Player player){
-        super(player);
+    public MerchantOrColorStrategy(){
+    }
+
+    public void init(Player player){
+        super.init(player);
         this.playerTools = new PlayerTools(player);
     }
 
@@ -39,6 +43,18 @@ public class MerchantOrColorStrategy extends CharacterStrat{
 
     @Override
     public String toString() {
-        return "Merchant or most common color Strategy{" ;
+        return "Merchant or most common color Strategy" ;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MerchantOrColorStrategy)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return 4;
     }
 }

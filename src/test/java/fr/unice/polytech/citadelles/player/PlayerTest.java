@@ -132,9 +132,8 @@ class PlayerTest {
     void pickCardObservatoryAndLibraryTest() {
         DistrictCard library = new DistrictCard(Color.PURPLE, DistrictName.LIBRARY, 5);
         DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
-        Strategy buildMax = new CompleteStrategy();
+        Strategy buildMax = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player", new ArrayList<>(), 100, rand, buildMax);
-        buildMax.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         player.setDistrictCardsBuilt(List.of(library, observatory));
 
         List<DistrictCard> fakeCards = new ArrayList<>();
@@ -153,9 +152,8 @@ class PlayerTest {
     @Test
     void pickCardObservatoryTest() {
         DistrictCard observatory = new DistrictCard(Color.PURPLE, DistrictName.OBSERVATORY, 5);
-        Strategy buildMax = new CompleteStrategy();
+        Strategy buildMax = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
         Player player = new Player("Player", new ArrayList<>(), 100, rand, buildMax);
-        buildMax.init(player, player.getRandom(), new CharacterStrat(player), new BuildMaxDistrictStrategy(player));
         player.setDistrictCardsBuilt(List.of(observatory));
 
         List<DistrictCard> fakeCards = new ArrayList<>();

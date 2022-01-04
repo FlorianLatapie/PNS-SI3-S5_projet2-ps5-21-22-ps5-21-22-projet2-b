@@ -12,7 +12,10 @@ public class CharacterStrat {
     Player player;
     Random random;
 
-    public CharacterStrat(Player player) {
+    public CharacterStrat() {
+    }
+
+    public void init(Player player) {
         this.player = player;
         this.random = player.getRandom();
     }
@@ -74,21 +77,16 @@ public class CharacterStrat {
         }
     }
 
-    public boolean chooseToExchangeCoinsForCards(){
-        return random.nextBoolean();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CharacterStrat)) return false;
-        CharacterStrat that = (CharacterStrat) o;
-        return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, random);
+        return 3;
     }
 
     @Override

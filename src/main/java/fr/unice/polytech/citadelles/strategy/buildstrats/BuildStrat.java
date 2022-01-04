@@ -13,7 +13,10 @@ public class BuildStrat {
     Player player;
     Random random;
 
-    public BuildStrat(Player player){
+    public BuildStrat(){
+    }
+
+    public void init(Player player) {
         this.player = player;
         this.random = player.getRandom();
     }
@@ -56,13 +59,12 @@ public class BuildStrat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BuildStrat)) return false;
-        BuildStrat that = (BuildStrat) o;
-        return Objects.equals(player, that.player) && Objects.equals(random, that.random);
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, random);
+        return 1;
     }
 
     @Override
