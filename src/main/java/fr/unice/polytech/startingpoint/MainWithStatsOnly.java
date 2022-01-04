@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class MainWithStatsOnly {
     public static void main(String... args) {
+        double numberOfGames = 1000;
         Random random = new Random();
         IOforStats io = new IOforStats();
         //IO io = new IO();
@@ -23,13 +24,12 @@ public class MainWithStatsOnly {
         Player p1 = null, p2 = null, p3 = null;
 
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < numberOfGames; i++) {
             io.println("this game is the " + i + "th");
 
             Strategy buildMaxDistrictSrategy = new CompleteStrategy();
             p1 = new Player("Player 1", buildMaxDistrictSrategy);
             buildMaxDistrictSrategy.init(p1, random, new CharacterStrat(p1), new BuildMaxDistrictStrategy(p1));
-
 
             Strategy buildMaxDistrictSrategyp2 = new CompleteStrategy();
             p2 = new Player("Player 2", buildMaxDistrictSrategyp2);
@@ -44,6 +44,6 @@ public class MainWithStatsOnly {
             io.println("this game is the " + i + "th");
         }
 
-        io.printStats(List.of(p1,p2,p3), winnersOfEachGame);
+        io.printStats(List.of(p1, p2, p3), winnersOfEachGame, numberOfGames);
     }
 }
