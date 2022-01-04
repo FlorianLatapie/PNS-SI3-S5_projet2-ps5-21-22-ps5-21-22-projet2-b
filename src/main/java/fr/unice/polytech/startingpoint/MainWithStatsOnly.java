@@ -9,12 +9,13 @@ import fr.unice.polytech.citadelles.strategy.Strategy;
 import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
 import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MainWithStatsOnly {
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
         double numberOfGames = 1000;
         Random random = new Random();
         IOforStats io = new IOforStats();
@@ -39,6 +40,6 @@ public class MainWithStatsOnly {
             io.println("this game is the " + i + "th");
         }
 
-        io.printStats(winnersOfEachGame, numberOfGames, p1, p2, p3);
+        io.saveAndPrintStats(winnersOfEachGame, numberOfGames, p1, p2, p3);
     }
 }
