@@ -11,30 +11,30 @@ import java.util.Random;
 
 public interface Strategy {
 
-    public void init(Player player);
+    void init(Player player);
 
-    public abstract CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
+    CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame);
 
-    public abstract boolean getCoinsOverDrawingACard();
+    boolean getCoinsOverDrawingACard();
 
-    public abstract boolean getTaxesAtBeginningOfTurn();
+    boolean getTaxesAtBeginningOfTurn();
 
-    public abstract DistrictCard buildDistrict();
+    DistrictCard buildDistrict();
 
-    public abstract DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards);
+    DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards);
 
-    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards);
+    CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards);
 
-    public CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards);
+    CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards);
 
-    public Player getSometimesRandomPlayer(List<Player> players);
+    Player getSometimesRandomPlayer(List<Player> players);
 
-    public Player magicianMove(List<Player> players);
+    Player magicianMove(List<Player> players);
 
-    public DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy);
+    DistrictCard warlordChooseDistrictToDestroy(List<DistrictCard> districtCardsThatCanBeDestroy);
 
-    public DistrictCard changeCardToOther();
+    DistrictCard changeCardToOther();
 
-    public DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts);
+    DistrictCard repairDistrict(List<DistrictCard> destroyedDistricts);
 
 }
