@@ -5,7 +5,6 @@ import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class CharacterStrat {
@@ -19,6 +18,7 @@ public class CharacterStrat {
         this.player = player;
         this.random = player.getRandom();
     }
+
 
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardDeckOfTheGame){
         return characterCardDeckOfTheGame.get(random.nextInt(0, characterCardDeckOfTheGame.size()));

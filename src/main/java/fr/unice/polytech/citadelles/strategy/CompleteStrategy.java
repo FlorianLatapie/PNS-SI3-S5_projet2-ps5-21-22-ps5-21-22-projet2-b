@@ -1,5 +1,6 @@
 package fr.unice.polytech.citadelles.strategy;
 
+import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
@@ -16,7 +17,7 @@ public class CompleteStrategy implements Strategy {
     CharacterStrat characterStrat;
     BuildStrat buildStrat;
 
-    public CompleteStrategy(CharacterStrat characterStrat, BuildStrat buildStrat){
+    public CompleteStrategy(CharacterStrat characterStrat, BuildStrat buildStrat) {
         this.characterStrat = characterStrat;
         this.buildStrat = buildStrat;
     }
@@ -28,6 +29,7 @@ public class CompleteStrategy implements Strategy {
         characterStrat.init(player);
         buildStrat.init(player);
     }
+
 
 
 

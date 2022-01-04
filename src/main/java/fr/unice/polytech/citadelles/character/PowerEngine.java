@@ -28,7 +28,7 @@ public abstract class PowerEngine {
     CharacterCard stolenCharacter;
 
     Random random;
-
+    Integer nbOfDistrictsToWin;
     private PowerEngine(){}
 
     protected PowerEngine(GameEngine gameEngine){
@@ -50,6 +50,7 @@ public abstract class PowerEngine {
         stolenCharacter = gameEngine.getStolenCharacter();
 
         random = gameEngine.getRandom();
+        nbOfDistrictsToWin = gameEngine.getNbOfDistrictsToWin();
     }
 
 

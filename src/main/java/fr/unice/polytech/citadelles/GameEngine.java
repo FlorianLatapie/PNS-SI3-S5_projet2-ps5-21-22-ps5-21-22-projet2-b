@@ -43,6 +43,8 @@ public class GameEngine {
 
     private Random random;
 
+    private int nbOfDistrictsToWin = 8;
+
     // constructors
     @Deprecated
     public GameEngine() {
@@ -60,7 +62,6 @@ public class GameEngine {
         listOfPlayers = new ArrayList<>();
         io = new IO();
         playersWhoBuilt8Cards = new ArrayList<>();
-
         deckOfCards = new DeckOfCards(random);
 
         initPlayers();
@@ -116,6 +117,7 @@ public class GameEngine {
                 kingByDefault = playerToAdd;
             }
         }
+
     }
 
     // game
@@ -256,10 +258,10 @@ public class GameEngine {
     //------------------------------------------------------------------------------
 
     public boolean hasThisPlayerBuiltd8Cards(Player player) {
-        boolean hasBuilt8 = player.getDistrictCardsBuilt().size() >= 8;
+        boolean hasBuilt8 = player.getDistrictCardsBuilt().size() >= nbOfDistrictsToWin;
         if (hasBuilt8) {
             playersWhoBuilt8Cards.add(player);
-            io.println(player.getName() + " built 8 cards!");
+            io.println(player.getName() + " built "+nbOfDistrictsToWin+" cards!");
         }
         return hasBuilt8;
     }
@@ -503,6 +505,8 @@ public class GameEngine {
     public int getRound() {
         return round;
     }
+
+    public int getNbOfDistrictsToWin(){ return nbOfDistrictsToWin;}
 
     public void setPlayersWhoBuilt8Cards(List<Player> playersWhoBuilt8Cards) {
         this.playersWhoBuilt8Cards = playersWhoBuilt8Cards;
