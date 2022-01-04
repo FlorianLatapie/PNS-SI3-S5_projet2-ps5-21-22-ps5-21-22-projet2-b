@@ -40,6 +40,6 @@ public class MainWithStatsOnly {
             io.println("this game is the " + i + "th");
         }
 
-        io.saveAndPrintStats(winnersOfEachGame, numberOfGames, p1, p2, p3);
+        io.saveAndPrintStats(winnersOfEachGame, p1, p2, p3);
     }
 }

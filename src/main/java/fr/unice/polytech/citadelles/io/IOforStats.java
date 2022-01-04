@@ -23,8 +23,13 @@ public class IOforStats extends IO {
         System.err.println(o);
     }
 
-    public void saveAndPrintStats(List<List<Player>> winnersOfEachGame, double numberOfGames, Player... players) throws IOException {
+    public void saveAndPrintStats(List<List<Player>> winnersOfEachGame, Player... players) throws IOException {
         String CSVFilePath = createCSVFile();
+        appendStatsToCSV(winnersOfEachGame, CSVFilePath);
+        readAndComputeStats(CSVFilePath, players);
+    }
+
+    public void appendStatsToCSV(List<List<Player>> winnersOfEachGame, String CSVFilePath) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(CSVFilePath, true), ';');
 
         for (List<Player> winnersForThisGame : winnersOfEachGame) {
@@ -41,8 +46,6 @@ public class IOforStats extends IO {
             }
         }
         writer.close();
-
-        readAndComputeStats(CSVFilePath, players);
     }
 
     public Map<Player, List<Integer>> readAndComputeStats(String csvFilePath, Player... players) throws IOException {
