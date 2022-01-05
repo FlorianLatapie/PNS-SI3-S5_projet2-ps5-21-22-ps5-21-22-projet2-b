@@ -27,7 +27,7 @@ public interface Strategy {
 
     CharacterCard stealCharacterCard(List<CharacterCard> ableToStealCharacterCards);
 
-    Player getSometimesRandomPlayer(List<Player> players);
+    Player chooseAPlayer(List<Player> players);
 
     Player magicianMove(List<Player> players);
 

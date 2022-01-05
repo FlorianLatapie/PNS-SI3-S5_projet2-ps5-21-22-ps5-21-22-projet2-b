@@ -36,6 +36,10 @@ public class Player {
         this(name, new ArrayList<>(), 0, new Random(), strategy);
     }
 
+    public Player(String name, Random random, Strategy strategy) {
+        this(name, new ArrayList<>(), 0, random, strategy);
+    }
+
     public Player(String name, List<DistrictCard> districtCards) {
         this(name, districtCards, 2, new Random());
     }
@@ -230,7 +234,7 @@ public class Player {
     }
 
     public Player warlordChoosePlayer(List<Player> players) {
-        return strategy.getSometimesRandomPlayer(players);
+        return strategy.chooseAPlayer(players);
     }
 
     public DistrictCard warlordChooseDistrictToDestroy(Player player) {

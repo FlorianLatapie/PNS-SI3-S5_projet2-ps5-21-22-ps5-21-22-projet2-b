@@ -74,6 +74,14 @@ public class SuperCharacterStratTest {
 
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.ASSASSIN));
 
+        assertEquals(new CharacterCard(CharacterName.WARLORD), superstrat.chooseKing(characterCardsOfTheRound));
+
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.WARLORD));
+
+        assertEquals(new CharacterCard(CharacterName.BISHOP), superstrat.chooseKing(characterCardsOfTheRound));
+
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.BISHOP));
+
         assertEquals(null, superstrat.chooseKing(characterCardsOfTheRound));
 
     }
@@ -121,6 +129,66 @@ public class SuperCharacterStratTest {
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
 
         assertEquals(superstrat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
+    }
+
+    @Test
+    void killCharacterCardTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        Random mockRandom = mock(Random.class);
+        when(mockRandom.nextInt(anyInt(), anyInt())).thenReturn(4);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player", mockRandom, strat);
+        player.setDistrictCardsBuilt(districtCards);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2", mockRandom, strat);
+        Player player3 = new Player("Player 3", mockRandom, strat);
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
+
+        assertEquals(new CharacterCard(CharacterName.KING), strat.killCharacterCard(characterCardsOfTheRound));
+
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.KING));
+
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), strat.killCharacterCard(characterCardsOfTheRound));
+    }
+
+
+    @Test
+    void chooseAPlayer(){
+        GameEngine mockGE = mock(GameEngine.class);
+        Random mockRandom = mock(Random.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player", mockRandom, strat);
+        player.setDistrictCardsBuilt(districtCards);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2", mockRandom, strat);
+        Player player3 = new Player("Player 3", mockRandom, strat);
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        when(mockRandom.nextBoolean()).thenReturn(true);
+        when(mockRandom.nextInt(anyInt(),anyInt())).thenReturn(1);
+
+        assertEquals(player, superstrat.chooseAPlayer(listPlayer));
+
+        listPlayer.remove(player);
+
+        assertEquals(player3, superstrat.chooseAPlayer(listPlayer));
+
+
     }
 
 }

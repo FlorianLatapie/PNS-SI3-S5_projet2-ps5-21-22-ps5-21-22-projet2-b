@@ -1,6 +1,5 @@
 package fr.unice.polytech.citadelles.strategy;
 
-import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.player.Player;
@@ -69,8 +68,8 @@ public class CompleteStrategy implements Strategy {
     }
 
     @Override
-    public Player getSometimesRandomPlayer(List<Player> players) {
-        return characterStrat.getSometimesRandomPlayer(players);
+    public Player chooseAPlayer(List<Player> players) {
+        return characterStrat.chooseAPlayer(players);
     }
 
     @Override
