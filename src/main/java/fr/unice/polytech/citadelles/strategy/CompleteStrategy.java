@@ -30,9 +30,6 @@ public class CompleteStrategy implements Strategy {
         buildStrat.init(player);
     }
 
-
-
-
     @Override
     public boolean getCoinsOverDrawingACard() {
         return buildStrat.getCoinsOverDrawingACard();
