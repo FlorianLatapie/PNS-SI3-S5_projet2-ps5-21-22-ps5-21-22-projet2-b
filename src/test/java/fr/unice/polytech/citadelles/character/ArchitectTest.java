@@ -20,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author Florian Latapie
- */
 class ArchitectTest {
     static List<DistrictCard> districtCards;
     static ByteArrayOutputStream outContent;

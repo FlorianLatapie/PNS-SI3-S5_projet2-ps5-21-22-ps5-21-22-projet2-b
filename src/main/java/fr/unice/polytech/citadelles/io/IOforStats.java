@@ -9,9 +9,6 @@ import fr.unice.polytech.citadelles.player.PlayerTools;
 import java.io.*;
 import java.util.*;
 
-/**
- * @author Florian Latapie
- */
 public class IOforStats extends IO {
     //private final static Logger LOGGER = Logger.getLogger(IO.class.getName());
 

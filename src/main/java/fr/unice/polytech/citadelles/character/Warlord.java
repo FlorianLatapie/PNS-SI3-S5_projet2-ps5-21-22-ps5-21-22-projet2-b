@@ -9,9 +9,6 @@ import fr.unice.polytech.citadelles.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Florian Latapie
- */
 public class Warlord extends PowerEngine {
     public Warlord(GameEngine gameEngine) {
         super(gameEngine);

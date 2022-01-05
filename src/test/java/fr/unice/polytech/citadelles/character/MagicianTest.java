@@ -19,9 +19,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author Florian Latapie
- */
 class MagicianTest {
     static List<DistrictCard> districtCards;
     static ByteArrayOutputStream outContent;

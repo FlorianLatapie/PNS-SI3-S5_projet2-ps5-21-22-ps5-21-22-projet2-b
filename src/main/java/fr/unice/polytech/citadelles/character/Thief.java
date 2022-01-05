@@ -7,9 +7,6 @@ import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
 
-/**
- * @author Florian Latapie
- */
 public class Thief extends PowerEngine {
 
     public Thief(GameEngine gameEngine) {

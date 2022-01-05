@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class MainWithStatsOnly {
     public static void main(String... args) throws IOException {
-        double numberOfGames = 1000;
+        double numberOfGames = 1000000;
         Random random = new Random();
         IOforStats io = new IOforStats();
         List<List<Player>> winnersOfEachGame = new ArrayList<>();
