@@ -77,6 +77,10 @@ public class CharacterStrat {
         }
     }
 
+    public boolean chooseAssassin(List<CharacterCard> characterCardList){
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

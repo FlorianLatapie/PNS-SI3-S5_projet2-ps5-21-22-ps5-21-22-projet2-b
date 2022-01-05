@@ -31,6 +31,7 @@ public class GameEngine {
 
     private List<Player> listOfPlayers;
     private List<Player> playersWhoBuilt8Cards;
+    List<Player> listOfPlayersSorted;
 
     private Player playerThatCantPlay = null;
     private Player kingOfTheLastRound;
@@ -133,7 +134,7 @@ public class GameEngine {
             io.printSeparator("Start of the round " + round);
             resetThePenalties();
 
-            List<Player> listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
+            listOfPlayersSorted = askPlayersRoleAndSortThemByRole(deckOfCards.getNewCharacterCards());// is a new copy of the 8 characters each new round
             io.printSeparator("All players have chosen their role for round " + round + "!");
 
             for (Player player : listOfPlayersSorted) {
@@ -276,7 +277,7 @@ public class GameEngine {
                     characterCardDeckOfTheRound);
         }
 
-        List<Player> listOfPlayersSorted = sortPlayerListByCharacterSequence();
+        listOfPlayersSorted = sortPlayerListByCharacterSequence();
         updateKing(listOfPlayersSorted);
         return listOfPlayersSorted;
     }
@@ -510,6 +511,10 @@ public class GameEngine {
     }
 
     public int getNbOfDistrictsToWin(){ return nbOfDistrictsToWin;}
+
+    public List<Player> getListOfPlayersSorted() {
+        return listOfPlayersSorted;
+    }
 
     public void setPlayersWhoBuilt8Cards(List<Player> playersWhoBuilt8Cards) {
         this.playersWhoBuilt8Cards = playersWhoBuilt8Cards;

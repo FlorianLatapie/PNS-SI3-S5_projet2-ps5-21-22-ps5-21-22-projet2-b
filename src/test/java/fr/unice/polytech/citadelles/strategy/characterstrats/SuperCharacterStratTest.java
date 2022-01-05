@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
@@ -219,5 +219,223 @@ public class SuperCharacterStratTest {
 
 
         assertEquals(player, superstrat.isAboutToWinWithKing());
+    }
+
+
+    @Test
+    void chooseAssassinTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        Player player = new Player("Player");
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+
+        List<Player> playersSorted = new ArrayList<>(List.of(player, player3,player2));
+        when(mockGE.getListOfPlayersSorted()).thenReturn(playersSorted);
+        when(mockGE.getNbOfDistrictsToWin()).thenReturn(4);
+
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildMaxDistrictStrategy());
+        player3.setStrategy(strat);
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
+        //test last to choose character and not about to win
+        assertFalse(superstrat.chooseAssassin(characterCardsOfTheRound));
+
+        //test has a lot of card and others do not
+        superstrat.setHaveALotOfCard(2);
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsInHand().removeAll(player.getDistrictCardsInHand());
+        player2.getDistrictCardsInHand().removeAll(player2.getDistrictCardsInHand());
+        assertTrue(superstrat.chooseAssassin(characterCardsOfTheRound));
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MAGICIAN));
+        assertFalse(superstrat.chooseAssassin(characterCardsOfTheRound));
+
+        //test coins and district card disparity
+        player3.getDistrictCardsInHand().removeAll(player3.getDistrictCardsInHand());
+        assertFalse(superstrat.districtCardsBuiltAndCoinsDisparity());
+
+        //test si quelqu'un peut gagner avec l'assassin
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertTrue(superstrat.districtCardsBuiltAndCoinsDisparity());
+        //test si je suis sur le point de gagner avec l'assassin
+        superstrat.init(player2);
+        assertTrue(superstrat.chooseAssassin(characterCardsOfTheRound));
+
+        //test pas d'assassin
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.ASSASSIN));
+        assertFalse(superstrat.chooseAssassin(characterCardsOfTheRound));
+
+
+
+    }
+
+    @Test
+    void checkDisparityTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        assertFalse(superstrat.checkDisparity(1, 2, 1));
+        assertTrue(superstrat.checkDisparity(1, 3, 1));
+        assertFalse(superstrat.checkDisparity(1, -2, 5));
+    }
+
+    @Test
+    void isAbleToWinWithAssassin(){
+        GameEngine mockGE = mock(GameEngine.class);
+        when(mockGE.getNbOfDistrictsToWin()).thenReturn(4);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player 1", strat);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertEquals(player,superstrat.isAbleToWinWithAssassin());
+
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertEquals(player,superstrat.isAbleToWinWithAssassin());
+
+        player.getDistrictCardsBuilt().removeAll(player.getDistrictCardsBuilt());
+        player2.getDistrictCardsBuilt().removeAll(player2.getDistrictCardsBuilt());
+        assertNull(superstrat.isAbleToWinWithAssassin());
+
+        player3.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player3.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertNull(superstrat.isAbleToWinWithAssassin());
+        player3.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertEquals(player3,superstrat.isAbleToWinWithAssassin());
+
+    }
+
+    @Test
+    void haveALotOfCard(){
+        GameEngine mockGE = mock(GameEngine.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player 1", strat);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+        assertFalse(superstrat.haveALotOfCard());
+        superstrat.setHaveALotOfCard(2);
+        player.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertTrue(superstrat.haveALotOfCard());
+
+        superstrat.setHaveALotOfCard(4);
+        assertFalse(superstrat.haveALotOfCard());
+
+        superstrat.setHaveALotOfCard(2);
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player3.getDistrictCardsInHand().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertFalse(superstrat.haveALotOfCard());
+
+
+        player.getDistrictCardsInHand().removeAll(player.getDistrictCardsBuilt());
+        assertFalse(superstrat.haveALotOfCard());
+
+    }
+
+
+
+    @Test
+    void lastToChooseCharacterTest(){
+
+        Player player = new Player("Player 1");
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+        List<Player> playersSorted = new ArrayList<>(List.of(player, player2, player3));
+        GameEngine mockGE = mock(GameEngine.class);
+        when(mockGE.getListOfPlayersSorted()).thenReturn(playersSorted);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        player.setStrategy(strat);
+        player.receiveCoins(1);
+        assertFalse(superstrat.lastToChooseCharacter(player));
+        assertTrue(superstrat.lastToChooseCharacter(player3));
+    }
+
+    @Test
+    void districtCardsBuiltAndCoinsDisparity(){
+        GameEngine mockGE = mock(GameEngine.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player 1", strat);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2", strat);
+
+        Player player3 = new Player("Player 3", strat);
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+        assertFalse(superstrat.districtCardsBuiltAndCoinsDisparity());
+        player2.receiveCoins(8);
+        player3.receiveCoins(10);
+        assertTrue(superstrat.districtCardsBuiltAndCoinsDisparity());
+        player2.removeCoins(8);
+        player3.removeCoins(10);
+        player.setDistrictCardsBuilt(districtCards);
+        assertTrue(superstrat.districtCardsBuiltAndCoinsDisparity());
+    }
+
+    @Test
+    void chooseCharacterTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        when(mockGE.getNbOfDistrictsToWin()).thenReturn(8);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+        Player player = new Player("Player", strat);
+        player.setDistrictCardsBuilt(districtCards);
+        player.receiveCoins(1);
+        Player player2 = new Player("Player 2", strat);
+        Player player3 = new Player("Player 3", strat);
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
+
+        assertEquals(superstrat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY,DistrictName.NONE,1));
+        assertEquals(new CharacterCard(CharacterName.ASSASSIN), strat.chooseCharacter(characterCardsOfTheRound));
     }
 }

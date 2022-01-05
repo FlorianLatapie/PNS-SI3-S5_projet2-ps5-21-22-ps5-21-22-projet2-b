@@ -7,6 +7,8 @@ import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SuperCharacterStrat extends CharacterStrat {
@@ -18,6 +20,9 @@ public class SuperCharacterStrat extends CharacterStrat {
     Integer nbOfDistrictsToWin;
     int nbDistrictsOfArchitectPower = 3;
     int minPriceFor2DistrictCards = 2;
+    CharacterCard characterToKill;
+    List<Player> listOfPlayersSorted;
+    private int haveALotOfCard = 4;
 
     public SuperCharacterStrat(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -25,6 +30,7 @@ public class SuperCharacterStrat extends CharacterStrat {
         listOfPlayers = gameEngine.getListOfPlayers();
         kingOfTheLastRound = gameEngine.getKingOfTheLastRound();
         nbOfDistrictsToWin = gameEngine.getNbOfDistrictsToWin();
+        listOfPlayersSorted = gameEngine.getListOfPlayersSorted();
     }
 
     public void init(Player player) {
@@ -34,7 +40,9 @@ public class SuperCharacterStrat extends CharacterStrat {
 
     @Override
     public CharacterCard chooseCharacter(List<CharacterCard> characterCardList) {
-        if (chooseKing(characterCardList) != null) {
+        if (chooseAssassin(characterCardList)) {
+            return new CharacterCard(CharacterName.ASSASSIN);
+        } else if (chooseKing(characterCardList) != null) {
             return chooseKing(characterCardList);
         } else if (chooseArchitect(characterCardList) != null) {
             return chooseArchitect(characterCardList);
@@ -42,6 +50,7 @@ public class SuperCharacterStrat extends CharacterStrat {
             return super.chooseCharacter(characterCardList);
         }
     }
+
 
     public CharacterCard chooseKing(List<CharacterCard> characterCardList) {
         if (isAboutToWinWithKing() != null) {
@@ -129,4 +138,75 @@ public class SuperCharacterStrat extends CharacterStrat {
     public void setListOfPlayers(List<Player> listOfPlayers) {
         this.listOfPlayers = listOfPlayers;
     }
+
+    //ASSASSIN
+
+    public boolean chooseAssassin(List<CharacterCard> characterCardDeckOfTheGame){
+        characterToKill = null;
+        if(!characterCardDeckOfTheGame.contains(new CharacterCard(CharacterName.ASSASSIN))) return false;
+
+        if(isAbleToWinWithAssassin()== null || !isAbleToWinWithAssassin().equals(this.player)){
+            if(lastToChooseCharacter(this.player) ) return false;
+        }
+
+        if(haveALotOfCard() && characterCardDeckOfTheGame.contains(new CharacterCard(CharacterName.MAGICIAN))) {
+            characterToKill= new CharacterCard(CharacterName.MAGICIAN);
+            return true;
+        }
+
+        if(!districtCardsBuiltAndCoinsDisparity()) return false;
+
+        if(isAbleToWinWithAssassin()==this.player){
+            characterToKill= new CharacterCard(CharacterName.WARLORD);
+            return true;
+        }else return isAbleToWinWithAssassin() != null;
+    }
+
+    public Player isAbleToWinWithAssassin(){
+        for(Player playerToCheck: listOfPlayers){
+            if(playerToCheck.getDistrictCardsBuilt().size()==nbOfDistrictsToWin-1){
+                return playerToCheck;
+            }
+        }
+        return null;
+    }
+
+    public boolean haveALotOfCard(){
+        List<Player> playersToCheckCopy = new ArrayList<Player>(listOfPlayers);
+        playersToCheckCopy.remove(this.player);
+        for(Player playerToCheck: playersToCheckCopy){
+            if(!checkDisparity(this.player.getDistrictCardsInHand().size(), playerToCheck.getDistrictCardsInHand().size(), haveALotOfCard)){ //si pas de grosse différence entre deux joueurs alors le joueur n'a pas bcp de cartes
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setHaveALotOfCard(int value){
+         haveALotOfCard = value;
+    }
+
+    public boolean lastToChooseCharacter(Player playerToCheck){
+         if(listOfPlayersSorted!=null && listOfPlayersSorted.size()>0) return listOfPlayersSorted.get(listOfPlayersSorted.size()-1).equals(playerToCheck);
+        return false;
+    }
+
+
+    public boolean districtCardsBuiltAndCoinsDisparity(){
+         List<Player> playersToCheckCopy = new ArrayList<Player>(listOfPlayers);
+         playersToCheckCopy.remove(this.player);
+        for (Player playerToCheck: playersToCheckCopy){
+            if(checkDisparity(this.player.getCoins(),playerToCheck.getCoins(),2) || checkDisparity(this.player.getDistrictCardsBuilt().size(),playerToCheck.getDistrictCardsBuilt().size(),2)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkDisparity(int reference, int toCheck, int sizeDisparity){
+        return (reference-sizeDisparity>toCheck || toCheck>reference+sizeDisparity); //Différence si toCheck est hors limite de + ou - 1
+    }
+
+
 }
+

@@ -323,6 +323,11 @@ public class Player {
         return strategy;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+        this.strategy.init(this);
+    }
+
     public void setCharacterCard(CharacterCard characterCard) {
         this.characterCard = characterCard;
     }
