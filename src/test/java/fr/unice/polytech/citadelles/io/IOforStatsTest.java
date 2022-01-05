@@ -52,16 +52,15 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Integer>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results.csv", p1, p2, p3);
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results.csv", p1, p2, p3);
 
-        //System.err.println(res);
         double moyenne = 0;
         for (Player p : res.keySet()) {
-            moyenne += res.get(p).get(1) / 12000.0 * 3;
+            moyenne += res.get(p).get(1) / 3000.0 * 3;
         }
         moyenne = moyenne / 3;
 
-        assertEquals(18.599833333333333, moyenne); // expected value computed with ms excel
+        assertEquals(18.496, moyenne); // expected value computed with ms excel
     }
 
     @Test
@@ -70,7 +69,7 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Integer>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results2.csv", p1, p2, p3);
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results2.csv", p1, p2, p3);
 
         double nbWinP1 = res.get(p1).get(0);
         double nbWinP2 = res.get(p2).get(0);
@@ -92,6 +91,7 @@ class IOforStatsTest {
     @Test
     void createCSVFileTest() throws IOException {
         String saveFolderPath = System.getProperty("user.dir") + "/save/";
+
         File saveFolder = new File(saveFolderPath);
 
         iOforStats.createCSVFile();
@@ -119,14 +119,14 @@ class IOforStatsTest {
 
         CSVReader reader = new CSVReader(new FileReader(csvFilePath), ';', '"', 0);
         List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"P1", "1", "10"});
-        expected.add(new String[]{"P2", "0", "9"});
+        expected.add(new String[]{"P1", "1", "10", "10", "2", "NaN", "0", "0", "0", "0", "0","0"});
+        expected.add(new String[]{"P2", "0", "9", "9", "2", "NaN", "0", "0", "0", "0", "0","0"});
 
         List<String[]> readAll = reader.readAll();
         assertEquals(2, readAll.size());
 
-        for (int i = 0; i< readAll.size() ; i++) {
-            for (int j = 0; j< readAll.get(i).length; j++) {
+        for (int i = 0; i < readAll.size(); i++) {
+            for (int j = 0; j < readAll.get(i).length; j++) {
                 assertEquals(expected.get(i)[j], readAll.get(i)[j]);
             }
         }

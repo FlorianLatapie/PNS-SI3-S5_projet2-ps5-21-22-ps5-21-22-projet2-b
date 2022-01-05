@@ -17,6 +17,10 @@ public class PlayerTools {
 
     public Color mostCommonColorInBuiltDistricts() {
         List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
+        return mostCommonColor(builtDistricts);
+    }
+
+    public static Color mostCommonColor(List<DistrictCard> districtCards) {
         int redCount = 0, greenCount = 0, blueCount = 0, yellowCount = 0;
         List<Integer> countOfEachColor = new ArrayList<>(List.of(redCount, greenCount, blueCount, yellowCount));
         List<Color> colorsToSearch = new ArrayList<>(List.of(Color.values()));
@@ -24,7 +28,7 @@ public class PlayerTools {
         colorsToSearch.remove(Color.PURPLE);
 
         for (int i = 0; i < colorsToSearch.size(); i++) {
-            for (DistrictCard districtCard : builtDistricts) {
+            for (DistrictCard districtCard : districtCards) {
                 if (districtCard.getColor().equals(colorsToSearch.get(i))) {
                     countOfEachColor.set(i, countOfEachColor.get(i) + 1);
                 }
@@ -76,5 +80,24 @@ public class PlayerTools {
             mapColorNumber.put(color, nb);
         }
         return mapColorNumber;
+    }
+
+    public Double averagePriceOfBuiltDistricts() {
+        double sum = 0 ;
+        for (DistrictCard districtCard : player.getDistrictCardsBuilt()) {
+            sum+= districtCard.getPriceToBuild();
+        }
+        return sum/player.getDistrictCardsBuilt().size();
+    }
+
+    public List<DistrictCard> getAllCardsWithThisColor(Color color){
+        List<DistrictCard> districtCard = player.getDistrictCardsBuilt();
+        List<DistrictCard> cardsWithThisColor = new ArrayList<>();
+        for(DistrictCard card : districtCard){
+            if(card.getColor().equals(color)){
+                cardsWithThisColor.add(card);
+            }
+        }
+        return cardsWithThisColor;
     }
 }

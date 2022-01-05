@@ -335,6 +335,10 @@ public class Player {
         this.destroyedDistricts = destroyedDistricts;
     }
 
+    public int getNbOfBonusPoints() {
+        return bonusPoints;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
