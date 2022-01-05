@@ -1,10 +1,6 @@
 package fr.unice.polytech.citadelles.io;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
-import fr.unice.polytech.citadelles.card.DistrictCard;
-import fr.unice.polytech.citadelles.enums.Color;
-import fr.unice.polytech.citadelles.enums.DistrictName;
 import fr.unice.polytech.citadelles.player.Player;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -52,7 +48,7 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results.csv", p1, p2, p3);
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results.csv", p1, p2, p3);
 
         double moyenne = 0;
         for (Player p : res.keySet()) {
@@ -69,7 +65,7 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStats(System.getProperty("user.dir") + "/saveForTests/results2.csv", p1, p2, p3);
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results2.csv", p1, p2, p3);
 
         double nbWinP1 = res.get(p1).get(0);
         double nbWinP2 = res.get(p2).get(0);

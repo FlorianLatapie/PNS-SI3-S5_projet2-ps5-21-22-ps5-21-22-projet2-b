@@ -16,7 +16,8 @@ public class IOforStats extends IO {
         LOGGER.setLevel(Level.WARNING);
     }*/
     @Override
-    public void println(Object o){}
+    public void println(Object o) {
+    }
 
     public void log(Object o) {
         System.out.println(o);
@@ -31,7 +32,7 @@ public class IOforStats extends IO {
     public void saveAndPrintStats(List<List<Player>> winnersOfEachGame, Player... players) throws IOException {
         String CSVFilePath = createCSVFile();
         appendStatsToCSV(winnersOfEachGame, CSVFilePath);
-        readAndComputeStats(CSVFilePath, players);
+        readAndComputeStatsAndPrintThem(CSVFilePath, players);
     }
 
     public void appendStatsToCSV(List<List<Player>> winnersOfEachGame, String CSVFilePath) throws IOException {
@@ -66,7 +67,7 @@ public class IOforStats extends IO {
         writer.close();
     }
 
-    public Map<Player, List<Double>> readAndComputeStats(String csvFilePath, Player... players) throws IOException {
+    public Map<Player, List<Double>> readAndComputeStatsAndPrintThem(String csvFilePath, Player... players) throws IOException {
         CSVReader reader = new CSVReader(new FileReader(csvFilePath), ';', '"', 0);
 
         List<String[]> allRows = reader.readAll();
@@ -99,6 +100,12 @@ public class IOforStats extends IO {
             }
         }
 
+        printStats(numberOfLines, numberOfGames, statsForEachPlayer, players);
+
+        return statsForEachPlayer;
+    }
+
+    private void printStats(double numberOfLines, double numberOfGames, Map<Player, List<Double>> statsForEachPlayer, Player... players) {
         for (Player p : players) {
             log(p.getName() + " has won " + statsForEachPlayer.get(p).get(0) + " games out of " + numberOfGames + " games" +
                     System.lineSeparator() + "\taverage: " + statsForEachPlayer.get(p).get(1) / numberOfLines * players.length + " points" +
@@ -114,8 +121,6 @@ public class IOforStats extends IO {
                     System.lineSeparator() + "\twith strategy built: " + p.getStrategy() +
                     System.lineSeparator());
         }
-
-        return statsForEachPlayer;
     }
 
     public String createCSVFile() throws IOException {
