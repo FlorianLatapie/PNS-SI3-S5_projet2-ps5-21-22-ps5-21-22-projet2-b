@@ -144,6 +144,9 @@ public class SuperCharacterStrat extends CharacterStrat {
 
     @Override
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards){
+        if(characterToKill!=null){
+            if(killableCharacterCards.contains(characterToKill)) return characterToKill;
+        }
          if(isAboutToWinWithKing()!=null && killableCharacterCards.contains(new CharacterCard(CharacterName.KING))){
              return new CharacterCard(CharacterName.KING);
          }
@@ -181,12 +184,16 @@ public class SuperCharacterStrat extends CharacterStrat {
             return true;
         }
 
-        if(!districtCardsBuiltAndCoinsDisparity()) return false;
-
         if(isAbleToWinWithAssassin()==this.player){
             characterToKill= new CharacterCard(CharacterName.WARLORD);
             return true;
-        }else return isAbleToWinWithAssassin() != null;
+        }else if(isAbleToWinWithAssassin()!=null) {
+            return true;
+        }
+
+        if(!districtCardsBuiltAndCoinsDisparity()) return false;
+        return false;
+
     }
 
     public Player isAbleToWinWithAssassin(){
