@@ -51,7 +51,10 @@ public class BuildStrat {
     }
 
     public DistrictCard chooseBestDistrictCard(List<DistrictCard> districtCards) {
-        int choice = random.nextInt(0, districtCards.size()-1);
+        if (districtCards.isEmpty()){
+            return null;
+        }
+        int choice = random.nextInt(0, districtCards.size());
         return districtCards.get(choice);
     }
 

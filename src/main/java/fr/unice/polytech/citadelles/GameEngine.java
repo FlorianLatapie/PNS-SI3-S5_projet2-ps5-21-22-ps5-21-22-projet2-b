@@ -13,7 +13,9 @@ import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
 import fr.unice.polytech.citadelles.strategy.Strategy;
 import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
+import fr.unice.polytech.citadelles.strategy.buildstrats.BuildStrat;
 import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
+import fr.unice.polytech.citadelles.strategy.characterstrats.MerchantOrColorStrategy;
 import fr.unice.polytech.citadelles.strategy.characterstrats.SuperCharacterStrat;
 
 import java.util.*;
@@ -51,19 +53,38 @@ public class GameEngine {
     // constructors
     @Deprecated
     public GameEngine() {
-        this(7, new Random());
+        this(7, new Random(), new IO());
+    }
+
+    public GameEngine(IO io) {
+        this.io = io;
+        this.random = new Random();
+
+
+        listOfPlayers = new ArrayList<>();
+
+        playersWhoBuilt8Cards = new ArrayList<>();
+        deckOfCards = new DeckOfCards(random);
+
+        this.nbPlayers = initPlayersWithEachStrategy();
+    }
+
+    public GameEngine(int nbPlayers, Random random) {
+        this(nbPlayers, random, new IO());
     }
 
     @Deprecated
-    public GameEngine(int nbPlayers, Random random) {
+    public GameEngine(int nbPlayers, Random random, IO io) {
         if (nbPlayers > 8 || nbPlayers < 3) {
             throw new IllegalArgumentException("Illegal number of players : " + nbPlayers);
         }
 
+        this.io = io;
         this.random = random;
         this.nbPlayers = nbPlayers;
+
         listOfPlayers = new ArrayList<>();
-        io = new IO();
+
         playersWhoBuilt8Cards = new ArrayList<>();
         deckOfCards = new DeckOfCards(random);
 
@@ -103,6 +124,36 @@ public class GameEngine {
                 p.setDistrictCardsInHand(districtCards);
             }
         }
+    }
+
+    public int initPlayersWithEachStrategy(){
+        List<DistrictCard>  districtCardsP1 = new ArrayList<>();
+        for (int j = 0; j < 4; j++) {
+            districtCardsP1.add(deckOfCards.getRandomDistrictCard());
+        }
+        Strategy buildMaxDistrictSrategyP1 = new CompleteStrategy(new SuperCharacterStrat(this), new BuildMaxDistrictStrategy());
+        Player p1 = new Player("Player 1", districtCardsP1, 2, random,  buildMaxDistrictSrategyP1);
+        listOfPlayers.add(p1);
+
+        List<DistrictCard>  districtCardsP2 = new ArrayList<>();
+        for (int j = 0; j < 4; j++) {
+            districtCardsP2.add(deckOfCards.getRandomDistrictCard());
+        }
+        Strategy buildMaxDistrictSrategyP2 = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
+        Player p2 = new Player("Player 2", districtCardsP1, 2, random,  buildMaxDistrictSrategyP2);
+        listOfPlayers.add(p2);
+
+        List<DistrictCard>  districtCardsP3 = new ArrayList<>();
+        for (int j = 0; j < 4; j++) {
+            districtCardsP3.add(deckOfCards.getRandomDistrictCard());
+        }
+        Strategy buildMaxDistrictSrategyP3 = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
+        Player p3 = new Player("Player 3", districtCardsP1, 2, random, buildMaxDistrictSrategyP3);
+        listOfPlayers.add(p3);
+
+        kingOfTheLastRound = p1;
+        kingByDefault = p1;
+        return listOfPlayers.size();
     }
 
 

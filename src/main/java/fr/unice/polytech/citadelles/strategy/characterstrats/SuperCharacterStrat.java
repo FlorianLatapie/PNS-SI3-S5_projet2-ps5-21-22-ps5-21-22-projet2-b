@@ -241,6 +241,9 @@ public class SuperCharacterStrat extends CharacterStrat {
         return (reference-sizeDisparity>toCheck || toCheck>reference+sizeDisparity); //Différence si toCheck est hors limite de + ou - 1
     }
 
-
+    @Override
+    public String toString() {
+        return "Super character strategy";
+    }
 }
 

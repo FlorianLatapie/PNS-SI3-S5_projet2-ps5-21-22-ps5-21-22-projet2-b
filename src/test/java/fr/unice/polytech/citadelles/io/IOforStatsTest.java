@@ -119,8 +119,8 @@ class IOforStatsTest {
 
         CSVReader reader = new CSVReader(new FileReader(csvFilePath), ';', '"', 0);
         List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"P1", "1", "10", "10", "2", "NaN", "0", "0", "0", "0", "0","0"});
-        expected.add(new String[]{"P2", "0", "9", "9", "2", "NaN", "0", "0", "0", "0", "0","0"});
+        expected.add(new String[]{"P1", "1", "10", "10", "2", "0.0", "0", "0", "0", "0", "0","0"});
+        expected.add(new String[]{"P2", "0", "9", "9", "2", "0.0", "0", "0", "0", "0", "0","0"});
 
         List<String[]> readAll = reader.readAll();
         assertEquals(2, readAll.size());

@@ -16,30 +16,21 @@ import java.util.Random;
 
 public class MainWithStatsOnly {
     public static void main(String... args) throws IOException {
-        double numberOfGames = 1000000;
-        Random random = new Random();
+        double numberOfGames = 1000;
         IOforStats io = new IOforStats();
         List<List<Player>> winnersOfEachGame = new ArrayList<>();
-        Player p1 = null, p2 = null, p3 = null;
 
+        GameEngine ge = null;
 
         for (int i = 0; i < numberOfGames; i++) {
             io.println("this game is the " + i + "th");
 
-            Strategy buildMaxDistrictSrategy = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
-            p1 = new Player("Player 1", buildMaxDistrictSrategy);
-
-            Strategy buildMaxDistrictSrategyp2 = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
-            p2 = new Player("Player 2", buildMaxDistrictSrategyp2);
-
-            Strategy buildMaxDistrictSrategyp3 = new CompleteStrategy(new CharacterStrat(), new BuildMaxDistrictStrategy());
-            p3 = new Player("Player 3", buildMaxDistrictSrategyp3);
-
-            GameEngine ge = new GameEngine(random, new DeckOfCards(random), io, true, p1, p2, p3);
+            ge = new GameEngine(io);
             winnersOfEachGame.add(ge.launchGame());
+
             io.println("this game is the " + i + "th");
         }
 
-        io.saveAndPrintStats(winnersOfEachGame, p1, p2, p3);
+        io.saveAndPrintStats(winnersOfEachGame, ge.getListOfPlayers().toArray(new Player[0]));
     }
 }

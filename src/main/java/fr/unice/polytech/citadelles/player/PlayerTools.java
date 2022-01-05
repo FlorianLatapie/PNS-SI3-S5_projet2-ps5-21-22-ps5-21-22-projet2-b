@@ -83,6 +83,9 @@ public class PlayerTools {
     }
 
     public Double averagePriceOfBuiltDistricts() {
+        if (player.getDistrictCardsBuilt().isEmpty()){
+            return 0.0;
+        }
         double sum = 0 ;
         for (DistrictCard districtCard : player.getDistrictCardsBuilt()) {
             sum+= districtCard.getPriceToBuild();
