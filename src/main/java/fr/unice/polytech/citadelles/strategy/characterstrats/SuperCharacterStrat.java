@@ -58,7 +58,14 @@ public class SuperCharacterStrat extends CharacterStrat {
                 return new CharacterCard(CharacterName.KING);
             } else if (characterCardList.contains(new CharacterCard(CharacterName.ASSASSIN))) {
                 return new CharacterCard(CharacterName.ASSASSIN);
-            } else {
+            }
+            else if(characterCardList.contains(new CharacterCard(CharacterName.WARLORD))){
+                return new CharacterCard(CharacterName.WARLORD);
+            }
+            else if(characterCardList.contains(new CharacterCard(CharacterName.BISHOP))){
+                return new CharacterCard(CharacterName.BISHOP);
+            }
+            else{
                 return null;
             }
         } else {
@@ -133,6 +140,26 @@ public class SuperCharacterStrat extends CharacterStrat {
             }
         }
         return null;
+    }
+
+    @Override
+    public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards){
+         if(isAboutToWinWithKing()!=null && killableCharacterCards.contains(new CharacterCard(CharacterName.KING))){
+             return new CharacterCard(CharacterName.KING);
+         }
+         else{
+             return super.killCharacterCard(killableCharacterCards);
+         }
+    }
+
+    @Override
+    public Player chooseAPlayer(List<Player> players){
+         if(isAboutToWinWithKing() != null && isAboutToWinWithKing()!=player){
+             return isAboutToWinWithKing();
+         }
+         else{
+             return super.chooseAPlayer(players);
+         }
     }
 
     public void setListOfPlayers(List<Player> listOfPlayers) {

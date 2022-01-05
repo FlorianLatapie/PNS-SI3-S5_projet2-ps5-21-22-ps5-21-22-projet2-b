@@ -32,7 +32,7 @@ public class CharacterStrat {
         return ableToStealCharacterCards.get(random.nextInt(0, ableToStealCharacterCards.size()));
     }
 
-    public Player getSometimesRandomPlayer(List<Player> players) {
+    public Player chooseAPlayer(List<Player> players) {
         if (random.nextBoolean() && !players.isEmpty()) {
             return players.get(random.nextInt(0, players.size()));
         } else {
