@@ -51,7 +51,7 @@ public class IO {
     public void printSeparator(String text) {
         String separator = "---------------------------------------------------------------------";
         if (!text.isEmpty()) text = " " + text.trim() + " ";
-        this.println(ANSI_BLUE + separator + text + separator + System.lineSeparator() + ANSI_RESET);
+        this.println(separator + text + separator + System.lineSeparator());
     }
 
     public void printWinner(List<Player> winners) {
