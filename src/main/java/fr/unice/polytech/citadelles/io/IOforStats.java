@@ -13,16 +13,22 @@ import java.util.*;
  * @author Florian Latapie
  */
 public class IOforStats extends IO {
+    //private final static Logger LOGGER = Logger.getLogger(IO.class.getName());
+
+    /*public IOforStats(){
+        LOGGER.setLevel(Level.WARNING);
+    }*/
     @Override
-    public void println(Object o) {
-    }
+    public void println(Object o){}
 
     public void log(Object o) {
         System.out.println(o);
+        //LOGGER.log(Level.SEVERE, o.toString());
     }
 
     public void errorlog(Object o) {
         System.err.println(o);
+        //LOGGER.log(Level.WARNING, o.toString());
     }
 
     public void saveAndPrintStats(List<List<Player>> winnersOfEachGame, Player... players) throws IOException {

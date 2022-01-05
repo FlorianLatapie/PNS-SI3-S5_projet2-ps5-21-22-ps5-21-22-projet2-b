@@ -4,11 +4,33 @@ import fr.unice.polytech.citadelles.player.Player;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * IO means Input/Output
  */
 public class IO {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    /*private final static Logger LOGGER = Logger.getLogger(IO.class.getName());
+
+    public IO (){
+        LOGGER.setLevel(Level.INFO);
+    }*/
+
+    public void println(Object o) {
+        //LOGGER.log(Level.INFO, o.toString());
+        System.out.println(o);
+    }
+
     public void printDistrictCardsInHandOf(Player player) {
         this.println(player.getName() + " has the following district cards in hand          : " + player.getDistrictCardsInHand());
     }
@@ -29,11 +51,7 @@ public class IO {
     public void printSeparator(String text) {
         String separator = "---------------------------------------------------------------------";
         if (!text.isEmpty()) text = " " + text.trim() + " ";
-        this.println(separator + text + separator + System.lineSeparator());
-    }
-
-    public void println(Object o) {
-        System.out.println(o);
+        this.println(ANSI_BLUE + separator + text + separator + System.lineSeparator() + ANSI_RESET);
     }
 
     public void printWinner(List<Player> winners) {
