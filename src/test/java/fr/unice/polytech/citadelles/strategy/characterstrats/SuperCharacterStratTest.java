@@ -66,15 +66,15 @@ public class SuperCharacterStratTest {
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
 
-        assertEquals(new CharacterCard(CharacterName.KING),strat.chooseKing(characterCardsOfTheRound));
+        assertEquals(new CharacterCard(CharacterName.KING),superstrat.chooseKing(characterCardsOfTheRound));
 
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.KING));
 
-        assertEquals(new CharacterCard(CharacterName.ASSASSIN), strat.chooseKing(characterCardsOfTheRound));
+        assertEquals(new CharacterCard(CharacterName.ASSASSIN), superstrat.chooseKing(characterCardsOfTheRound));
 
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.ASSASSIN));
 
-        assertEquals(null, strat.chooseKing(characterCardsOfTheRound));
+        assertEquals(null, superstrat.chooseKing(characterCardsOfTheRound));
 
     }
 
@@ -97,7 +97,7 @@ public class SuperCharacterStratTest {
         superstrat.setListOfPlayers(listPlayer);
 
 
-        assertEquals(player, strat.isAboutToWinWithKing());
+        assertEquals(player, superstrat.isAboutToWinWithKing());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class SuperCharacterStratTest {
         DeckOfCards doc = new DeckOfCards();
         List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
 
-        assertEquals(strat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
+        assertEquals(superstrat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
     }
 
 }

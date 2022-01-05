@@ -77,14 +77,6 @@ public class CharacterStrat {
         }
     }
 
-    public CharacterCard chooseKing(List<CharacterCard> characterCardList){
-        return null;
-    }
-
-    public Player isAboutToWinWithKing(){
-        return null;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

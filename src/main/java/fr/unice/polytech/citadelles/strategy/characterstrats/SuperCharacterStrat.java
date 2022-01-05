@@ -39,7 +39,6 @@ public class SuperCharacterStrat extends CharacterStrat {
          }
     }
 
-    @Override
     public CharacterCard chooseKing(List<CharacterCard> characterCardList) {
         if(isAboutToWinWithKing() != null){
             if(characterCardList.contains(new CharacterCard(CharacterName.KING))){
@@ -57,7 +56,6 @@ public class SuperCharacterStrat extends CharacterStrat {
         }
     }
 
-    @Override
     public Player isAboutToWinWithKing() {
          for(Player player : listOfPlayers){
              if((player.getCoins()>=1 || player.getDistrictCardsInHand().size()>=1) && player.getDistrictCardsBuilt().size()==6){

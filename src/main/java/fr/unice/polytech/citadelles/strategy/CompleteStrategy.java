@@ -93,16 +93,6 @@ public class CompleteStrategy implements Strategy {
         return characterStrat.repairDistrict(destroyedDistricts);
     }
 
-    @Override
-    public Player isAboutToWinWithKing(){
-        return characterStrat.isAboutToWinWithKing();
-    }
-
-    @Override
-    public CharacterCard chooseKing(List<CharacterCard> characterCardList){
-        return characterStrat.chooseKing(characterCardList);
-    }
-
 
     @Override
     public boolean equals(Object o) {
