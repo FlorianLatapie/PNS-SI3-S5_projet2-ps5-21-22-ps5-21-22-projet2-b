@@ -2,17 +2,11 @@ package fr.unice.polytech.startingpoint;
 
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.io.IOforStats;
-import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.player.Player;
-import fr.unice.polytech.citadelles.strategy.CompleteStrategy;
-import fr.unice.polytech.citadelles.strategy.Strategy;
-import fr.unice.polytech.citadelles.strategy.buildstrats.BuildMaxDistrictStrategy;
-import fr.unice.polytech.citadelles.strategy.characterstrats.CharacterStrat;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MainWithStatsOnly {
     public static void main(String... args) throws IOException {

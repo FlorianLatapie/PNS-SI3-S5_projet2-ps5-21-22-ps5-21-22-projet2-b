@@ -10,6 +10,8 @@ import java.io.*;
 import java.util.*;
 
 public class IOforStats extends IO {
+    private String resultsDOTcsv = "results.csv";
+    private String resultsComputedDOTtxt = "resultsComputed.txt";
     //private final static Logger LOGGER = Logger.getLogger(IO.class.getName());
 
     /*public IOforStats(){
@@ -30,9 +32,11 @@ public class IOforStats extends IO {
     }
 
     public void saveAndPrintStats(List<List<Player>> winnersOfEachGame, Player... players) throws IOException {
-        String CSVFilePath = createCSVFile();
+        String CSVFilePath = createFile(resultsDOTcsv, false);
+        String resultsComputedPath = createFile(resultsComputedDOTtxt, true);
+
         appendStatsToCSV(winnersOfEachGame, CSVFilePath);
-        readAndComputeStatsAndPrintThem(CSVFilePath, players);
+        readAndComputeStatsAndPrintThem(CSVFilePath, resultsComputedPath, players);
     }
 
     public void appendStatsToCSV(List<List<Player>> winnersOfEachGame, String CSVFilePath) throws IOException {
@@ -67,7 +71,7 @@ public class IOforStats extends IO {
         writer.close();
     }
 
-    public Map<Player, List<Double>> readAndComputeStatsAndPrintThem(String csvFilePath, Player... players) throws IOException {
+    public Map<Player, List<Double>> readAndComputeStatsAndPrintThem(String csvFilePath, String computedStatsPath, Player... players) throws IOException {
         CSVReader reader = new CSVReader(new FileReader(csvFilePath), ';', '"', 0);
 
         List<String[]> allRows = reader.readAll();
@@ -90,24 +94,34 @@ public class IOforStats extends IO {
             statsForEachPlayer.put(p, new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
         }
 
+        int j = 1;
         for (String[] line : allRows) {
             for (Player p : players) {
                 if (line[0].equals(p.getName())) {
                     for (int i = 0; i < statsForEachPlayer.get(p).size(); i++) {
-                        statsForEachPlayer.get(p).set(i, statsForEachPlayer.get(p).get(i) + Double.parseDouble(line[i + 1]));
+                        try {
+                            statsForEachPlayer.get(p).set(i, statsForEachPlayer.get(p).get(i) + Double.parseDouble(line[i + 1]));
+                        } catch (Exception e) {
+                            String message = "Error while parsing " + resultsDOTcsv + " please check if line " + j + " has exactly a player name then 11 numbers";
+                            errorlog(message);
+                            return null;
+                        }
                     }
                 }
             }
+            j++;
         }
 
-        printStats(numberOfLines, numberOfGames, statsForEachPlayer, players);
+        printAndSaveStats(numberOfLines, numberOfGames, statsForEachPlayer, computedStatsPath, players);
 
         return statsForEachPlayer;
     }
 
-    private void printStats(double numberOfLines, double numberOfGames, Map<Player, List<Double>> statsForEachPlayer, Player... players) {
+    private void printAndSaveStats(double numberOfLines, double numberOfGames, Map<
+            Player, List<Double>> statsForEachPlayer, String computedStatsPath, Player... players) throws IOException {
         for (Player p : players) {
-            log(p.getName() + " has won " + statsForEachPlayer.get(p).get(0) + " games out of " + numberOfGames + " games" +
+            log(p.getName() + " has won " + statsForEachPlayer.get(p).get(0) + " games out of " + numberOfGames + ", average: " + statsForEachPlayer.get(p).get(1) / numberOfLines * players.length + " points");
+            saveComputedStats(computedStatsPath, p.getName() + " has won " + statsForEachPlayer.get(p).get(0) + " games out of " + numberOfGames + " games" +
                     System.lineSeparator() + "\taverage: " + statsForEachPlayer.get(p).get(1) / numberOfLines * players.length + " points" +
                     System.lineSeparator() + "\taverage: " + statsForEachPlayer.get(p).get(2) / numberOfLines * players.length + " bonus points" +
                     System.lineSeparator() + "\taverage: " + statsForEachPlayer.get(p).get(3) / numberOfLines * players.length + " coins" +
@@ -118,25 +132,43 @@ public class IOforStats extends IO {
                     System.lineSeparator() + "\taverage Yellow cards built: " + statsForEachPlayer.get(p).get(8) / numberOfLines * players.length +
                     System.lineSeparator() + "\taverage Grey cards built: " + statsForEachPlayer.get(p).get(9) / numberOfLines * players.length +
                     System.lineSeparator() + "\taverage Purple cards built: " + statsForEachPlayer.get(p).get(10) / numberOfLines * players.length +
-                    System.lineSeparator() + "\twith strategy built: " + p.getStrategy() +
-                    System.lineSeparator());
+                    System.lineSeparator() + "\twith strategy built: " + p.getStrategy() + System.lineSeparator() + System.lineSeparator());
         }
     }
 
-    public String createCSVFile() throws IOException {
+    public void saveComputedStats(String computedStatsPath, String s) throws IOException {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(computedStatsPath, true));
+            writer.write(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            assert writer != null;
+            writer.close();
+        }
+    }
+
+    public String createFile(String filename, boolean deletePrevious) throws IOException {
         String saveFolderPath = System.getProperty("user.dir") + "/save/";
         File saveFolder = new File(saveFolderPath);
+
         if (!saveFolder.exists()) {
             saveFolder.mkdir();
             log("\"" + saveFolderPath + "\" created");
         }
-        String CSVFilePath = saveFolderPath + "results.csv";
+        String CSVFilePath = saveFolderPath + filename;
         File CSVFile = new File(CSVFilePath);
+
+        if (deletePrevious) {
+            CSVFile.delete();
+        }
+
         if (!CSVFile.exists()) {
             if (CSVFile.createNewFile()) {
-                log("\"" + saveFolderPath + "results.csv" + "\" created");
+                log("" + saveFolderPath + filename + " created");
             } else {
-                errorlog("error while creating the file : \"" + CSVFilePath + "\"");
+                errorlog("error while creating the file : " + CSVFilePath + "");
             }
         }
         return CSVFilePath;

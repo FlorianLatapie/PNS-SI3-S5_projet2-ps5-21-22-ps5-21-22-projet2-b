@@ -1,0 +1,780 @@
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 1 has won 2.0 games out of 3.0 games
+	average: 5.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 2 has won 1.0 games out of 3.0 games
+	average: 10.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
+Player 3 has won 0.0 games out of 3.0 games
+	average: 1.0 points
+	average: 0.0 bonus points
+	average: 0.0 coins
+	average price of built districts: 0.0 coins
+	average Red cards built: 0.0
+	average Green cards built: 0.0
+	average Blue cards built: 0.0
+	average Yellow cards built: 0.0
+	average Grey cards built: 0.0
+	average Purple cards built: 0.0
+	with strategy built: CompleteStrategy{characterStrat=random Character Strategy, buildStrat=random Build Strategy}
+
