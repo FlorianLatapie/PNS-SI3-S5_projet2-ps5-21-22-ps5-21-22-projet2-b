@@ -4,6 +4,7 @@ import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
 import fr.unice.polytech.citadelles.enums.CharacterName;
+import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.player.Player;
 import fr.unice.polytech.citadelles.player.PlayerTools;
 
@@ -47,7 +48,25 @@ public class SuperCharacterStrat extends CharacterStrat {
         } else if (chooseArchitect(characterCardList) != null) {
             return chooseArchitect(characterCardList);
         } else {
-            return super.chooseCharacter(characterCardList);
+
+            CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
+            List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
+
+            if (characterCardList.contains(favChar)) {
+                return favChar;
+            } else {
+                if (!builtDistricts.isEmpty()) {
+                    Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
+                    for (CharacterCard characterCard : characterCardList) {
+                        if (characterCard.getColor().equals(mostFrequentColor)) {
+                            return characterCard;
+                        }
+                    }
+                }
+                //return characterCardList.get(random.nextInt(0, characterCardList.size()));
+                return super.chooseCharacter(characterCardList);
+            }
+
         }
     }
 
