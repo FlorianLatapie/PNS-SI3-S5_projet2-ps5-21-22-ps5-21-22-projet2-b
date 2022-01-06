@@ -59,7 +59,14 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results.csv", System.getProperty("user.dir") + "/saveForTests/resultsComputed.txt", p1, p2, p3);
+        String saveFolderPath = System.getProperty("user.dir") + "/saveForTests/";
+        String resultsCsvPath = saveFolderPath + "results.csv";
+        String resultsComputedTxtPath = saveFolderPath + "resultsComputed.txt";
+
+        File resultsComputedTxt = new File(resultsComputedTxtPath);
+        resultsComputedTxt.delete();
+
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(resultsCsvPath, resultsComputedTxtPath, p1, p2, p3);
 
         double moyenne = 0;
         for (Player p : res.keySet()) {
@@ -76,7 +83,14 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results2.csv", System.getProperty("user.dir") + "/saveForTests/resultsComputed2.txt", p1, p2, p3);
+        String saveFolderPath = System.getProperty("user.dir") + "/saveForTests/";
+        String resultsCsvPath = saveFolderPath + "results2.csv";
+        String resultsComputedTxtPath = saveFolderPath + "resultsComputed2.txt";
+
+        File resultsComputedTxt = new File(resultsComputedTxtPath);
+        resultsComputedTxt.delete();
+
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(resultsCsvPath, resultsComputedTxtPath, p1, p2, p3);
 
         double nbWinP1 = res.get(p1).get(0);
         double nbWinP2 = res.get(p2).get(0);
