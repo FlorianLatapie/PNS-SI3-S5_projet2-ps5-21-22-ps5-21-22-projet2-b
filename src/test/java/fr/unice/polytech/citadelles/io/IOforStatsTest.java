@@ -15,18 +15,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class IOforStatsTest {
     IOforStats iOforStats;
     static ByteArrayOutputStream outContent;
+    static ByteArrayOutputStream errContent;
     static final PrintStream originalOut = System.out;
+    static final PrintStream originalErr = System.err;
 
     @BeforeAll
     static void baSetUp() {
         outContent = new ByteArrayOutputStream();
+        errContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
 
     @BeforeEach
     void setUp() {
         iOforStats = new IOforStats();
         outContent.reset();
+        errContent.reset();
     }
 
     @Test
@@ -42,13 +47,26 @@ class IOforStatsTest {
     }
 
     @Test
+    void errorlogTest() {
+        iOforStats.errorlog("something");
+        assertEquals("something" + System.lineSeparator(), errContent.toString());
+    }
+
+    @Test
     void printStatsTest() throws IOException {
         List<List<Player>> winnersForEachGame = new ArrayList<>();
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results.csv", p1, p2, p3);
+        String saveFolderPath = System.getProperty("user.dir") + "/saveForTests/";
+        String resultsCsvPath = saveFolderPath + "results.csv";
+        String resultsComputedTxtPath = saveFolderPath + "resultsComputed.txt";
+
+        File resultsComputedTxt = new File(resultsComputedTxtPath);
+        resultsComputedTxt.delete();
+
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(resultsCsvPath, resultsComputedTxtPath, p1, p2, p3);
 
         double moyenne = 0;
         for (Player p : res.keySet()) {
@@ -65,7 +83,14 @@ class IOforStatsTest {
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
 
-        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(System.getProperty("user.dir") + "/saveForTests/results2.csv", p1, p2, p3);
+        String saveFolderPath = System.getProperty("user.dir") + "/saveForTests/";
+        String resultsCsvPath = saveFolderPath + "results2.csv";
+        String resultsComputedTxtPath = saveFolderPath + "resultsComputed2.txt";
+
+        File resultsComputedTxt = new File(resultsComputedTxtPath);
+        resultsComputedTxt.delete();
+
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(resultsCsvPath, resultsComputedTxtPath, p1, p2, p3);
 
         double nbWinP1 = res.get(p1).get(0);
         double nbWinP2 = res.get(p2).get(0);
@@ -85,15 +110,51 @@ class IOforStatsTest {
     }
 
     @Test
+    void printStatsTest3() throws IOException {
+        Player p1 = new Player("Richard-Alphonse");
+        Player p2 = new Player("Our AI");
+        Player p3 = new Player("Random");
+
+        String saveForTestsPath = System.getProperty("user.dir") + "/saveForTests/";
+        String corruptedCSVPath = saveForTestsPath + "corrupted.csv";
+        String corruptedTXTPath = saveForTestsPath + "corrupted.txt";
+
+        File corruptedTxt = new File(corruptedTXTPath);
+        corruptedTxt.delete();
+        Map<Player, List<Double>> res = iOforStats.readAndComputeStatsAndPrintThem(corruptedCSVPath, corruptedTXTPath, p1, p2, p3);
+
+        assertNull(res);
+        assertEquals("", outContent.toString());
+    }
+
+    @Test
     void createCSVFileTest() throws IOException {
         String saveFolderPath = System.getProperty("user.dir") + "/save/";
 
         File saveFolder = new File(saveFolderPath);
 
-        iOforStats.createCSVFile();
+        iOforStats.createFile("resultsForTests.csv", false);
 
         assertTrue(saveFolder.exists());
         assertTrue(saveFolder.list().length >= 1);
+
+        File resultsForTestsFile = new File(saveFolderPath + "resultsForTests.csv");
+        resultsForTestsFile.delete();
+    }
+
+    @Test
+    void createCSVFileTest2() throws IOException {
+        String saveFolderPath = System.getProperty("user.dir") + "/save/";
+
+        File saveFolder = new File(saveFolderPath);
+
+        iOforStats.createFile("resultsForTests.csv", true);
+
+        assertTrue(saveFolder.exists());
+        assertTrue(saveFolder.list().length >= 1);
+
+        File resultsForTestsFile = new File(saveFolderPath + "resultsForTests.csv");
+        resultsForTestsFile.delete();
     }
 
     @Test
@@ -115,8 +176,8 @@ class IOforStatsTest {
 
         CSVReader reader = new CSVReader(new FileReader(csvFilePath), ';', '"', 0);
         List<String[]> expected = new ArrayList<>();
-        expected.add(new String[]{"P1", "1", "10", "10", "2", "0.0", "0", "0", "0", "0", "0","0"});
-        expected.add(new String[]{"P2", "0", "9", "9", "2", "0.0", "0", "0", "0", "0", "0","0"});
+        expected.add(new String[]{"P1", "1", "10", "10", "2", "0.0", "0", "0", "0", "0", "0", "0"});
+        expected.add(new String[]{"P2", "0", "9", "9", "2", "0.0", "0", "0", "0", "0", "0", "0"});
 
         List<String[]> readAll = reader.readAll();
         assertEquals(2, readAll.size());
@@ -131,5 +192,6 @@ class IOforStatsTest {
     @AfterAll
     static void restoreStreams() {
         System.setOut(originalOut);
+        System.setErr(originalErr);
     }
 }

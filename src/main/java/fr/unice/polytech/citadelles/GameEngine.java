@@ -132,7 +132,7 @@ public class GameEngine {
             districtCardsP1.add(deckOfCards.getRandomDistrictCard());
         }
         Strategy buildMaxDistrictSrategyP1 = new CompleteStrategy(new SuperCharacterStrat(this), new BuildMaxDistrictStrategy());
-        Player p1 = new Player("Player 1", districtCardsP1, 2, random,  buildMaxDistrictSrategyP1);
+        Player p1 = new Player("Richard-Alphonse", districtCardsP1, 2, random,  buildMaxDistrictSrategyP1);
         listOfPlayers.add(p1);
 
         List<DistrictCard>  districtCardsP2 = new ArrayList<>();
@@ -140,7 +140,7 @@ public class GameEngine {
             districtCardsP2.add(deckOfCards.getRandomDistrictCard());
         }
         Strategy buildMaxDistrictSrategyP2 = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
-        Player p2 = new Player("Player 2", districtCardsP1, 2, random,  buildMaxDistrictSrategyP2);
+        Player p2 = new Player("Our AI", districtCardsP1, 2, random,  buildMaxDistrictSrategyP2);
         listOfPlayers.add(p2);
 
         List<DistrictCard>  districtCardsP3 = new ArrayList<>();
@@ -148,7 +148,7 @@ public class GameEngine {
             districtCardsP3.add(deckOfCards.getRandomDistrictCard());
         }
         Strategy buildMaxDistrictSrategyP3 = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
-        Player p3 = new Player("Player 3", districtCardsP1, 2, random, buildMaxDistrictSrategyP3);
+        Player p3 = new Player("Random", districtCardsP1, 2, random, buildMaxDistrictSrategyP3);
         listOfPlayers.add(p3);
 
         kingOfTheLastRound = p1;

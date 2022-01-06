@@ -169,6 +169,82 @@ public class SuperCharacterStratTest {
     }
 
     @Test
+    void chooseMagicianTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildMaxDistrictStrategy());
+        Player player = new Player("Player", strat);
+        player.receiveCoins(1);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
+
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), superstrat.chooseMagician(characterCardsOfTheRound));
+
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MAGICIAN));
+        assertEquals(null, superstrat.chooseMagician(characterCardsOfTheRound));
+    }
+    
+    void chooseMerchantTest(){
+        superCharacterStrat.init(player1);
+
+        List<Player> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add(player1);
+        listOfPlayers.add(player2);
+        listOfPlayers.add(player3);
+
+        superCharacterStrat.setListOfPlayers(listOfPlayers);
+
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.KING));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ASSASSIN));
+
+        assertEquals(true, superCharacterStrat.shouldIChooseMerchant());
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), superCharacterStrat.chooseMerchant(characterCardDeckOfTheGame));
+        assertEquals(new CharacterCard(CharacterName.MERCHANT), superCharacterStrat.chooseCharacter(characterCardDeckOfTheGame));
+    }
+
+    @Test
+    void chooseMerchantTestWithTooMuchRoundsInGame(){
+        when(mockGE.getRound()).thenReturn(5);
+        superCharacterStrat.init(player1);
+
+        List<Player> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add(player1);
+        listOfPlayers.add(player2);
+        listOfPlayers.add(player3);
+
+        superCharacterStrat.setListOfPlayers(listOfPlayers);
+
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.KING));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ASSASSIN));
+
+        assertEquals(false, superCharacterStrat.shouldIChooseMerchant());
+        assertEquals(null, superCharacterStrat.chooseMerchant(characterCardDeckOfTheGame));
+    }
+
+    @Test
+    void chooseMerchantTestWithTooMuchCoins(){
+        when(mockGE.getRound()).thenReturn(5);
+        superCharacterStrat.init(player2);
+
+        List<Player> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add(player1);
+        listOfPlayers.add(player2);
+        listOfPlayers.add(player3);
+
+        superCharacterStrat.setListOfPlayers(listOfPlayers);
+
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.KING));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ASSASSIN));
+
+        assertEquals(false, superCharacterStrat.shouldIChooseMerchant());
+        assertEquals(null, superCharacterStrat.chooseMerchant(characterCardDeckOfTheGame));
+    }
+
+    @Test
     void chooseKingTest(){
         GameEngine mockGE = mock(GameEngine.class);
         SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
@@ -484,9 +560,19 @@ public class SuperCharacterStratTest {
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY,DistrictName.NONE,1));
         assertEquals(new CharacterCard(CharacterName.ASSASSIN), strat.chooseCharacter(characterCardsOfTheRound));
         characterCardsOfTheRound.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MERCHANT));
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MAGICIAN));
         characterCardsOfTheRound.add(new CharacterCard(CharacterName.WARLORD));
         assertEquals(new CharacterCard(CharacterName.WARLORD), strat.chooseCharacter(characterCardsOfTheRound));
 
+        characterCardsOfTheRound.add(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardsOfTheRound.add(new CharacterCard(CharacterName.MAGICIAN));
+        characterCardsOfTheRound.add(new CharacterCard(CharacterName.MERCHANT));
+
+        listPlayer.remove(player);
+        superstrat.setListOfPlayers(listPlayer);
+        superstrat.init(player);
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), superstrat.chooseMagician(characterCardsOfTheRound));
     }
 
     @Test
