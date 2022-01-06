@@ -168,6 +168,23 @@ public class SuperCharacterStratTest {
     }
 
     @Test
+    void chooseMagicianTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildMaxDistrictStrategy());
+        Player player = new Player("Player", strat);
+        player.receiveCoins(1);
+
+        DeckOfCards doc = new DeckOfCards();
+        List<CharacterCard> characterCardsOfTheRound = doc.getNewCharacterCards();
+
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), superstrat.chooseMagician(characterCardsOfTheRound));
+
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.MAGICIAN));
+        assertEquals(null, superstrat.chooseMagician(characterCardsOfTheRound));
+    }
+
+    @Test
     void chooseKingTest(){
         GameEngine mockGE = mock(GameEngine.class);
         SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
@@ -445,6 +462,11 @@ public class SuperCharacterStratTest {
         assertEquals(superstrat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY,DistrictName.NONE,1));
         assertEquals(new CharacterCard(CharacterName.ASSASSIN), strat.chooseCharacter(characterCardsOfTheRound));
+
+        listPlayer.remove(player);
+        superstrat.setListOfPlayers(listPlayer);
+        superstrat.init(player);
+        assertEquals(new CharacterCard(CharacterName.MAGICIAN), superstrat.chooseMagician(characterCardsOfTheRound));
     }
 
     @Test

@@ -47,6 +47,8 @@ public class SuperCharacterStrat extends CharacterStrat {
             return chooseKing(characterCardList);
         } else if (chooseArchitect(characterCardList) != null) {
             return chooseArchitect(characterCardList);
+        } else if (chooseMagician(characterCardList)!= null){
+            return chooseMagician(characterCardList);
         } else {
 
             CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
@@ -67,6 +69,15 @@ public class SuperCharacterStrat extends CharacterStrat {
                 return super.chooseCharacter(characterCardList);
             }
 
+        }
+    }
+
+    public CharacterCard chooseMagician(List<CharacterCard> characterCardList) {
+        if(player.getDistrictCardsInHand().isEmpty() && characterCardList.contains(new CharacterCard(CharacterName.MAGICIAN))){
+            return new CharacterCard(CharacterName.MAGICIAN);
+        }
+        else{
+            return null;
         }
     }
 
