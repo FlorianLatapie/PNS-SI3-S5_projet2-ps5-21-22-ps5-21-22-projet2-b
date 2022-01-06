@@ -4,6 +4,7 @@ import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DeckOfCards;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.character.Architect;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.enums.DistrictName;
@@ -421,6 +422,43 @@ public class SuperCharacterStratTest {
     }
 
     @Test
+    void chooseWarlordTest(){
+        GameEngine mockGE = mock(GameEngine.class);
+        when(mockGE.getNbOfDistrictsToWin()).thenReturn(4);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+
+        Player player = new Player("Player 1", strat);
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertNull(superstrat.isAboutToWin());
+        assertFalse(superstrat.chooseWarlord(characterCardDeckOfTheGame));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        assertEquals(player2, superstrat.isAboutToWin());
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.KING));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardDeckOfTheGame.add(new CharacterCard(CharacterName.WARLORD));
+        assertFalse(superstrat.chooseWarlord(characterCardDeckOfTheGame));
+        player.receiveCoins(8);
+        assertTrue(superstrat.chooseWarlord(characterCardDeckOfTheGame));
+    }
+
+
+
+    @Test
     void chooseCharacterTest(){
         GameEngine mockGE = mock(GameEngine.class);
         when(mockGE.getNbOfDistrictsToWin()).thenReturn(8);
@@ -445,6 +483,10 @@ public class SuperCharacterStratTest {
         assertEquals(superstrat.chooseKing(characterCardsOfTheRound), strat.chooseCharacter(characterCardsOfTheRound));
         player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY,DistrictName.NONE,1));
         assertEquals(new CharacterCard(CharacterName.ASSASSIN), strat.chooseCharacter(characterCardsOfTheRound));
+        characterCardsOfTheRound.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardsOfTheRound.add(new CharacterCard(CharacterName.WARLORD));
+        assertEquals(new CharacterCard(CharacterName.WARLORD), strat.chooseCharacter(characterCardsOfTheRound));
+
     }
 
     @Test
@@ -504,6 +546,39 @@ public class SuperCharacterStratTest {
 
         assertEquals(player3, superstrat.chooseAPlayer(listPlayer));
 
+    }
 
+    @Test
+    void chooseAplayerForWarlord(){
+        GameEngine mockGE = mock(GameEngine.class);
+        when(mockGE.getNbOfDistrictsToWin()).thenReturn(4);
+        SuperCharacterStrat superstrat = new SuperCharacterStrat(mockGE);
+        CompleteStrategy strat = new CompleteStrategy(superstrat, new BuildStrat());
+
+        Player player = new Player("Player 1", strat);
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+
+        List<Player> listPlayer = new ArrayList<>();
+        listPlayer.add(player);
+        listPlayer.add(player2);
+        listPlayer.add(player3);
+        superstrat.setListOfPlayers(listPlayer);
+
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        player2.getDistrictCardsBuilt().add(new DistrictCard(Color.GREY, DistrictName.NONE, 2));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ASSASSIN));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.KING));
+        characterCardDeckOfTheGame.remove(new CharacterCard(CharacterName.ARCHITECT));
+        characterCardDeckOfTheGame.add(new CharacterCard(CharacterName.WARLORD));
+        assertEquals(player2,superstrat.chooseAPlayerForWarlord(listPlayer));
+        assertNull(superstrat.chooseAPlayerForWarlord(new ArrayList<Player>()));
+        List<Player> playersOne = new ArrayList<Player> ();
+        playersOne.add(player3);
+        assertEquals(player3, superstrat.chooseAPlayerForWarlord(playersOne));
     }
 }

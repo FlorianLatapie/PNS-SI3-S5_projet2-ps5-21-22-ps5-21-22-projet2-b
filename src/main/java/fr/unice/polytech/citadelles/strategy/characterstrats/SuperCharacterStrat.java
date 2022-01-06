@@ -3,6 +3,7 @@ package fr.unice.polytech.citadelles.strategy.characterstrats;
 import fr.unice.polytech.citadelles.GameEngine;
 import fr.unice.polytech.citadelles.card.CharacterCard;
 import fr.unice.polytech.citadelles.card.DistrictCard;
+import fr.unice.polytech.citadelles.character.Warlord;
 import fr.unice.polytech.citadelles.enums.CharacterName;
 import fr.unice.polytech.citadelles.enums.Color;
 import fr.unice.polytech.citadelles.player.Player;
@@ -10,6 +11,7 @@ import fr.unice.polytech.citadelles.player.PlayerTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SuperCharacterStrat extends CharacterStrat {
@@ -22,6 +24,7 @@ public class SuperCharacterStrat extends CharacterStrat {
     int nbDistrictsOfArchitectPower = 3;
     int minPriceFor2DistrictCards = 2;
     CharacterCard characterToKill;
+    Player playerToDestroy;
     List<Player> listOfPlayersSorted;
     private int haveALotOfCard = 4;
 
@@ -47,29 +50,42 @@ public class SuperCharacterStrat extends CharacterStrat {
             return chooseKing(characterCardList);
         } else if (chooseArchitect(characterCardList) != null) {
             return chooseArchitect(characterCardList);
-        } else {
+        } else if (chooseWarlord(characterCardList)) {
+            return  new CharacterCard(CharacterName.WARLORD);
+        } else{
 
-            CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
-            List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
+                CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
+                List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
 
-            if (characterCardList.contains(favChar)) {
-                return favChar;
-            } else {
-                if (!builtDistricts.isEmpty()) {
-                    Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
-                    for (CharacterCard characterCard : characterCardList) {
-                        if (characterCard.getColor().equals(mostFrequentColor)) {
-                            return characterCard;
+                if (characterCardList.contains(favChar)) {
+                    return favChar;
+                } else {
+                    if (!builtDistricts.isEmpty()) {
+                        Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
+                        for (CharacterCard characterCard : characterCardList) {
+                            if (characterCard.getColor().equals(mostFrequentColor)) {
+                                return characterCard;
+                            }
                         }
                     }
+                    //return characterCardList.get(random.nextInt(0, characterCardList.size()));
+                    return super.chooseCharacter(characterCardList);
                 }
-                //return characterCardList.get(random.nextInt(0, characterCardList.size()));
-                return super.chooseCharacter(characterCardList);
+
             }
-
         }
-    }
 
+
+    public Player isAboutToWin(){
+        List<Player> playersToCheck = new ArrayList<>(listOfPlayers);
+        playersToCheck.remove(this.player);
+        for(Player playerToCheck : playersToCheck){
+            if(playerToCheck.getDistrictCardsBuilt().size() == nbOfDistrictsToWin-1){
+                return playerToCheck;
+            }
+        }
+        return null;
+    }
 
     public CharacterCard chooseKing(List<CharacterCard> characterCardList) {
         if (isAboutToWinWithKing() != null) {
@@ -100,6 +116,7 @@ public class SuperCharacterStrat extends CharacterStrat {
         }
         return null;
     }
+
 
 
     CharacterCard chooseArchitect(List<CharacterCard> characterCardDeckOfTheGame) {
@@ -178,6 +195,9 @@ public class SuperCharacterStrat extends CharacterStrat {
     public Player chooseAPlayer(List<Player> players){
          if(isAboutToWinWithKing() != null && isAboutToWinWithKing()!=player){
              return isAboutToWinWithKing();
+         }
+         else if (isAboutToWin()!= null){
+             return isAboutToWin();
          }
          else{
              return super.chooseAPlayer(players);
@@ -258,6 +278,31 @@ public class SuperCharacterStrat extends CharacterStrat {
 
     public boolean checkDisparity(int reference, int toCheck, int sizeDisparity){
         return (reference-sizeDisparity>toCheck || toCheck>reference+sizeDisparity); //Différence si toCheck est hors limite de + ou - 1
+    }
+
+
+    //WARLORD
+    public boolean chooseWarlord(List<CharacterCard> characterCardDeckOfTheGame){
+        if(!characterCardDeckOfTheGame.contains(new CharacterCard(CharacterName.WARLORD))) return false;
+        playerToDestroy = isAboutToWin();
+        if(playerToDestroy != null) {
+            Warlord warlord = new Warlord(gameEngine);
+            if(warlord.canWarlordDestroyACardFromPlayer(this.player, playerToDestroy)){
+                return true;
+            };
+            return false;
+        }
+        return !lastToChooseCharacter(this.player);
+    }
+
+
+    @Override
+    public Player chooseAPlayerForWarlord(List<Player> players){
+        if(!players.isEmpty()){
+            if(players.contains(isAboutToWin())) return isAboutToWin();
+            else return players.get(random.nextInt(0, players.size()));
+        }else return null;
+
     }
 
     @Override

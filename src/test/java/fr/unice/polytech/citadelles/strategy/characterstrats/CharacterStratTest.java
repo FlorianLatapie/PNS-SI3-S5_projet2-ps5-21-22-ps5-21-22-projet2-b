@@ -143,8 +143,7 @@ class CharacterStratTest {
 
         List<Player> players = List.of(player,player2);
 
-        assertEquals(player2, player.warlordChoosePlayer(players));
-        assertEquals(null, player.warlordChoosePlayer(players));
+        assertNull(player.warlordChoosePlayer(players));
     }
 
     @Test

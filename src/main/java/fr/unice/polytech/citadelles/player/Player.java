@@ -234,7 +234,7 @@ public class Player {
     }
 
     public Player warlordChoosePlayer(List<Player> players) {
-        return strategy.chooseAPlayer(players);
+        return strategy.chooseAPlayerForWarlord(players);
     }
 
     public DistrictCard warlordChooseDistrictToDestroy(Player player) {

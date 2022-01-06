@@ -40,6 +40,14 @@ public class CharacterStrat {
         }
     }
 
+    public Player chooseAPlayerForWarlord(List<Player> players) {
+        if (random.nextBoolean() && !players.isEmpty()) {
+            return players.get(random.nextInt(0, players.size()));
+        } else {
+            return null;
+        }
+    }
+
     public Player magicianMove(List<Player> players) {
         if (random.nextBoolean()) {
             return players.get(random.nextInt(0, players.size()));

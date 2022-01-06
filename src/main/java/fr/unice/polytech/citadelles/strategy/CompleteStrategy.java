@@ -89,6 +89,11 @@ public class CompleteStrategy implements Strategy {
         return characterStrat.repairDistrict(destroyedDistricts);
     }
 
+    @Override
+    public Player chooseAPlayerForWarlord(List<Player> players) {
+        return null;
+    }
+
 
     @Override
     public boolean equals(Object o) {

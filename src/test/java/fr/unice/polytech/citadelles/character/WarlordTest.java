@@ -66,12 +66,12 @@ class WarlordTest {
         players.add(player1);
 
         Warlord warlordEngine = new Warlord(ge);
-        assertEquals(players, warlordEngine.canWarlordDestroyACardFromCharacter(warlord, players));
+        assertEquals(players, warlordEngine.canWarlordDestroyACardFromPlayers(warlord, players));
         player1.getDistrictCardsBuilt().remove(0);
-        assertNotEquals(players, warlordEngine.canWarlordDestroyACardFromCharacter(warlord, players));
+        assertNotEquals(players, warlordEngine.canWarlordDestroyACardFromPlayers(warlord, players));
         player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.CHURCH, 3));
-        assertEquals(players, warlordEngine.canWarlordDestroyACardFromCharacter(warlord, players));
+        assertEquals(players, warlordEngine.canWarlordDestroyACardFromPlayers(warlord, players));
         player1.getDistrictCardsBuilt().add(new DistrictCard(Color.BLUE, DistrictName.MONASTERY, 2));
-        assertEquals(players, warlordEngine.canWarlordDestroyACardFromCharacter(warlord, players));
+        assertEquals(players, warlordEngine.canWarlordDestroyACardFromPlayers(warlord, players));
     }
 }
