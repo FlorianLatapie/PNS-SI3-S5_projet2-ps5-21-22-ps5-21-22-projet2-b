@@ -139,7 +139,7 @@ public class GameEngine {
         for (int j = 0; j < 4; j++) {
             districtCardsP2.add(deckOfCards.getRandomDistrictCard());
         }
-        Strategy buildMaxDistrictSrategyP2 = new CompleteStrategy(new CharacterStrat(), new BuildStrat());
+        Strategy buildMaxDistrictSrategyP2 = new CompleteStrategy(new MerchantOrColorStrategy(), new BuildMaxDistrictStrategy());
         Player p2 = new Player("Player 2", districtCardsP1, 2, random,  buildMaxDistrictSrategyP2);
         listOfPlayers.add(p2);
 

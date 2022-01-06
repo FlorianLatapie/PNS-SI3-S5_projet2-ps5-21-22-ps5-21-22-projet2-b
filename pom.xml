@@ -41,13 +41,13 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>first</id>
+                        <id>oneGame</id>
                         <configuration>
                             <mainClass>fr.unice.polytech.startingpoint.Main</mainClass>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>second</id>
+                        <id>stats</id>
                         <configuration>
                             <mainClass>fr.unice.polytech.startingpoint.MainWithStatsOnly</mainClass>
                         </configuration>
