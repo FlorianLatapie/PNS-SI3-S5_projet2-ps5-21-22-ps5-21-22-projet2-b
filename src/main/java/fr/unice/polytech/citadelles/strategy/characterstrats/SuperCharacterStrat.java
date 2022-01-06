@@ -24,6 +24,8 @@ public class SuperCharacterStrat extends CharacterStrat {
     CharacterCard characterToKill;
     List<Player> listOfPlayersSorted;
     private int haveALotOfCard = 4;
+    private int hasALotOfCoins = 4;
+    private int nbOfRoundsToChooseMerchant = 4;
 
     public SuperCharacterStrat(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -47,28 +49,12 @@ public class SuperCharacterStrat extends CharacterStrat {
             return chooseKing(characterCardList);
         } else if (chooseArchitect(characterCardList) != null) {
             return chooseArchitect(characterCardList);
+        }  else if(chooseMerchant(characterCardList) != null){
+            return chooseMerchant(characterCardList);
         } else if (chooseMagician(characterCardList)!= null){
             return chooseMagician(characterCardList);
         } else {
-
-            CharacterCard favChar = new CharacterCard(CharacterName.MERCHANT);
-            List<DistrictCard> builtDistricts = player.getDistrictCardsBuilt();
-
-            if (characterCardList.contains(favChar)) {
-                return favChar;
-            } else {
-                if (!builtDistricts.isEmpty()) {
-                    Color mostFrequentColor = playerTools.mostCommonColorInBuiltDistricts();
-                    for (CharacterCard characterCard : characterCardList) {
-                        if (characterCard.getColor().equals(mostFrequentColor)) {
-                            return characterCard;
-                        }
-                    }
-                }
-                //return characterCardList.get(random.nextInt(0, characterCardList.size()));
-                return super.chooseCharacter(characterCardList);
-            }
-
+            return super.chooseCharacter(characterCardList);
         }
     }
 
@@ -172,6 +158,28 @@ public class SuperCharacterStrat extends CharacterStrat {
         return null;
     }
 
+    //MERCHANT
+    //A choisir en dernier
+    CharacterCard chooseMerchant(List<CharacterCard> characterCardList){
+        if(shouldIChooseMerchant() && characterCardList.contains(new CharacterCard(CharacterName.MERCHANT))){
+            return new CharacterCard(CharacterName.MERCHANT);
+        } else {
+            return null;
+        }
+    }
+
+    boolean shouldIChooseMerchant(){
+        //Le choisir en début de partie
+        if(gameEngine.getRound() <= nbOfRoundsToChooseMerchant){
+            return true;
+        }
+        //Ne pas le prendre si on a suffisament de pièces
+        if(player.getCoins() > hasALotOfCoins) {
+            return false;
+        }
+        return false;
+    }
+
     @Override
     public CharacterCard killCharacterCard(List<CharacterCard> killableCharacterCards){
         if(characterToKill!=null){
@@ -254,7 +262,6 @@ public class SuperCharacterStrat extends CharacterStrat {
          if(listOfPlayersSorted!=null && listOfPlayersSorted.size()>0) return listOfPlayersSorted.get(listOfPlayersSorted.size()-1).equals(playerToCheck);
         return false;
     }
-
 
     public boolean districtCardsBuiltAndCoinsDisparity(){
          List<Player> playersToCheckCopy = new ArrayList<Player>(listOfPlayers);
