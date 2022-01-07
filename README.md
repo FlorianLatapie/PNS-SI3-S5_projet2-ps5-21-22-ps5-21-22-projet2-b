@@ -38,6 +38,22 @@ mvn exec:java@oneGame
 * ✅ Le paquet de cartes contient toutes les cartes du jeu de base 
 * ✅ Impossibilité de construire 2 fois la même carte 
 
+### Personnages : 
+Tous les personnages ont été implémentés ainsi que leurs pouvoir soit :
+1. **L’assassin** (pouvoir : assassine un autre personnage)
+2. **Le voleur** (pouvoir : vole un autre personnage)
+3. **Le magicien** (pouvoir : échange ses cartes avec un joueur ou échange des cartes de sa main avec la pioche)
+4. **Le roi** (pouvoir : ses quartiers nobles rapportent et il devient automatiquement le premier joueur)
+5. **L’évêque** (pouvoir : ses quartiers religieux rapportent il est protégé contre le Condottière
+6. **Le marchand** (pouvoir : ses quartiers marchands rapportent il gagne une pièce d'or)
+7. **L’architecte** (pouvoir : il pioche deux cartes en plus et peut bâtir jusqu'à trois quartiers)
+8. **Le condottiere** (pouvoir : ses quartiers militaires rapportent il peut détruire un quartier)
+
+
+### Les stratégies
+* Une stratégie qui choisit des personnages, de piocher des pièces ou des cartes et de construire ou non des quartiers de manière aléatoire.
+* Une stratégie qui construit un maximum de quartiers les moins chers possibles et qui choisit le personnage marchand en premier sinon il prend un personnage avec la couleur plus fréquente parmi ses quartiers construits. 
+
 
 ### Le déroulement d’un tour 
 * Choix du rôle selon le rôle du tour précédent 
@@ -56,23 +72,6 @@ mvn exec:java@oneGame
 * ✅ pour les joueurs ayant construit les merveilles Université et Dracoport
 #### Les joueurs sont triés en fonction de leur nombre de points
 Le premier de ce tri est le gagnant du jeu
-
-
-### Personnages : 
-Tous les personnages ont été implémentés ainsi que leurs pouvoir soit :
-1. **L’assassin** (pouvoir : assassine un autre personnage)
-2. **Le voleur** (pouvoir : vole un autre personnage)
-3. **Le magicien** (pouvoir : échange ses cartes avec un joueur ou échange des cartes de sa main avec la pioche)
-4. **Le roi** (pouvoir : ses quartiers nobles rapportent et il devient automatiquement le premier joueur)
-5. **L’évêque** (pouvoir : ses quartiers religieux rapportent il est protégé contre le Condottière
-6. **Le marchand** (pouvoir : ses quartiers marchands rapportent il gagne une pièce d'or)
-7. **L’architecte** (pouvoir : il pioche deux cartes en plus et peut bâtir jusqu'à trois quartiers)
-8. **Le condottiere** (pouvoir : ses quartiers militaires rapportent il peut détruire un quartier)
-
-
-### Les stratégies
-* Une stratégie qui choisit des personnages, de piocher des pièces ou des cartes et de construire ou non des quartiers de manière aléatoire.
-* Une stratégie qui construit un maximum de quartiers les moins chers possibles et qui choisit le personnage marchand en premier sinon il prend un personnage avec la couleur plus fréquente parmi ses quartiers construits. 
 
 
 ## Ce qui n’a pas été réalisé  
