@@ -1,6 +1,12 @@
 # 🏰 
 # projet2-ps5-21-22-ps5-21-22-projet2-b : Projet Citadelles
 
+## Membres de l'équipe 
+* Florian Latapie
+* Loïc Le Bris 
+* Marius Lesaulnier
+* Thomas Paul
+
 # Description du projet 
 * Simulation d'une partie du jeu de société original Citadelles
 * Les parties se jouent automatiquement : 3 à 7 robots s'affrontent
